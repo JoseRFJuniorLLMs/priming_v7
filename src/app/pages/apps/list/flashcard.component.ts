@@ -108,8 +108,6 @@ export class FlashcardComponent implements AfterViewInit, OnDestroy {
     }
   }
   
-  
-
   ngOnDestroy(): void {
     if (this.voiceRecognitionService && this.voiceRecognitionService.wavesurfer) {
       this.voiceRecognitionService.wavesurfer.destroy();
@@ -184,5 +182,9 @@ export class FlashcardComponent implements AfterViewInit, OnDestroy {
     if (this.voiceRecognitionService.wavesurfer) {
       this.voiceRecognitionService.wavesurfer.playPause();
     }
+  }
+
+  closeClick(): void {
+    this.dialogRef.close();
   }
 }

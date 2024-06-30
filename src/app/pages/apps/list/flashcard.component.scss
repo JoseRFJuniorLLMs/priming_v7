@@ -16,15 +16,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px;
   width: 100%;
-  max-width: 800px; // Expandir a largura máxima
+  max-width: 800px;
+  position: relative; // Necessário para o posicionamento absoluto do botão
+}
 
-  .description, .answer {
-    font-size: 2em;
-    font-weight: bold;
-    color: #333;
-    margin: 10px 0;
-    line-height: 1.5; // Aumentar o espaçamento entre as linhas
-  }
+.description, .answer {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  margin: 10px 0;
+  line-height: 1.5;
 }
 
 .flex {
@@ -65,13 +66,25 @@ button.meu-botao {
   margin-top: 20px;
 }
 
-// Container do Waveform
 .waveform-container {
   display: flex;
   align-items: center;
-  width: 100%; // ou a largura desejada
-  height: auto; // ou a altura desejada
+  width: 100%;
+  height: auto;
+
   button {
-    margin-right: 10px; // Espaço entre o botão e o waveform
+    margin-right: 10px;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
   }
 }

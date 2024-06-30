@@ -2,13 +2,24 @@
   <div class="search-bar">
     <input type="text" [(ngModel)]="searchTerm" placeholder="Search by title" (input)="searchNotes()" />
     
-    <button matTooltip="View Flashcard" (click)="openFlashcard()" type="button">
-      <span matTooltip="FlashCard" class="material-symbols-outlined centered-and-enlarged" style="font-size: 40px; color: rgb(255, 2, 2);">
-        self_improvement
-      </span>
-      FlashCard
-      <span class="material-symbols-outlined" style="font-size: 30px; color: rgb(254, 1, 1);">
-        skull
+    <button matTooltip="View FlashCard" (click)="openFlashcard()" type="button">
+      <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(254, 1, 1);">
+        extension
+        </span>
+    </button>
+    <button matTooltip="View Done" (click)="openFlashcard()" type="button">
+      <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(249, 228, 3);">
+        grade
+        </span>
+    </button>
+    <button matTooltip="SRVP" (click)="openFlashcard()" type="button">
+      <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(249, 228, 3);">
+        offline_bolt
+        </span>
+    </button>
+    <button matTooltip="View AudioCard" (click)="openFlashcard()" type="button">
+      <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(74, 59, 239);">
+        record_voice_over
         </span>
     </button>
 
@@ -17,7 +28,7 @@
     <div *ngIf="notes.length > 0; else noNotes">
       <div *ngFor="let note of notes">
         <div class="note">
-          <!-- <h3><strong>Title:</strong>{{ note.title }}</h3> -->
+          <h3><strong>Title:</strong>{{ note.title }}</h3>
           <p><strong>Description:</strong>{{ note.description }}</p>
           <p><strong>Answer:</strong> {{ note.answer }}</p>
           <p><strong>Revision:</strong> {{ note.last_revision_date }}</p>
@@ -28,7 +39,7 @@
             <i class="fas fa-edit" style="font-size: 25px;color: rgb(67, 218, 150);"></i> Edit
           </button>
           <button matTooltip="View" (click)="editNote(note)">
-            <i class="fas fa-view" style="font-size: 25px;color: rgb(67, 218, 150);"></i> View
+            <i class="fas fa-eye" style="font-size: 25px;color: rgb(67, 218, 150);"></i> View
           </button>
           <button matTooltip="Delete" (click)="deleteNote(note._id)">
             <i class="fas fa-trash" style="font-size: 25px; color: rgb(241, 4, 4);" ></i> Delete
