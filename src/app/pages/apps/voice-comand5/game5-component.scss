@@ -1,9 +1,10 @@
-$primary-color: #2121ef; // Azul para associações inverossímeis e textos de negrito
-$pronunciation-color: #77db45; // Laranja para a pronúncia
-$translation-color: #ed0707; // Verde para a tradução
-$english-color: #28c625; // Rosa para as palavras em inglês
-$error-color: #ff0000; // Vermelho para erro
-$correct-color: #77dd77; // Verde claro para correções corretas
+$primary-color: #2121ef; 
+$pronunciation-color: #77db45; 
+$translation-color: #ed0707;
+$english-color: #28c625; 
+$error-color: #ff0000; 
+$correct-color: #77dd77; 
+$current-cell-color: #dbcabf; 
 
 .game-container {
   h1 {
@@ -83,6 +84,10 @@ $correct-color: #77dd77; // Verde claro para correções corretas
 
     td.correct {
       background-color: $correct-color;
+    }
+
+    td.current-cell {
+      background-color: $current-cell-color;
     }
 
     tr:nth-child(even) {

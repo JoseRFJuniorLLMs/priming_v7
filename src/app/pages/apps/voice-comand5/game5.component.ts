@@ -60,7 +60,7 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2
   ) {}
 
-  vocabulary = vocabulary;
+  vocabulary = this.shuffleArray(vocabulary); // Embaralhar o vocabulário ao inicializar
   currentIndex = 0;
   phases = ['english', 'pronunciation', 'translation', 'association'];
   currentPhase = this.phases[0];
@@ -78,19 +78,17 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
 
     this.voiceRecognitionService.onResult.subscribe((transcript: string) => {
       const currentWord = this.vocabulary[this.currentIndex].english;
-      const currentPronunciation = this.vocabulary[this.currentIndex].pronunciation;
       if (transcript.trim().toLowerCase() === currentWord.toLowerCase() && !this.correctEnglish[this.currentIndex]) {
         this.correctEnglish[this.currentIndex] = true;
         this.soundService.playDone();
-        // Speak the pronunciation after the English word is correct
-        this.voiceRecognitionService.speak(currentPronunciation);
-      } else if (transcript.trim().toLowerCase() === currentPronunciation.toLowerCase() && this.correctEnglish[this.currentIndex]) {
-        this.correctPronunciation[this.currentIndex] = true;
         this.markRowAsCorrect(this.currentIndex);
+        this.score++; // Atualizar a pontuação em caso de acerto
         this.next();
       } else {
         this.soundService.playErro();
         this.markError(this.currentIndex);
+        this.score--; // Atualizar a pontuação em caso de erro
+        this.next();
       }
     });
 
@@ -98,6 +96,14 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
       const currentWord = this.vocabulary[this.currentIndex].english;
       this.voiceRecognitionService.speak(currentWord);
     }
+  }
+
+  shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   next(): void {
@@ -109,6 +115,7 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
     this.currentPhase = this.phases[0]; // Reinicia a fase
     const currentWord = this.vocabulary[this.currentIndex].english;
     this.voiceRecognitionService.speak(currentWord);
+    this.scrollToCurrentElement();
   }
 
   scrollToCurrentElement(): void {
