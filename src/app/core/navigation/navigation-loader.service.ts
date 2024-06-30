@@ -21,6 +21,12 @@ export class NavigationLoaderService {
   loadNavigation(): void {
     this._items.next([
       {
+        type: 'link',
+        label: 'Login',
+        route: '/login',
+        icon: 'mat:login'
+      },
+      {
         type: 'subheading',
         label: 'Dashboards',
         children: [
@@ -110,12 +116,6 @@ export class NavigationLoaderService {
                 route: '/apps/book2',
                 icon: 'mat:menu_book'
               },
-/*               {
-                type: 'link',
-                label: 'Books PDF',
-                route: '/apps/book4',
-                icon: 'mat:text_rotate_up'
-              }, */
               {
                 type: 'link',
                 label: 'Books Text',
@@ -147,6 +147,48 @@ export class NavigationLoaderService {
             label: 'Series',
             route: '/apps/editor',
             icon: 'mat:movie'
+          },
+          {
+            type: 'link',
+            label: 'Puzzle Block',
+            route: '/apps/puzzle-block',
+            icon: 'mat:extension'
+          }
+        ]
+      },
+      {
+        type: 'subheading',
+        label: 'Pages',
+        children: [
+          {
+            type: 'link',
+            label: 'Pricing',
+            route: '/pages/pricing',
+            icon: 'mat:attach_money'
+          },
+          {
+            type: 'link',
+            label: 'FAQ',
+            route: '/pages/faq',
+            icon: 'mat:help'
+          },
+          {
+            type: 'link',
+            label: 'Invoice',
+            route: '/pages/invoice',
+            icon: 'mat:receipt'
+          },
+          {
+            type: 'link',
+            label: 'Error 404',
+            route: '/pages/error-404',
+            icon: 'mat:error'
+          },
+          {
+            type: 'link',
+            label: 'Error 500',
+            route: '/pages/error-500',
+            icon: 'mat:error'
           }
         ]
       },
@@ -160,6 +202,24 @@ export class NavigationLoaderService {
         label: 'Configuration',
         route: () => this.layoutService.openConfigpanel(),
         icon: 'mat:book'
+      },
+      {
+        type: 'link',
+        label: 'Register',
+        route: '/register',
+        icon: 'mat:person_add'
+      },
+      {
+        type: 'link',
+        label: 'Forgot Password',
+        route: '/forgot-password',
+        icon: 'mat:lock_open'
+      },
+      {
+        type: 'link',
+        label: 'Coming Soon',
+        route: '/coming-soon',
+        icon: 'mat:hourglass_empty'
       }
     ]);
   }

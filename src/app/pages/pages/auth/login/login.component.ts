@@ -54,7 +54,7 @@ export class LoginComponent {
       try {
         await this.authService.login(email!, password!);
         this.snackbar.open('Login successful!', 'Close', { duration: 3000 });
-        this.router.navigate(['/']); // Navigate to home page or dashboard
+        // O redirecionamento é tratado no AuthService após o login bem-sucedido
       } catch (error) {
         console.error('Login error:', error);
         this.snackbar.open('Login failed. Please check your credentials and try again.', 'Close', { duration: 5000 });
