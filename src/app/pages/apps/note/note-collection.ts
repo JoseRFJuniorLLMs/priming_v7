@@ -1,11 +1,11 @@
-import { StudentCollection } from '../student/form/student-collection';
+import { Student } from '../student/form/student';
 
 export class NoteCollection {
   _id!: string;
   title?: string;
   created_at?: string;
   description?: string;
-  student?: StudentCollection;
+  student?: Student;
   tags?: string;
   answer?: string;
   last_revision_date?: string;

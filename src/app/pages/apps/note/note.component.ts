@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { StudentCollection } from '../student/form/student-collection';
+import { Student } from '../student/form/student';
 import { CdkDragDrop, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import { VoiceRecognitionService } from '../../../pages/apps/voice-comand/voice-recognition.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -89,7 +89,7 @@ export class NoteComponent implements OnInit {
       });
   }
 
-  createNote(student: StudentCollection): void {
+  createNote(student: Student): void {
     const newNote = new NoteCollection({
       _id: '', // Generate a unique ID for the new note if necessary
       created_at: new Date().toISOString(),

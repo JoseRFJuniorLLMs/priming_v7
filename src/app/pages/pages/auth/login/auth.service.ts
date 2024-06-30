@@ -21,39 +21,50 @@ export class AuthService {
     private studentService: StudentService
   ) {}
 
-  async register(email: string, password: string, studentData: Omit<Student, '_id'>) {
+  async register(email: string, password: string, studentData: Omit<Student, '_id' | 'email'>) {
     try {
+      console.log('Registering user with email:', email);
       const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      if (!user || !user.uid || !user.email) {
+        throw new Error('User or user email not found.');
+      }
+
       const student: Student = {
-        _id: userCredential.user!.uid,
-        email: userCredential.user!.email!,
+        _id: user.uid,
+        email: user.email,
         ...studentData
       };
+
+      console.log('Adding student data to Firestore:', student);
       await this.studentService.addStudentData(student);
+      console.log('Student data added successfully');
       this.router.navigate(['/dashboards/analytics']);
     } catch (error) {
-      console.error('Error during registration: ', error);
+      console.error('Error during registration:', error);
       this.loginErrorSubject.next('Registration failed. Please try again.');
     }
   }
 
   async login(email: string, password: string) {
     try {
+      console.log('Logging in user with email:', email);
       await this.afAuth.signInWithEmailAndPassword(email, password);
       this.loginErrorSubject.next(null); // Clear any previous error
       this.router.navigate(['/dashboards/analytics']); // Redirect to dashboard after successful login
     } catch (error) {
-      console.error('Error during login: ', error);
+      console.error('Error during login:', error);
       this.loginErrorSubject.next('Incorrect email or password.'); // Set error message
     }
   }
 
   async logout() {
     try {
+      console.log('Logging out user');
       await this.afAuth.signOut();
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error('Error during logout: ', error);
+      console.error('Error during logout:', error);
     }
   }
 

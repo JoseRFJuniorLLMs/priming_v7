@@ -1,4 +1,4 @@
-import { StudentCollection } from '../student/form/student-collection';
+import { StudentCollection } from '../student/form/student';
 
 export class TagsCollection {
   _id!: string;

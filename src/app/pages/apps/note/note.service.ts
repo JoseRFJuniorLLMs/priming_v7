@@ -13,7 +13,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { NoteCollection } from './note-collection';
-import { StudentCollection } from '../student/form/student-collection';
+import { Student } from '../student/form/student';
 
 @Injectable({
   providedIn: 'root'
@@ -48,12 +48,12 @@ export class NoteService {
     }) as Observable<NoteCollection>;
   }
 
-  getStudentById(id: string): Observable<StudentCollection | any> {
+  getStudentById(id: string): Observable<Student | any> {
     if (!id) return of(undefined);
     const studentDocRef = doc(this.firestore, `StudentCollection/${id}`);
     return docData(studentDocRef, {
       idField: '_id'
-    }) as Observable<StudentCollection>;
+    }) as Observable<Student>;
   }
 
   createNote(note: NoteCollection): Promise<void> {
