@@ -19,7 +19,7 @@ export class RegisterComponent {
     courses: [''],
     gender: [''],
     phone: ['']
-    // adicione outros campos conforme necessário
+    
   });
 
   constructor(

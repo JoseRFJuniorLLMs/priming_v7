@@ -71,7 +71,126 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
-          // adicione outras rotas de aplicativos aqui
+          {
+            path: 'voicegame',
+            loadComponent: () =>
+              import('./pages/apps/voice-comand/game.component').then(
+                (m) => m.GameComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'voicegame4',
+            loadComponent: () =>
+              import('./pages/apps/voice-comand4/game4.component').then(
+                (m) => m.Game4Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'voicegame5',
+            loadComponent: () =>
+              import('./pages/apps/voice-comand5/game5.component').then(
+                (m) => m.Game5Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'book3',
+            loadComponent: () =>
+              import('./pages/apps/book3/book3.component').then(
+                (m) => m.Book3Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'voicegame2',
+            loadComponent: () =>
+              import('./pages/apps/voice-comand2/game2.component').then(
+                (m) => m.Game2Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'voicegame3',
+            loadComponent: () =>
+              import('./pages/apps/voice-comand3/game3.component').then(
+                (m) => m.Game3Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'list',
+            loadComponent: () =>
+              import('./pages/apps/list/note-list.component').then(
+                (m) => m.NoteListComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'book',
+            loadComponent: () =>
+              import('./pages/apps/book/book.component').then(
+                (m) => m.BookComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'book2',
+            loadComponent: () =>
+              import('./pages/apps/book2/book2.component').then(
+                (m) => m.Book2Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'clase',
+            loadComponent: () =>
+              import('./pages/apps/clase/clase.component').then(
+                (m) => m.ClaseComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'graph',
+            loadComponent: () =>
+              import('./pages/apps/graph/graph.component').then(
+                (m) => m.GraphComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'editor',
+            loadComponent: () =>
+              import('./pages/apps/editor/editor.component').then(
+                (m) => m.EditorComponent
+              ),
+            data: {
+              scrollDisabled: true
+            }
+          }
         ]
       },
       {
@@ -111,6 +230,39 @@ export const appRoutes: VexRoutes = [
               import('./pages/pages/errors/error-500/error-500.component').then(
                 (m) => m.Error500Component
               )
+          }
+        ]
+      },
+      {
+        path: 'ui',
+        children: [
+          {
+            path: 'components',
+            loadChildren: () =>
+              import('./pages/ui/components/components.routes')
+          },
+          {
+            path: 'forms/form-elements',
+            loadComponent: () =>
+              import('./pages/ui/forms/form-elements/form-elements.component').then(
+                (m) => m.FormElementsComponent
+              )
+          },
+          {
+            path: 'forms/form-wizard',
+            loadComponent: () =>
+              import('./pages/ui/forms/form-wizard/form-wizard.component').then(
+                (m) => m.FormWizardComponent
+              )
+          },
+          {
+            path: 'icons',
+            loadChildren: () => import('./pages/ui/icons/icons.routes')
+          },
+          {
+            path: 'page-layouts',
+            loadChildren: () =>
+              import('./pages/ui/page-layouts/page-layouts.routes')
           }
         ]
       },
