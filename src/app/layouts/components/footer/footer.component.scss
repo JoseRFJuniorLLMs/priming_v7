@@ -1,0 +1,50 @@
+:host {
+  @apply bg-foreground dark:bg-base border-t text-default flex w-full bottom-0 relative;
+  height: var(--vex-footer-height);
+  z-index: var(--vex-footer-z-index);
+}
+
+// footer.component.scss
+
+button.mat-raised-button {
+  &.playing {
+    background-color: green; // Cor quando estiver tocando
+    color: white; // Cor do ícone quando estiver tocando
+  }
+
+  &.not-playing {
+    background-color: red; // Cor quando não estiver tocando
+    color: black; // Cor do ícone quando não estiver tocando
+  }
+}
+
+
+button.mat-raised-button {
+  &.playing {
+    background-color: green; // Cor quando estiver tocando
+    color: white; // Cor do ícone quando estiver tocando
+  }
+
+  &.not-playing {
+    background-color: red; // Cor quando não estiver tocando
+    color: black; // Cor do ícone quando não estiver tocando
+  }
+}
+
+.waveform-container {
+  /* position: absolute;  */
+  /* bottom: 0;  */
+  /* left: 0;  */
+  width: 100%;
+  height: 128px;
+ /*  margin-top: 20px; */
+ /*  z-index: 9999; */
+}
+
+.progress-ba-container {
+  /* position: absolute;  */
+  /* bottom: 0;  */
+  /* left: 0;  */
+  margin-top: 20px;
+ /*  z-index: 9999; */
+}

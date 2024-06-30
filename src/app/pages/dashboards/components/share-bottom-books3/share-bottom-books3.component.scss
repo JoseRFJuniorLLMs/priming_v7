@@ -1,0 +1,27 @@
+// Definição de estilos para mensagens do usuário
+.user-message {
+  background-color: #e0f2f1; /* Cor de fundo para mensagens do usuário */
+  color: #000; /* Cor do texto para mensagens do usuário */
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+// Definição de estilos para mensagens do assistente
+.assistant-message {
+  background-color: #fce4ec; /* Cor de fundo para mensagens do assistente */
+  color: #000; /* Cor do texto para mensagens do assistente */
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+// Estilo adicional para a área de histórico de conversação
+.conversation-history {
+  max-height: 300px; /* Altura máxima para a área de histórico de conversação */
+  overflow-y: auto; /* Adicionar barra de rolagem vertical quando necessário */
+}
+
+mat-form-field {
+  margin-right: 12px;
+}

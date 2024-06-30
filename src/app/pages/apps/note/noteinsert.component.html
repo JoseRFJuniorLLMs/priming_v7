@@ -1,0 +1,56 @@
+<div class="note-form-container">
+  <form class="note-form">
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Title Notes">Title <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.title" name="title" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Description Notes">Description <span style="color: red;"></span></mat-label>
+      <textarea matInput [(ngModel)]="newNote.description" name="description" #descriptionInput required (click)="pasteFromClipboard()"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Tag Notes (VERB, BOOK, CLASS..)">Tag <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.tags" name="tags" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Answer">Answer <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.answer" name="answer">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Level">Level <span style="color: red;"></span></mat-label>
+      <mat-select [(ngModel)]="newNote.level" name="level" required>
+        <mat-option value="easy">Easy</mat-option>
+        <mat-option value="medium">Medium</mat-option>
+        <mat-option value="hard">Hard</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Last Revision Date">Last Revision Date <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.last_revision_date" name="last_revision_date">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Next Revision Date">Next Revision Date <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.next_revision_date" name="next_revision_date">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label matTooltip="Image URL">Image <span style="color: red;"></span></mat-label>
+      <input matInput [(ngModel)]="newNote.image" name="image">
+    </mat-form-field>
+<!--     <mat-checkbox [(ngModel)]="newNote.permanent" name="permanent">Permanent</mat-checkbox>
+ -->    
+<div class="buttons-container">
+      <button matTooltip="Create" (click)="createNote()" type="button">
+        <i class="fas fa-edit" style="font-size: 20px;"></i> Create
+      </button>
+      <button matTooltip="List" [routerLink]="['apps/notes']" type="button">
+        <i class="fas-solid fa-snowflake" style="font-size: 20px;"></i> List
+      </button>
+      <button matTooltip="List" [routerLink]="['apps/list']" type="button">
+        <i class="fas fa-list" style="font-size: 20px;"></i> List
+      </button>
+      <button matTooltip="Graph" [routerLink]="['apps/graph']" type="button">
+        <i class="fas fa-chart-area" style="font-size: 20px;"></i> Graph
+      </button>
+    </div>
+  </form>
+</div>

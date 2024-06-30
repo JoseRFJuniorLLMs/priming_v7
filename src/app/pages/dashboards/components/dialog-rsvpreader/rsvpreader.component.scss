@@ -1,0 +1,44 @@
+.rsvp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background-color: #333030;
+  color: #fffefe;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.text-display {
+  margin: 0;
+  font-size: 60px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+::ng-deep .highlight {
+  color: #f06204; /* Cor de destaque */
+  font-weight: bold; /* Negrito para maior destaque */
+}
+
+
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Espaçamento acima dos botões */
+}
+
+button {
+  font-size: 16px;
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ddd; /* Cor de fundo para os botões */
+  &:hover {
+    background-color: #e63946;
+    color: white;
+  }
+}

@@ -1,0 +1,33 @@
+.buttons-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.section-title {
+  grid-column: 1 / -1; /* Faz o título abranger todas as colunas */
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.phonetic-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.phonetic {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.word {
+  font-size: 16px;
+}

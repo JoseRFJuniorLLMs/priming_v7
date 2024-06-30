@@ -1,0 +1,276 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/src/assets/pdf/EnglishBooks
+/src/assets/txt/
+/dist
+/tmp
+/out-tsc
+demo/gpt4.json
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events.json
+speed-measure-plugin.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# GPT4
+gpt4.json
+/gpt4
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.angular/cache
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+/ARCHIVE/*
+src/assets/pdf/EnglishBooks/_How to Avoid English Teachers_ Pet Peeves_ - Miller Thurston Cheryl.pdf
+src/assets/pdf/EnglishBooks/_One to One - a Teacher_s Handbook_ - Wilberg Peter.pdf
+src/assets/pdf/EnglishBooks/_Planning Lessons and Courses_ - Woodward Tessa.pdf
+src/assets/pdf/EnglishBooks/_Resourceful English Teacher - Complete Companion_ - Chandler Jon, Stone Mark.pdf
+src/assets/pdf/EnglishBooks/_Rules, Patterns and Words - Grammar and Lexis in English Language Teaching_ - Willis Dave.pdf
+src/assets/pdf/EnglishBooks/_Task-Based Language Teaching_ - Nunan David.pdf
+src/assets/pdf/EnglishBooks/_Teacher_s Guide to using Film and TV_ - Penguin Readers - Walker Carolyn.pdf
+src/assets/pdf/EnglishBooks/_Teacher_s Tools_.pdf
+src/assets/pdf/EnglishBooks/_Teaching English - Language Issues and Education Policies_ - Brumfit C. J..pdf
+src/assets/pdf/EnglishBooks/_Teaching English - Language Teacher Education_ - Bowers Roger.pdf
+src/assets/pdf/EnglishBooks/_Teaching English - Language Teacher Education_ - Bowers Roger2.pdf
+src/assets/pdf/EnglishBooks/_Teaching English - Language Teaching Projects for the Third World_ - Brumfit C. J..pdf
+src/assets/pdf/EnglishBooks/_Teaching English Pronunciation_ - Kenworty Joanne - Longman for Teachers.pdf
+src/assets/pdf/EnglishBooks/_Teaching for Student Learning - Becoming an Accomplished Teacher_ - Arends Richard I., Kilcher A.pdf
+src/assets/pdf/EnglishBooks/_Teaching for Student Learning - Becoming an Accomplished Teacher_ - Arends Richard I[1]., Kilche.pdf
+src/assets/pdf/EnglishBooks/_Teaching Listening_ - Brown Steven.pdf
+src/assets/pdf/EnglishBooks/_Teaching The Spoken Language_ - Brown Gillian, Yule George.PDF
+src/assets/pdf/EnglishBooks/_Teaching Through Play. Teacher_s Thinking and Classroom Practice_ - Bennett Neville, Wood Liz, R.pdf
+src/assets/pdf/EnglishBooks/_Teaching Through Play[1]. Teacher_s Thinking and Classroom Practice_ - Bennett Neville, Wood Liz.pdf
+src/assets/pdf/EnglishBooks/3Pavement Design And Materials Papagiannakis.pdf
+src/assets/pdf/EnglishBooks/4_Practical_English_Usage_3ed_-_Swan.pdf
+src/assets/pdf/EnglishBooks/19- English Collocation in Use - Advanced.pdf
+src/assets/pdf/EnglishBooks/501 Grammar and Writing Questions - Learning Express.pdf
+src/assets/pdf/EnglishBooks/1000 Quick Writing Ideas.pdf
+src/assets/pdf/EnglishBooks/1997 - Swan_ M._ Walter_ C. - How English Works_ a Grammar Practice Book with Answers - Oxford.pdf
+src/assets/pdf/EnglishBooks/0022448780Grammar and Writing Handbook G6.pdf
+src/assets/pdf/EnglishBooks/A Dictionary of English Folklore ABEE.pdf
+src/assets/pdf/EnglishBooks/Academic Vocabulary in use.pdf
+src/assets/pdf/EnglishBooks/Advanced Grammar in Use 2nd Edition.pdf
+src/assets/pdf/EnglishBooks/agv1.GOOD PAGE1.pdf
+src/assets/pdf/EnglishBooks/anguage Success Strategies - learn french accellerated accelerated learning.pdf
+src/assets/pdf/EnglishBooks/ANSWER - Cambridge ielts 1.PDF
+src/assets/pdf/EnglishBooks/ANSWER - Cambridge ielts 2.PDF
+src/assets/pdf/EnglishBooks/ANSWER - Cambridge IELTS 3.PDF
+src/assets/pdf/EnglishBooks/ANSWER - Cambridge ielts 5.PDF
+src/assets/pdf/EnglishBooks/ANSWER - Cambridge ielts 7.PDF
+src/assets/pdf/EnglishBooks/Answers to All TOEFL Essay Questions.pdf
+src/assets/pdf/EnglishBooks/Basic French.pdf
+src/assets/pdf/EnglishBooks/Basic French(1).pdf
+src/assets/pdf/EnglishBooks/Buiding_Grammar_Skills_for_TOEFL_IBT.pdf
+src/assets/pdf/EnglishBooks/Cam6 Answers.pdf
+src/assets/pdf/EnglishBooks/cam6-test1.pdf
+src/assets/pdf/EnglishBooks/cam6-test2.pdf
+src/assets/pdf/EnglishBooks/cam6-text3.pdf
+src/assets/pdf/EnglishBooks/cam6-text4.pdf
+src/assets/pdf/EnglishBooks/Cambridge Grammar For First Certificate.pdf
+src/assets/pdf/EnglishBooks/Cambridge ielts 1.pdf
+src/assets/pdf/EnglishBooks/Cambridge ielts 2 (in china).pdf
+src/assets/pdf/EnglishBooks/Cambridge ielts 2.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 3.pdf
+src/assets/pdf/EnglishBooks/Cambridge ielts 5.PDF
+src/assets/pdf/EnglishBooks/Cambridge ielts 7 .pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 8 (2010).pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 8_Test 1.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 8_Test 2.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 8_Test 3.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS 8_Test 4.pdf
+src/assets/pdf/EnglishBooks/cambridge ielts 9.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS4.01.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS4.02.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS4.03.pdf
+src/assets/pdf/EnglishBooks/Cambridge IELTS4.04.pdf
+src/assets/pdf/EnglishBooks/Cambridge University Press - English Vocabulary in Use Upper.pdf
+src/assets/pdf/EnglishBooks/Cambridge_IELTS_4[www.TopSage.com].pdf
+src/assets/pdf/EnglishBooks/Cambridge_IELTS_6[www.TopSage.com].pdf
+src/assets/pdf/EnglishBooks/Cambridge-English-Advanced-Grammar-in-Use.pdf
+src/assets/pdf/EnglishBooks/Cambridge.Preparation.for.the.TOEFL.Test.3rd.Edition.pdf
+src/assets/pdf/EnglishBooks/Check Your English Vocabulary for IELTS.pdf
+src/assets/pdf/EnglishBooks/Check Your Vocabulary for English For The IELTS Examination.pdf
+src/assets/pdf/EnglishBooks/Cognitive_Grammar-A_Basic_Introduction_0195331958.pdf
+src/assets/pdf/EnglishBooks/Collins Easy Learning French Grammar (gnv64).pdf
+src/assets/pdf/EnglishBooks/Countdown_To_French.pdf
+src/assets/pdf/EnglishBooks/Countdown_To_French(1).pdf
+src/assets/pdf/EnglishBooks/Creative Teaching English in the Early Years and Primary Classroom_184312260X.pdf
+src/assets/pdf/EnglishBooks/Drills.pdf
+src/assets/pdf/EnglishBooks/English Book - Basic Grammar in use Book 1.pdf
+src/assets/pdf/EnglishBooks/English Book - Oxford Practice Grammar With Answers.pdf
+src/assets/pdf/EnglishBooks/English Brainstormers_Ready-to-Use Games and Activities.pdf
+src/assets/pdf/EnglishBooks/English Experience Press Grammar Zappers (Kids).pdf
+src/assets/pdf/EnglishBooks/English Grammar - Teacher_s Guide.pdf
+src/assets/pdf/EnglishBooks/English Grammar Book - With Laughter - Exercises For Instant Lessons.pdf
+src/assets/pdf/EnglishBooks/English Grammar Drills, M[1]. Lester.pdf
+src/assets/pdf/EnglishBooks/English Grammar for ESL Learners.pdf
+src/assets/pdf/EnglishBooks/English Grammar In Use - Advanced.pdf
+src/assets/pdf/EnglishBooks/English Grammar in Use (intermediate)_ 3rd ed_ 2004_ Raymond Murphy.pdf
+src/assets/pdf/EnglishBooks/English Language Learning and Technology.pdf
+src/assets/pdf/EnglishBooks/English Learning - New Grammar Practice for pre-intermediate students (with key) - 2000 [Longman].pdf
+src/assets/pdf/EnglishBooks/English_Advanced_Grammer_Pratice.pdf
+src/assets/pdf/EnglishBooks/english_collocations_in_use.pdf
+src/assets/pdf/EnglishBooks/English_to_the_Max__1_200_Questions_That_Will_Maximize_Your_English_Power.pdf
+src/assets/pdf/EnglishBooks/English.Advanced.Vocabulary.and.Structure.Practice.pdf
+src/assets/pdf/EnglishBooks/English+Idioms+in+Use+Advanced+with+Answers.pdf
+src/assets/pdf/EnglishBooks/French For Dummies 2nd Edition.pdf
+src/assets/pdf/EnglishBooks/French_Grammer.pdf
+src/assets/pdf/EnglishBooks/French_Language_Course.pdf
+src/assets/pdf/EnglishBooks/Grammar in Use.pdf
+src/assets/pdf/EnglishBooks/Grammar Sense - Book 3 - Test.pdf
+src/assets/pdf/EnglishBooks/grammar_activities_1.pdf
+src/assets/pdf/EnglishBooks/Grammar_Success_in_20_Minutes_a_Day.pdf
+src/assets/pdf/EnglishBooks/GUIDE TO OPEN IELTS CAMBRIDGE 4 FULL EBOOK.pdf
+src/assets/pdf/EnglishBooks/GUIDE TO OPEN IELTS CAMBRIDGE 6 FULL EBOOK.pdf
+src/assets/pdf/EnglishBooks/How to teach a listening lesson -pdp-.pdf
+src/assets/pdf/EnglishBooks/how to teach.pdf
+src/assets/pdf/EnglishBooks/how to use corpora in language teaching.pdf
+src/assets/pdf/EnglishBooks/how_to_teach_english(2).pdf
+src/assets/pdf/EnglishBooks/How_to_Teach_Pronunciation.PDF
+src/assets/pdf/EnglishBooks/How-to-Teach-Vocabulary.pdf
+src/assets/pdf/EnglishBooks/Huong dan mo ebook co file ma hoa DIGITAL ID bang Adobe Reader 9.pdf
+src/assets/pdf/EnglishBooks/Huong dan mo ebook co file ma hoa DIGITAL ID bang Adobe Reader 9(1).pdf
+src/assets/pdf/EnglishBooks/ICT in teacher education.pdf
+src/assets/pdf/EnglishBooks/Idiot_s guide to learning french on your own(1).pdf
+src/assets/pdf/EnglishBooks/IELTS Advantage - Reading Skills.pdf
+src/assets/pdf/EnglishBooks/IELTS Advantage. Writing Skills.pdf
+src/assets/pdf/EnglishBooks/IH Sydney TESOL and English Jan 2010 Brochure.pdf
+src/assets/pdf/EnglishBooks/IMPROVING LEARNING IN SECONDARY ENGLISH.pdf
+src/assets/pdf/EnglishBooks/Incorporating intercultural communicative competence ELT.pdf
+src/assets/pdf/EnglishBooks/introducing english as an additional language.pdf
+src/assets/pdf/EnglishBooks/Just Enough English Grammar Illustrated.pdf
+src/assets/pdf/EnglishBooks/LANGUAGE CULTURE AND TEACHING.pdf
+src/assets/pdf/EnglishBooks/Language Curriculum Design.PDF
+src/assets/pdf/EnglishBooks/Language Learning- Natural English Reading and Writing Skills Resource Book -Elementary1.pdf
+src/assets/pdf/EnglishBooks/Learn To Speak English in 100 Days English Work book Great for Learning by www[1].itdunya.com.pdf
+src/assets/pdf/EnglishBooks/Learn_French.pdf
+src/assets/pdf/EnglishBooks/Learn_French(1).pdf
+src/assets/pdf/EnglishBooks/LEARNER AND TEACHER AUTONOMY concepts, realities, and responses  edited by Terry Lamb, Hayo Rein2.pdf
+src/assets/pdf/EnglishBooks/LEARNER AND TEACHER AUTONOMY concepts, realities, and responses  edited by Terry Lamb, Hayo Reind.pdf
+src/assets/pdf/EnglishBooks/learning_and_teaching_languages_through_content_9027219745.pdf
+src/assets/pdf/EnglishBooks/Learning-Envirnoment-for-Teacher-Education.pdf
+src/assets/pdf/EnglishBooks/learning-research-english-next.pdf
+src/assets/pdf/EnglishBooks/Lec 1 Glossary of ELT terms[1].pdf
+src/assets/pdf/EnglishBooks/lesson plan.pdf
+src/assets/pdf/EnglishBooks/Modern French Grammar - Workbook 2e (Routledge, 2004)BBS.pdf
+src/assets/pdf/EnglishBooks/Modern French Grammar 2e (Routledge, 2004)BBS.pdf
+src/assets/pdf/EnglishBooks/Motivating Language Learners.pdf
+src/assets/pdf/EnglishBooks/Motivating-Learners.pdf
+src/assets/pdf/EnglishBooks/Murphy English Grammar in Use - Intermediate.pdf
+src/assets/pdf/EnglishBooks/Natural English Teacher Training Pack.pdf
+src/assets/pdf/EnglishBooks/Nature as Teacher - New Principles in the Working of Nature .pdf
+src/assets/pdf/EnglishBooks/New Headway English Course - Advanced Teacher_s Book.pdf
+src/assets/pdf/EnglishBooks/New[1].Perspectives.On.Grammar.Teaching.In.Second.Language.Classrooms.pdf
+src/assets/pdf/EnglishBooks/Newspapers - Resource Books For Teachers.pdf
+src/assets/pdf/EnglishBooks/Oxford - Grammar Spectrum 2 Pre-Intermediate With Key.pdf
+src/assets/pdf/EnglishBooks/Oxford english grammar - Sentences and clauses.pdf
+src/assets/pdf/EnglishBooks/Oxford Take Off In French - Book.pdf
+src/assets/pdf/EnglishBooks/OXFORD_2004_Natural[1].Grammar.pdf
+src/assets/pdf/EnglishBooks/Oxford_Practice_Grammar_Advanced.pdf
+src/assets/pdf/EnglishBooks/Planning a Lesson Package2[1].pdf
+src/assets/pdf/EnglishBooks/Portfolio Management in Practice.pdf
+src/assets/pdf/EnglishBooks/Practise Your Grammar with Answer Key.pdf
+src/assets/pdf/EnglishBooks/Pragmatics, how people use language.pdf
+src/assets/pdf/EnglishBooks/Ready Made English, Beginner-Low Intermediate - Heinemann - English Teaching Resource.pdf
+src/assets/pdf/EnglishBooks/Recipes for tired teachers.pdf
+src/assets/pdf/EnglishBooks/Reduced Learning  to Listen Teacher_s book 3.pdf
+src/assets/pdf/EnglishBooks/Rich-Dad-Poor-Dad.pdf
+src/assets/pdf/EnglishBooks/Rich-Habits.pdf
+src/assets/pdf/EnglishBooks/SCRIPT LISTENING .pdf
+src/assets/pdf/EnglishBooks/SCRIPTS - Cambridge ielts 1.pdf
+src/assets/pdf/EnglishBooks/SCRIPTS - Cambridge ielts 2.PDF
+src/assets/pdf/EnglishBooks/SCRIPTS - Cambridge IELTS 3.PDF
+src/assets/pdf/EnglishBooks/SCRIPTS - Cambridge ielts 5.PDF
+src/assets/pdf/EnglishBooks/SCRIPTS - Cambridge ielts 7.PDF
+src/assets/pdf/EnglishBooks/SCRIPTS LISTENING .pdf
+src/assets/pdf/EnglishBooks/Situations for the English Language Teacher--Wagner and Larson.pdf
+src/assets/pdf/EnglishBooks/SOCIAL ACTIONS FOR CLASSROOM LANGUAGE LEARNING by John Hellermann.pdf
+src/assets/pdf/EnglishBooks/Solutions Intermediate Teacher_s book.pdf
+src/assets/pdf/EnglishBooks/State Teacher Policy Yearbook.pdf
+src/assets/pdf/EnglishBooks/t Knowledge in Second Language Learning, Testing and Teaching_ - Ellis Rod, Loewen Shawn, Elder C.pdf
+src/assets/pdf/EnglishBooks/TASK BASED LESSON PLAN.pdf
+src/assets/pdf/EnglishBooks/Teacher Leadership and Behaviour Management.pdf
+src/assets/pdf/EnglishBooks/Teachers - Enhancing Powerful Vocabulary - 4a ed.pdf
+src/assets/pdf/EnglishBooks/Teachers - Expanding Powerful Vocabulary - 3a ed.pdf
+src/assets/pdf/EnglishBooks/Teaching Academic Writing.pdf
+src/assets/pdf/EnglishBooks/TEACHING AND LEARNING Pedagogy, Curriculum and Culture by Alex Moore.pdf
+src/assets/pdf/EnglishBooks/Teaching Beginning Reading and Writing With the Picture Word Inductive Model.pdf
+src/assets/pdf/EnglishBooks/Teaching by Principles_0130282839.pdf
+src/assets/pdf/EnglishBooks/Teaching ENGLISH a re source for primary and seconday.pdf
+src/assets/pdf/EnglishBooks/Teaching English as a Foreign Language (Routledge Education Books).pdf
+src/assets/pdf/EnglishBooks/Teaching English in the Primary Classroom.pdf
+src/assets/pdf/EnglishBooks/teaching english in Turkey.pdf
+src/assets/pdf/EnglishBooks/Teaching English through English.pdf
+src/assets/pdf/EnglishBooks/Teaching English To Children.pdf
+src/assets/pdf/EnglishBooks/Teaching English.pdf
+src/assets/pdf/EnglishBooks/teaching english2.pdf
+src/assets/pdf/EnglishBooks/Teaching ESL-EFL reading and writing.pdf
+src/assets/pdf/EnglishBooks/Teaching language and literature in elementary classrooms.pdf
+src/assets/pdf/EnglishBooks/Teaching Large Multilevel Classes.pdf
+src/assets/pdf/EnglishBooks/teaching materials.pdf
+src/assets/pdf/EnglishBooks/Teaching Pronunciation a handbook for Teachers and Trainers.pdf
+src/assets/pdf/EnglishBooks/TEACHING READING by elizabeth s[1]. pang, et al.pdf
+src/assets/pdf/EnglishBooks/teaching reading by marianne celce-murcia.pdf
+src/assets/pdf/EnglishBooks/Teaching Resources - 95 Worksheets For English Lessons.pdf
+src/assets/pdf/EnglishBooks/Teaching Resources - Natural English - Pre-Intermediate Reading And Writing Skills Resource Book.pdf
+src/assets/pdf/EnglishBooks/Teaching Resources - Play Games With English 2.pdf
+src/assets/pdf/EnglishBooks/Teaching Resources - Ready Made English Multilevel Activities 1 - Heineman.pdf
+src/assets/pdf/EnglishBooks/teaching_language_as_communication__h[1].g._widdowson_.pdf
+src/assets/pdf/EnglishBooks/teaching_spoken_english.pdf
+src/assets/pdf/EnglishBooks/teaching-listening-and-speaking-from-theory-to-practice.pdf
+src/assets/pdf/EnglishBooks/Teaching[1].English.Intonation.pdf
+src/assets/pdf/EnglishBooks/Techniques and Principles in Language Teaching.pdf
+src/assets/pdf/EnglishBooks/Techniques and resources in Teaching grammar.pdf
+src/assets/pdf/EnglishBooks/Techniques And Resources In Teaching Reading.pdf
+src/assets/pdf/EnglishBooks/TEFL.pdf
+src/assets/pdf/EnglishBooks/TESOL-Journal-Teaching-Tips.pdf
+src/assets/pdf/EnglishBooks/Testing and Reducing L2 Vocabulary Learning Strategies Inventory.pdf
+src/assets/pdf/EnglishBooks/The Best Teacher Ms Bunton Low Res.pdf
+src/assets/pdf/EnglishBooks/The Blue Book of Grammar and Punctuation- An Easy-to-Use Guide with Clear Rules, Real-World .pdf
+src/assets/pdf/EnglishBooks/The Language and Reality of Time By Thomas Sattig.pdf
+src/assets/pdf/EnglishBooks/The neural simulation language - A system brain modeling.pdf
+src/assets/pdf/EnglishBooks/THE PRACTICE OF ENGLISH LANGUAGE TEACHING.pdf
+src/assets/pdf/EnglishBooks/The Status of the Teaching Profession.pdf
+src/assets/pdf/EnglishBooks/The_Skillful_Teacher.pdf
+src/assets/pdf/EnglishBooks/Think_and_Grow_Rich!.pdf
+src/assets/pdf/EnglishBooks/Tools-for-ESL-lesson-planning.pdf
+src/assets/pdf/EnglishBooks/Understanding Language Teaching.pdf
+src/assets/pdf/EnglishBooks/values in english language teaching.pdf
+src/assets/pdf/EnglishBooks/Vocabulary Throught Reading.pdf
+src/assets/pdf/EnglishBooks/Wasi_Idiomas_Communicative language teaching today_Jack C Richards.pdf
+src/assets/pdf/EnglishBooks/Williams-tha place of task in language classroom.pdf
+src/assets/pdf/EnglishBooks/WRITING SAMPLE .pdf
+src/assets/pdf/EnglishBooks/Young learners.pdf
+src/assets/pdf/EnglishBooks/yslexia in the Foreign Language Classroom_ - Nijakowska Joanna.pdf

@@ -1,0 +1,11 @@
+<!-- audio-recorder.component.html -->
+<div class="audio-recorder-container">
+  <!-- Container onde a forma de onda será renderizada -->
+  <div #mic class="waveform-container"></div>
+  <!-- Controles para a gravação -->
+  <div class="recording-controls">
+    <button mat-raised-button color="primary" (click)="startRecording()" [disabled]="isRecording">Iniciar Gravação</button>
+    <button mat-raised-button color="accent" (click)="pauseRecording()" [disabled]="!isRecording">Pausar</button>
+    <button mat-raised-button color="warn" (click)="stopRecording()" [disabled]="!isRecording">Parar Gravação</button>
+  </div>
+</div>

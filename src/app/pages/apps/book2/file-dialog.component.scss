@@ -1,0 +1,15 @@
+.centered-and-enlarged {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em; /* Ajuste o tamanho conforme necessário */
+}
+
+.mat-dialog-content {
+  overflow: hidden; // Prevent overflow on the main content area
+
+  // Target the inner content container
+  & > .mat-dialog-container {
+    overflow-y: hidden; // Specifically disable vertical scrolling
+  }
+}

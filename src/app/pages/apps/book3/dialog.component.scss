@@ -1,0 +1,135 @@
+::ng-deep .mat-dialog-container {
+  height: 100vh;
+  max-height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-dialog-content {
+  flex: 1;
+  overflow: auto;
+}
+
+.sentence-container {
+  display: flex;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  padding: 10px;
+}
+
+button {
+  flex: 1;
+}
+
+.highlighted-yellow {
+  line-height: 1.5;
+  background-color: hsla(0, 90%, 92%, 0.511);
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.highlighted-gray {
+  line-height: 1.5;
+  background-color: hsla(0, 90%, 92%, 0.511);
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.play-sound-button {
+  position: fixed;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
+  z-index: 1050;
+  width: 90px;
+  height: 90px;
+}
+
+.play-sound-button mat-icon {
+  font-size: 60px;
+  height: 60px;
+  width: 60px;
+}
+
+.play-sound-button2 {
+  width: 90px;
+  height: 90px;
+  margin-right: 20px;
+}
+
+.play-sound-button2 mat-icon {
+  font-size: 60px;
+  height: 60px;
+  width: 60px;
+}
+
+.waveform-container {
+  cursor: pointer;
+  width: 100%;
+  height: 10px;
+}
+
+.close-button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 1050;
+  width: 30px;
+  height: 30px;
+}
+
+.card {
+  position: relative;
+}
+
+/* Nova classe para a legenda */
+.legenda {
+  position: fixed;
+  bottom: 20px; /* Ajuste para adicionar espaçamento */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px; /* Aumentando o padding para mais espaço */
+  font-size: 24px; /* Aumentando o tamanho da fonte */
+  z-index: 1050;
+  width: 80%; /* Ajustando a largura para não ocupar toda a tela */
+  text-align: center;
+  border-radius: 10px; /* Adicionando bordas arredondadas */
+  margin-bottom: 20px; /* Adicionando espaçamento extra */
+}
+
+/* Classes para os estados dos botões */
+.clicked {
+  background-color: red !important;
+  color: white;
+}
+
+.button-enabled {
+  background-color: green;
+  color: white;
+}
+
+.button-disabled {
+  background-color: red;
+  color: white;
+}
+
+/* Estilização para o texto falado */
+.spoken-text {
+  font-size: 24px; /* Aumentando o tamanho da fonte do texto falado */
+  margin-top: 10px; /* Adicionando espaçamento entre o título e o texto falado */
+}
+
+/* Classe para a palavra destacada */
+.highlighted-word {
+  background-color: yellow;
+  font-weight: bold;
+}

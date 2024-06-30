@@ -1,0 +1,42 @@
+<mat-dialog-content>
+  <div class="container p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="loading-indicator" *ngIf="isLoading">
+      <mat-progress-spinner mode="indeterminate" color="warn"></mat-progress-spinner>
+      <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+      <mat-progress-bar mode="buffer" color="warn"></mat-progress-bar>
+      <mat-progress-bar mode="query" color="warn"></mat-progress-bar>
+    </div>
+    <div class="error-message" *ngIf="errorText">
+      <p>{{ errorText }}</p>
+    </div>
+  </div>
+
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>
+          <div class="flashcard" @fade>
+            <div class="word" *ngIf="!showTranslation">{{ words[currentWordIndex] }}</div>
+            <div class="translation" *ngIf="showTranslation">{{ translations[currentWordIndex] }}</div>
+          </div>
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <img mat-card-xl-image alt="img" src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+      </mat-card-title-group>
+    </mat-card-header>
+  </mat-card>
+</mat-dialog-content>
+
+<mat-card-actions>
+  <div class="flex">
+    <button class="meu-botao" (click)="showTranslationAndSpeak()" matTooltip="Dead" color="basic" mat-fab type="button">
+      <i class="fa fa-skull-crossbones" style="font-size: 30px;"></i>
+    </button>
+    <button class="meu-botao" (click)="showTranslationAndSpeak()" matTooltip="Done" color="warn" mat-fab type="button">
+      <i class="fa fa-heartbeat" style="font-size: 30px;"></i>
+    </button>
+    <button class="meu-botao" color="accent" matTooltip="{{ autoChangeEnabled ? 'Disable Automatic Switching' : 'Enable Automatic Switching' }}" mat-icon-button (click)="toggleAutoChange()">
+      <i class="fa" [ngClass]="autoChangeEnabled ? 'fa-bolt' : 'fa-angle-double-right'" style="font-size: 30px;"></i>
+    </button>
+  </div>
+</mat-card-actions>

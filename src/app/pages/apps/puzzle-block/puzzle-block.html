@@ -1,0 +1,67 @@
+<!-- inicio -->
+<mat-accordion>
+  <mat-expansion-panel #expansionPanel hideToggle [expanded]="isPanelExpanded">
+    <mat-expansion-panel-header>
+      <mat-panel-title matTooltip="AI">
+        AI
+      </mat-panel-title>
+      <i class="fas fa-microphone" style="font-size: 35px;" matTooltip="GPT-4o AI"></i>
+
+      <span class="material-symbols-outlined">
+        graphic_eq
+      </span>
+
+    </mat-expansion-panel-header>
+    <div class="example-box" cdkDrag>
+      <div class="puzzle-block-container">
+        <button matTooltip="Play" mat-fab [color]="isRecording ? 'warn' : 'primary'" (click)="toggleRecording()">
+          <!-- Ícone de Play -->
+          <mat-icon *ngIf="!isRecording" mat-icon-button svgIcon="mat:mic" (click)="toggleRecording()">
+            play_arrow
+          </mat-icon>
+          <span class="material-symbols-outlined">
+            graphic_eq
+          </span>
+          <!-- Ícone de Pause -->
+          <mat-icon *ngIf="isRecording" mat-icon-button svgIcon="mat:stop" (click)="toggleRecording()">
+            pause
+          </mat-icon>
+        </button>
+        <!--  <div #waveformPlay id="waveformPlay" class="waveformPlay"></div> -->
+        <label for="mic-select" matTooltip="You can choose between microphones">Mic:</label>
+        <select #micSelect id="mic-select" class="mic-selection" matTooltip="You can choose between microphones">
+        </select>
+      </div>
+    </div>
+    <div #mic id="mic" class="waveform-container"></div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!-- inicio -->
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title
+        matTooltip="WebRTC (Web Real-Time Communication) is an open-source technology that enables real-time audio, video, and data communication directly between web browsers or other compatible devices, without the need for additional plugins or software. A WebRTC chat is an application or feature that utilizes WebRTC technology to facilitate real-time communication through text messages, voice calls, or video calls, or a combination of these elements, all within the context of a web browser.">
+        Talk to Teacher
+      </mat-panel-title>
+      <i class="fas fa-user-tie" style="font-size: 35px;"
+        matTooltip="WebRTC (Web Real-Time Communication) is an open-source technology that enables real-time audio, video, and data communication directly between web browsers or other compatible devices, without the need for additional plugins or software. A WebRTC chat is an application or feature that utilizes WebRTC technology to facilitate real-time communication through text messages, voice calls, or video calls, or a combination of these elements, all within the context of a web browser."></i>
+      <i class="fas fa-user-astronaut" style="font-size: 35px;"
+        matTooltip="WebRTC (Web Real-Time Communication) is an open-source technology that enables real-time audio, video, and data communication directly between web browsers or other compatible devices, without the need for additional plugins or software. A WebRTC chat is an application or feature that utilizes WebRTC technology to facilitate real-time communication through text messages, voice calls, or video calls, or a combination of these elements, all within the context of a web browser."></i>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<!-- inicio -->
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title matTooltip="Word">
+        Word Game
+      </mat-panel-title>
+      <i class="fas fa-word" style="font-size: 35px;" matTooltip="Word"></i>
+    </mat-expansion-panel-header>
+    <word></word>
+  </mat-expansion-panel>
+</mat-accordion>

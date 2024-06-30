@@ -1,0 +1,101 @@
+$primary-color: #2121ef; // Azul para associações inverossímeis e textos de negrito
+$pronunciation-color: #77db45; // Laranja para a pronúncia
+$translation-color: #ed0707; // Verde para a tradução
+$english-color: #28c625; // Rosa para as palavras em inglês
+$error-color: #ff0000; // Vermelho para erro
+$correct-color: #77dd77; // Verde claro para correções corretas
+
+.game-container {
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .score-container {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px; // Adiciona a margem superior
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      margin: 0 5px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center; // Centro do texto horizontalmente
+      vertical-align: middle; // Centro do texto verticalmente
+      position: relative; // Necessário para posicionamento absoluto do ícone
+      overflow: hidden; // Para esconder partes do ícone fora da célula
+      cursor: pointer; // Mostrar que as células são clicáveis
+    }
+
+    th {
+      background-color: #dedbdb;
+    }
+
+    td.covered {
+      color: transparent; // Esconder o texto
+    }
+
+    td.unlikely-association {
+      color: $primary-color;
+      font-weight: bold;
+    }
+
+    td.pronunciation {
+      color: $pronunciation-color;
+      font-weight: bold;
+    }
+
+    td.translation,
+    td.association {
+      color: $translation-color;
+      font-weight: bold;
+      font-size: 18px; // Aumentar o tamanho da fonte para destacar
+    }
+
+    td.english {
+      color: $english-color;
+      font-weight: bold;
+    }
+
+    td.uncovered {
+      font-weight: bold;
+      font-size: 20px; // Aumentar o tamanho da fonte quando descoberto
+    }
+
+    td.error {
+      color: $error-color;
+      font-weight: bold;
+      position: relative;
+    }
+
+    td.correct {
+      background-color: $correct-color;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  }
+
+  .fa-heart {
+    margin-left: 10px;
+    color: red;
+  }
+}

@@ -1,0 +1,46 @@
+<div class="note-list">
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search by title" (input)="searchNotes()" />
+    
+    <button matTooltip="View Flashcard" (click)="openFlashcard()" type="button">
+      <span matTooltip="FlashCard" class="material-symbols-outlined centered-and-enlarged" style="font-size: 40px; color: rgb(255, 2, 2);">
+        self_improvement
+      </span>
+      FlashCard
+      <span class="material-symbols-outlined" style="font-size: 30px; color: rgb(254, 1, 1);">
+        skull
+        </span>
+    </button>
+
+  </div>
+  <div *ngIf="filteredNotes$ | async as notes; else loading">
+    <div *ngIf="notes.length > 0; else noNotes">
+      <div *ngFor="let note of notes">
+        <div class="note">
+          <!-- <h3><strong>Title:</strong>{{ note.title }}</h3> -->
+          <p><strong>Description:</strong>{{ note.description }}</p>
+          <p><strong>Answer:</strong> {{ note.answer }}</p>
+          <p><strong>Revision:</strong> {{ note.last_revision_date }}</p>
+<!--           <p><strong>Tags:</strong> {{ note.tags }}</p>
+          <p><strong>Creation Date:</strong> {{ note.created_at }}</p>
+          <p><strong>Permanent:</strong> {{ note.permanent }}</p> -->
+          <button matTooltip="Edit" disabled (click)="editNote(note)">
+            <i class="fas fa-edit" style="font-size: 25px;color: rgb(67, 218, 150);"></i> Edit
+          </button>
+          <button matTooltip="View" (click)="editNote(note)">
+            <i class="fas fa-view" style="font-size: 25px;color: rgb(67, 218, 150);"></i> View
+          </button>
+          <button matTooltip="Delete" (click)="deleteNote(note._id)">
+            <i class="fas fa-trash" style="font-size: 25px; color: rgb(241, 4, 4);" ></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noNotes>
+      <p>No notes found.</p>
+    </ng-template>
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+</div>

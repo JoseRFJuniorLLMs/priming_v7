@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Murilo Playlist Videos</title>
+    <style>
+        .video-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            overflow: auto;
+            max-height: 100vh; /* Limita a altura máxima para a viewport */
+            max-width: 100%;   /* Limita a largura máxima para a viewport */
+        }
+
+        .video-gallery iframe {
+            flex: 1 1 560px;
+            max-width: 560px;
+            height: 315px;
+        }
+    </style>
+</head>
+<body>
+    <div class="h-full flex flex-col">
+        <vex-secondary-toolbar class="flex-none shadow-none" current="WYSIWYG Editor">
+            <vex-breadcrumbs [crumbs]="['Apps', 'WYSIWYG Editor']"></vex-breadcrumbs>
+        </vex-secondary-toolbar>
+        <div class="video-gallery">
+            <!-- Iframes dos vídeos existentes -->
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/k89GF-i_Eyg" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/7VHcMWM5xGY" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/TJywSALVd4o" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/9lEdXumkQ0E" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Iy1k-zcQ0Ms" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/7KdMteEbx9U" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            
+          
+                 <iframe width="560" height="315" src="https://www.youtube.com/embed/POlIYcLDHxc?list=PLpbA2UOaRPjmcVXEIYLMjcU055REB86rU&index=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+           
+          </div>
+    </div>
+</body>
+</html>

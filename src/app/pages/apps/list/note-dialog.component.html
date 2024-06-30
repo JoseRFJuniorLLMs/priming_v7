@@ -1,0 +1,12 @@
+<!-- note-dialog.component.html -->
+<h1 mat-dialog-title>Note Details</h1>
+<div mat-dialog-content>
+  <p><strong>Title:</strong> {{data.title}}</p>
+  <p><strong>Description:</strong> {{data.description}}</p>
+  <p><strong>Tags:</strong> {{data.tags}}</p>
+  <p><strong>Creation Date:</strong> {{data.created_at}}</p>
+  <p><strong>Permanent:</strong> {{data.permanent}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()">Close</button>
+</div>

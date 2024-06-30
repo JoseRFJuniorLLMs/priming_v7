@@ -1,0 +1,112 @@
+<mat-card cdkDrag cdkDragHandle
+class="action flex-none" color="primary"
+id="barr01" mat-flat-button>
+
+<mat-card-actions align="end">
+  
+  <!-- Botão Play com ícone -->
+  <button (click)="processCurrentPageAudio()" mat-fab color="primary" aria-label="Play">
+    <mat-icon>play_arrow</mat-icon>
+  </button>
+
+  <!-- Botão Pausa com ícone -->
+  <button (click)="pauseAudio()" mat-fab color="warn" aria-label="Pause">
+    <mat-icon>pause</mat-icon>
+  </button>
+  
+<button mat-raised-button
+    matTooltip="Página Atual: {{currentPage}}">
+Página {{currentPage}} de {{totalPages}}
+</button>
+
+<mat-form-field appearance="fill" matTooltip="{{currentPage}}"
+mat-raised-button [matBadge]="currentPage">
+      <mat-label>Layout Options</mat-label>
+      <mat-select [(ngModel)]="selectedLayoutOption"
+      (selectionChange)="changeRenderOption($event.value)">
+        <mat-option disabled="true" value="default">Default</mat-option>
+        <mat-option disabled="false" value="continuous">Continuous</mat-option>
+        <mat-option disabled="true" value="paginated">Paginated</mat-option>
+        <mat-option disabled="true" value="auto">Auto</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button (click)="prevPage()" matTooltip="Previous Page"
+    class="config-panel-toggle4" color="primary" mat-fab type="button">
+      <mat-icon svgIcon="mat:arrow_back_ios"></mat-icon>
+    </button>
+    <button (click)="nextPage()" matTooltip="Next Page" class="config-panel-toggle4" color="primary" mat-fab type="button">
+      <mat-icon svgIcon="mat:arrow_forward_ios">Next Page</mat-icon>
+    </button>
+
+    <button (click)="zoomIn()" matTooltip="Zoom IN" class="config-panel-toggle4" color="primary" mat-fab type="button">
+      <mat-icon svgIcon="mat:zoom_in">Zoom IN</mat-icon>
+    </button>
+    <button (click)="zoomOut()" matTooltip="Zoom OUT" class="config-panel-toggle4" color="primary" mat-fab type="button">
+      <mat-icon svgIcon="mat:zoom_out">Zoom OUT</mat-icon>
+    </button>
+
+    <button (click)="countPages()" matTooltip="{{totalPages}}" [matBadge]="totalPages"
+    class="config-panel-toggle4" color="primary" mat-fab type="button">
+      <mat-icon svgIcon="mat:content_paste">Count Pages</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<!-- Container para o Waveform, com posicionamento relativo -->
+<div class="waveform-container">
+  <!-- Waveform -->
+  <div id="waveform" #waveform autoplay style="cursor: pointer;">
+  </div>
+
+  <!-- Tooltip -->
+  <div class="tooltip-meu-tooltip">
+    Tooltip content goes here
+  </div>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Bookstore
+      </mat-panel-title>
+      <mat-panel-description>
+
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+      <div class="ebook-gallery">
+        <div *ngFor="let ebook of ebooks" class="ebook-item" (click)="selectEbook(ebook)" matTooltip="{{ebook.title}} por {{ebook.author}} - {{ebook.pageCount}} páginas">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <mat-card-title-group>
+                <img alt="{{ebook.title}} cover" mat-card-xl-image [src]="ebook.cover" [alt]="ebook.title">
+                <mat-card-title>{{ ebook.title }}</mat-card-title>
+
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-card-subtitle>{{ ebook.author }}</mat-card-subtitle>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+          (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Book
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelOpenState ? 'Open' : 'Closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+      <div id="area-de-exibicao"></div>
+
+  </mat-expansion-panel>
+</mat-accordion>
+

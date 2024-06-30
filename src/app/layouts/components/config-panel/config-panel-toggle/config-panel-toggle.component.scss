@@ -1,0 +1,33 @@
+.config-panel-toggle {
+  z-index: 100;
+  @apply fixed bottom-6 right-6;
+}
+.config-panel-toggle2 {
+  z-index: 100;
+  @apply fixed bottom-6 right-24;
+}
+.config-panel-toggle3 {
+  z-index: 100;
+  @apply fixed bottom-6 right-44;
+}
+.config-panel-toggle4 {
+  z-index: 100;
+  @apply fixed bottom-6 right-64;
+}
+
+::ng-deep [dir="rtl"] .config-panel-toggle {
+  @apply left-6 right-auto;
+}
+
+
+.mat-icon.custom-icon {
+  font-size: 60px; // Ajuste o tamanho conforme necessário
+  height: 60px; // Ajuste a altura conforme necessário
+  width: 60px; // Ajuste a largura conforme necessário
+}
+
+.mat-icon.custom-icon-menu {
+  font-size: 40px; // Ajuste o tamanho conforme necessário
+  height: 40px; // Ajuste a altura conforme necessário
+  width: 40px; // Ajuste a largura conforme necessário
+}

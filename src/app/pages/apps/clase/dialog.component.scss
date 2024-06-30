@@ -1,0 +1,41 @@
+.centered-and-enlarged {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4em; /* Ajuste o tamanho conforme necessário */
+}
+
+.mat-dialog-content {
+  overflow: hidden; /* Prevent overflow on the main content area */
+
+  /* Target the inner content container */
+  & > .mat-dialog-container {
+    overflow-y: hidden; /* Specifically disable vertical scrolling */
+  }
+}
+
+.custom-button {
+  color: rgb(0, 0, 0); /* Cor preta para a letra */
+}
+
+.mat-dialog-actions button.custom-button:hover {
+  background-color: #FFD700; /* Laranja claro */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px; /* Ajuste conforme necessário */
+  right: 10px; /* Ajuste conforme necessário */
+  color: rgb(255, 0, 0); /* Cor branca para o texto */
+  border: none; /* Remove a borda */
+  padding: 10px; /* Ajuste conforme necessário */
+  cursor: pointer; /* Cursor pointer para indicar que é clicável */
+}
+
+.close-button:hover {
+  background-color: darkred; /* Vermelho escuro ao passar o mouse */
+}
+
+.mat-dialog-container {
+  position: relative; /* Para permitir o posicionamento absoluto do botão close */
+}

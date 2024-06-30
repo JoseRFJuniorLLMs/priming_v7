@@ -1,0 +1,150 @@
+.game-container {
+  text-align: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  width: 100vw; /* Largura total da tela */
+  height: 100vh; /* Altura total da tela */
+  padding: 20px;
+  color: white; /* Ensure text is readable over the background */
+}
+
+.game-container .fragment {
+  font-size: 8em;
+  margin: 20px 0;
+  z-index: 1;
+  position: relative;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.game-container .message {
+  font-size: 1.5em;
+  margin-top: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+.game-container button {
+  margin: 10px;
+  z-index: 1;
+  position: relative;
+}
+
+.game-container .waveform-container, .waveformPlay {
+  width: 100%;
+  height: 128px;
+  margin-top: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+.game-container .button-container {
+  margin-top: 80px; 
+  z-index: 1;
+  position: relative;
+}
+
+:host {
+  display: block;
+  padding: 8px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espaço aumentado para garantir espaçamento suficiente */
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Espaço ajustado */
+  position: relative; /* Alterado para relativo para evitar sobreposição */
+  width: 100%;
+  padding: 10px;
+}
+
+.mic {
+  border: 2px solid #2196f3;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+#waveformPlay {
+  width: 100%;
+  height: 128px;
+  margin-top: 20px; /* Espaço acima do waveform */
+  position: relative;
+  z-index: 1;
+}
+
+.message-text, .speak-text, .question-message, .answer-message, .error-message {
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%; /* Para expandir toda a largura da tela */
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto; /* Centralizar horizontalmente */
+  position: relative;
+  z-index: 1;
+}
+
+.question-message {
+  background-color: rgba(0, 0, 0, 0.5); /* Mais transparente */
+  color: white;
+  font-size: 40px;
+}
+
+.answer-message {
+  background-color: rgba(15, 207, 236, 0.5); /* Mais transparente */
+  color: white;
+  font-size: 30px;
+}
+
+.error-message {
+  background-color: rgba(253, 95, 95, 0.8); /* Cor original e opacidade */
+  color: white;
+  font-size: 40px; /* Tamanho original */
+  position: fixed;
+  bottom: 60px; /* Ajustado para a parte inferior da tela */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+.question-container,
+.answer-container {
+  display: flex;
+  flex-direction: column; /* Ajustado para coluna para centralizar verticalmente */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.next-button-container {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end; /* Alinha o botão à direita */
+  width: 100%;
+  padding: 20px;
+}

@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Results</h2>
+<div mat-dialog-content class="full-height">
+  <label for="voices">Select Voice:
+    <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
+      voice_chat
+    </span>
+  </label>
+  <select id="voices" (change)="onVoiceChange($event)">
+    <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
+  </select>
+
+  <table>
+    <tr *ngFor="let sentence of sentences; let i = index">
+      <td>
+        <button 
+          (click)="togglePlaySentence(i)" 
+          matTooltip="Play Sentence">
+          <span class="material-symbols-outlined" 
+                [style.color]="playClicked[i] ? 'rgb(255, 69, 0)' : 'rgb(144, 238, 144)'" 
+                [style.fontSize]="'50px'">
+            {{ playClicked[i] ? 'stop_circle' : 'play_circle' }}
+          </span>
+        </button>
+      </td>
+      <td [innerHTML]="highlightWords(sentence, i)"></td>
+      <td>
+        <button 
+          matTooltip="Speak Sentence" 
+          (click)="speakSentence(i)" 
+          [disabled]="canSpeak && currentSentenceIndex === i ? false : true">
+          <span class="material-symbols-outlined" 
+                [style.color]="speakClicked[i] ? 'rgb(255, 69, 0)' : 'rgb(50, 205, 50)'" 
+                [style.fontSize]="'50px'">
+            {{ speakClicked[i] ? 'mic_off' : 'mic' }}
+          </span>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="legenda" *ngIf="spokenText">
+  <h3>Spoken Text:</h3>
+  <p class="spoken-text" [innerHTML]="spokenText"></p>
+</div>
+
+<button mat-icon-button matTooltip="Close" class="close-button" color="warn" type="button" (click)="onClose()">
+  <mat-icon svgIcon="mat:close"></mat-icon>
+</button>

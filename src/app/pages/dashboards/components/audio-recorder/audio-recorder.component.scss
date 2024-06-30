@@ -1,0 +1,21 @@
+/* audio-recorder.component.scss */
+.audio-recorder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.waveform-container {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 150px; /* ou a altura que você preferir */
+  margin-top: 20px;
+}
+
+.recording-controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}

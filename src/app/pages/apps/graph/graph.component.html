@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="network-container" #network></div>
+  <div class="settings-panel" [class.minimized]="isMinimized">
+    <button class="toggle-button" (click)="toggleSettings()">⚙️</button>
+    <div class="settings-content" *ngIf="!isMinimized">
+      <h3>== Edges ==</h3>
+      <div>
+        <label>
+          <strong>Smooth:</strong>
+          <input type="checkbox" [(ngModel)]="edgesOptions.smooth.enabled" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Type:</strong>
+          <select [(ngModel)]="edgesOptions.smooth.type" (change)="updateOptions()">
+            <option value="dynamic">Dynamic</option>
+            <option value="continuous">Continuous</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Force Direction:</strong>
+          <select [(ngModel)]="edgesOptions.smooth.forceDirection" (change)="updateOptions()">
+            <option value="none">None</option>
+            <option value="horizontal">Horizontal</option>
+            <option value="vertical">Vertical</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Roundness:</strong>
+          <input type="range" min="0" max="1" step="0.1" [(ngModel)]="edgesOptions.smooth.roundness" (change)="updateOptions()">
+        </label>
+      </div>
+
+      <h3>=== Physics ===</h3>
+      <div>
+        <label>
+          <strong>Enabled:</strong>
+          <input type="checkbox" [(ngModel)]="physicsOptions.enabled" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Theta:</strong>
+          <input type="range" min="0" max="1" step="0.1" [(ngModel)]="physicsOptions.barnesHut.theta" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Gravitational Constant:</strong>
+          <input type="range" min="-20000" max="0" step="100" [(ngModel)]="physicsOptions.barnesHut.gravitationalConstant" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Central Gravity:</strong>
+          <input type="range" min="0" max="1" step="0.1" [(ngModel)]="physicsOptions.barnesHut.centralGravity" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Spring Length:</strong>
+          <input type="range" min="0" max="200" step="1" [(ngModel)]="physicsOptions.barnesHut.springLength" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Spring Constant:</strong>
+          <input type="range" min="0" max="1" step="0.01" [(ngModel)]="physicsOptions.barnesHut.springConstant" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Damping:</strong>
+          <input type="range" min="0" max="1" step="0.01" [(ngModel)]="physicsOptions.barnesHut.damping" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Avoid Overlap:</strong>
+          <input type="range" min="0" max="1" step="0.1" [(ngModel)]="physicsOptions.barnesHut.avoidOverlap" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Max Velocity:</strong>
+          <input type="range" min="0" max="100" step="1" [(ngModel)]="physicsOptions.maxVelocity" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Min Velocity:</strong>
+          <input type="range" min="0" max="10" step="0.1" [(ngModel)]="physicsOptions.minVelocity" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Solver:</strong>
+          <select [(ngModel)]="physicsOptions.solver" (change)="updateOptions()">
+            <option value="barnesHut">BarnesHut</option>
+            <option value="repulsion">Repulsion</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Timestep:</strong>
+          <input type="range" min="0" max="1" step="0.01" [(ngModel)]="physicsOptions.timestep" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Wind X:</strong>
+          <input type="range" min="-10" max="10" step="1" [(ngModel)]="windOptions.x" (change)="updateOptions()">
+        </label>
+      </div>
+      <div>
+        <label>
+          <strong>Wind Y:</strong>
+          <input type="range" min="-10" max="10" step="1" [(ngModel)]="windOptions.y" (change)="updateOptions()">
+        </label>
+      </div>
+      <button (click)="generateOptions()">Generate Options</button>
+    </div>
+  </div>
+</div>
+
+

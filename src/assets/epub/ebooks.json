@@ -1,0 +1,572 @@
+[
+  {
+    "title": "Thus Spake Zarathustra",
+    "path": "../../assets/epub/Thus_Spake_Zarathustra.epub",
+    "cover": "../../assets/epub/cover/Thus_Spake_Zarathustra.png"
+  },
+  {
+    "title": "Beelzebub's Tales to His Grands",
+    "path": "../../assets/epub/Beelzebub's Tales to His Grands - Gurdjieff.epub",
+    "cover": "../../assets/epub/cover/Beelzebub's Tales to His Grands.png"
+  },
+  {
+    "title": "In Search Of The Miraculous",
+    "path": "../../assets/epub/In_Search_Of_The_Miraculous.epub",
+    "cover": "../../assets/epub/cover/In_Search_Of_The_Miraculous.png"
+  },
+  {
+    "title": "In Search of Being",
+    "path": "../../assets/epub/In_Search_of_Being_-_G_I_Gurdjieff.epub",
+    "cover": "../../assets/epub/cover/In_Search_of_Being_-_G_I_Gurdjieff.png"
+  },
+  {
+    "title": "The Book of Mirdad",
+    "path": "../../assets/epub/The_Book_of_Mirdad.epub",
+    "cover": "../../assets/epub/cover/The_Book_of_Mirdad.png"
+  },
+  {
+    "title": "Tertium Organum",
+    "path": "../../assets/epub/tertium.epub",
+    "cover": "../../assets/epub/cover/tertium.png"
+  },
+  {
+    "title": "Saladin",
+    "path": "../../assets/epub/Saladin-Nina_Prentice.epub",
+    "cover": "../../assets/epub/cover/Saladin-Nina_Prentice.png"
+  },
+  {
+    "title": "The Subtle Art of Not Giving",
+    "path": "../../assets/epub/The Subtle Art of Not Giving a - Mark Manson.epub",
+    "cover": "../../assets/epub/cover/Giving.png"
+  },
+  {
+    "title": "Peter Pan",
+    "path": "../../assets/epub/Peter_Pan-J_M_Barrie.epub",
+    "cover": "../../assets/epub/cover/pan.png"
+  },
+  {
+    "title": "The Art of Witty Banter",
+    "path": "../../assets/epub/The-Art-of-Witty-Banter-Be-Clever-Be-Quick-Be-Interesting-Create-Captivatin.epub",
+    "cover": "../../assets/epub/cover/art.png"
+  },
+  {
+    "title": "Mindfulness Is Better Than Chocolate",
+    "path": "../../assets/epub/Mindfulness Is Better Than Chocolate - David Michie.epub",
+    "cover": "../../assets/epub/cover/MindfulnessChocolate.png"
+  },
+  {
+    "title": "Thinking Fastand Slow",
+    "path": "../../assets/epub/ThinkingFastandSlow.epub",
+    "cover": "../../assets/epub/cover/ThinkingFastandSlow.png"
+  },
+  {
+    "title": "The Surpisingly Simple",
+    "path": "../../assets/epub/The Surpisingly Simple Truth Behind Extr - Gary Keller.epub",
+    "cover": "../../assets/epub/cover/Simple.png"
+  },
+  {
+    "title": "WDKU",
+    "path": "../../assets/epub/WDKU.epub",
+    "cover": "../../assets/epub/cover/WDKU.png"
+  },
+  {
+    "title": "The Nightingale",
+    "path": "../../assets/epub/The_Nightingale-Hans_Andersen.epub",
+    "cover": "../../assets/epub/cover/Nightingale.png"
+  },
+  {
+    "title": "Tune",
+    "path": "../../assets/epub/Tune.epub",
+    "cover": "../../assets/epub/cover/Tune.png"
+  },
+  {
+    "title": "Think and Grow Rich",
+    "path": "../../assets/epub/Think and Grow Rich!.epub",
+    "cover": "../../assets/epub/cover/ThinkGrow.png"
+  },
+  {
+    "title": "The Invisible Man",
+    "path": "../../assets/epub/The_Invisible_Man-H_G_Wells.epub",
+    "cover": "../../assets/epub/cover/Invisible.png"
+  },
+  {
+    "title": "Time Machine",
+    "path": "../../assets/epub/Time_Machine-H_G_Wells.epub",
+    "cover": "../../assets/epub/cover/TimeMachine.png"
+  },
+  {
+    "title": "The Power of Now",
+    "path": "../../assets/epub/the_power_of_now.epub",
+    "cover": "../../assets/epub/cover/the_power_of_now.png"
+  },
+  {
+    "title": "Metamorphosis",
+    "path": "../../assets/epub/meta.epub",
+    "cover": "../../assets/epub/cover/meta.png"
+  },
+  {
+    "title": "The Worry Trick",
+    "path": "../../assets/epub/The Worry Trick_ How Your Brain Tricks You - David A Carbonell.epub",
+    "cover": "../../assets/epub/cover/Worry.png"
+  },
+  {
+    "title": "The Trial",
+    "path": "../../assets/epub/Process.epub",
+    "cover": "../../assets/epub/cover/Process.png"
+  },
+  {
+    "title": "Amazing Memory",
+    "path": "../../assets/epub/men.epub",
+    "cover": "../../assets/epub/cover/men.png"
+  },
+  {
+    "title": "Unlocking Greatness",
+    "path": "../../assets/epub/Unlocking.epub",
+    "cover": "../../assets/epub/cover/Unlocking.png"
+  },
+  {
+    "title": "This Messy Magnificent Life",
+    "path": "../../assets/epub/Messy.epub",
+    "cover": "../../assets/epub/cover/Messy.png"
+  },
+  {
+    "title": "Arquipélago Gulag",
+    "path": "../../assets/epub/gular.epub",
+    "cover": "../../assets/epub/cover/gulag.png"
+  },
+  {
+    "title": "The Hero with a Thousand Faces",
+    "path": "../../assets/epub/face.epub",
+    "cover": "../../assets/epub/cover/face.png"
+  },
+  {
+    "title": "The Selfish Gene",
+    "path": "../../assets/epub/TheSelfishGene.epub",
+    "cover": "../../assets/epub/cover/TheSelfishGene.png"
+  },
+  {
+    "title": "The Harmonious Circle",
+    "path": "../../assets/epub/cicle.epub",
+    "cover": "../../assets/epub/cover/cicle.png"
+  },
+  {
+    "title": "Genius",
+    "path": "../../assets/epub/pia.epub",
+    "cover": "../../assets/epub/cover/pia.png"
+  },
+  {
+    "title": "Brave New World",
+    "path": "../../assets/epub/Brave_New_World.epub",
+    "cover": "../../assets/epub/cover/Brave_New_World.png"
+  },
+  {
+    "title": "Little Man",
+    "path": "../../assets/epub/Reich.epub",
+    "cover": "../../assets/epub/cover/Reich.png"
+  },
+  {
+    "title": "India",
+    "path": "../../assets/epub/india.epub",
+    "cover": "../../assets/epub/cover/india.png"
+  },
+  {
+    "title": "Science Delusion",
+    "path": "../../assets/epub/science_delusion.epub",
+    "cover": "../../assets/epub/cover/science_delusion.png"
+  },
+  {
+    "title": "Zen",
+    "path": "../../assets/epub/zen.epub",
+    "cover": "../../assets/epub/cover/zen.png"
+  },
+  {
+    "title": "The Importance Of Living",
+    "path": "../../assets/epub/Living.epub",
+    "cover": "../../assets/epub/cover/Living.png"
+  },
+  {
+    "title": "Darkness at Noon",
+    "path": "../../assets/epub/noon.epub",
+    "cover": "../../assets/epub/cover/noon.png"
+  },
+  {
+    "title": "The God Delusion",
+    "path": "../../assets/epub/TheGodDelusion.epub",
+    "cover": "../../assets/epub/cover/TheGodDelusion.png"
+  },
+  {
+    "title": "The Greatest Show on Earth",
+    "path": "../../assets/epub/The_Greatest_Show_on_Earth.epub",
+    "cover": "../../assets/epub/cover/The_Greatest_Show_on_Earth.png"
+  },
+  {
+    "title": "TWaiting for Godot",
+    "path": "../../assets/epub/godot.epub",
+    "cover": "../../assets/epub/cover/godot.png"
+  },
+  {
+    "title": "The Brothers Karamazov",
+    "path": "../../assets/epub/karamazov.epub",
+    "cover": "../../assets/epub/cover/karamazov.png"
+  },
+  {
+    "title": "The Cherry Orchard",
+    "path": "../../assets/epub/The_Cherry_Orchard.epub",
+    "cover": "../../assets/epub/cover/The_Cherry_Orchard.png"
+  },
+  {
+    "title": "The Tibetan Book",
+    "path": "../../assets/epub/tibet.epub",
+    "cover": "../../assets/epub/cover/tibet.png"
+  },
+  {
+    "title": "The Biology of Belief",
+    "path": "../../assets/epub/The_Biology_of_Belief.epub",
+    "cover": "../../assets/epub/cover/The_Biology_of_Belief.png"
+  },
+  {
+    "title": "Subliminal",
+    "path": "../../assets/epub/Subliminal.epub",
+    "cover": "../../assets/epub/cover/Subliminal.png"
+  },
+  {
+    "title": "Coraline",
+    "path": "../../assets/epub/Coraline_-_Neil_Gaiman.epub",
+    "cover": "../../assets/epub/cover/Coraline_-_Neil_Gaiman.png"
+  },
+  {
+    "title": "2084",
+    "path": "../../assets/epub/2084.epub",
+    "cover": "../../assets/epub/cover/2084.png"
+  },
+  {
+    "title": "The Reasonable Robot",
+    "path": "../../assets/epub/The_Reasonable_Robot.epub",
+    "cover": "../../assets/epub/cover/The_Reasonable_Robot.png"
+  },
+  {
+    "title": "Transcendent Brain Spirituality",
+    "path": "../../assets/epub/The_Transcendent_Brain_Spirituality_in_the_Age_of_Science_Alan_Lightman.epub",
+    "cover": "../../assets/epub/cover/Transcendent_Brain_Spirituality.png"
+  },
+  {
+    "title": "A World Without Work",
+    "path": "../../assets/epub/A_World_Without_Work.epub",
+    "cover": "../../assets/epub/cover/A_World_Without_Work.png"
+  },
+  {
+    "title": "How to Create a Mind",
+    "path": "../../assets/epub/How_to_Create_a_Mind.epub",
+    "cover": "../../assets/epub/cover/How_to_Create_a_Mind.png"
+  },
+  {
+    "title": "The Reality Game",
+    "path": "../../assets/epub/The_Reality_Game.epub",
+    "cover": "../../assets/epub/cover/The_Reality_Game.png"
+  },
+  {
+    "title": "Girl Decoded",
+    "path": "../../assets/epub/Girl_Decoded.epub",
+    "cover": "../../assets/epub/cover/Girl_Decoded.png"
+  },
+  {
+    "title": "The Powerof Habit",
+    "path": "../../assets/epub/Charles_Duhigg_The_Power_of_Habit_Why_We_Do_Wha_z-lib_org.epub",
+    "cover": "../../assets/epub/cover/Power_of_Habit.png"
+  },
+  {
+    "title": "Smarter_Faster_Better",
+    "path": "../../assets/epub/Charles_Duhigg_Smarter_Faster_Better_The_Secret.epub",
+    "cover": "../../assets/epub/cover/Charles_Duhigg_Smarter_Faster_Better_The_Secret.png"
+  },
+  {
+    "title": "The_Singularity_Is_Near",
+    "path": "../../assets/epub/The_Singularity_Is_Near.epub",
+    "cover": "../../assets/epub/cover/The_Singularity_Is_Near.png"
+  },
+  {
+    "title": "Age Of Spiritual Machines",
+    "path": "../../assets/epub/Age_Of_Spiritual_Machines.epub",
+    "cover": "../../assets/epub/cover/Age_Of_Spiritual_Machines.png"
+  },
+  {
+    "title": "AI In Health",
+    "path": "../../assts/epub/AI_In_Health.epub",
+    "cover": "../../assets/epub/cover/AI_In_Health.png"
+  },
+  {
+    "title": "Word",
+    "path": "../../assets/epub/Work.epub",
+    "cover": "../../assets/epub/cover/work.png"
+  },
+  {
+    "title": "The Age of the Machine",
+    "path": "../../assets/epub/the_Machine.epub",
+    "cover": "../../assets/epub/cover/how_to_machine.png"
+  },
+  {
+    "title": "How to Stay Alive",
+    "path": "../../assets/epub/How_to_Stay_Alive_ The Ultimate.epub",
+    "cover": "../../assets/epub/cover/The_Ultimate_Bear_Grylls.png"
+  },
+  {
+    "title": "The Little Price",
+    "path": "../../assets/epub/TheLittlePrince.epub",
+    "cover": "../../assets/epub/cover/TheLittlePrince.png"
+  },
+  {
+    "title": "The Secret Garden",
+    "path": "../../assets/epub/TheSecretGarden.epub",
+    "cover": "../../assets/epub/cover/TheSecretGarden.png"
+  },
+  {
+    "title": "Dom Quixote",
+    "path": "../../assets/epub/DomQuixote.epub",
+    "cover": "../../assets/epub/cover/domquixote.png"
+  },
+  {
+    "title": "War and Peace",
+    "path": "../../assets/epub/WarandPeace.epub",
+    "cover": "../../assets/epub/cover/WarandPeace.png"
+  },
+  {
+    "title": "Pride and Prejudice",
+    "path": "../../assets/epub/PrideandPrejudice.epub",
+    "cover": "../../assets/epub/cover/PrideandPrejudice.png"
+  },
+  {
+    "title": "The Divine Comedy",
+    "path": "../../assets/epub/TheDivineComedy.epub",
+    "cover": "../../assets/epub/cover/TheDivineComedy.png"
+  },
+  {
+    "title": "The Great Gatsby",
+    "path": "../../assets/epub/TheGreatGatsby.epub",
+    "cover": "../../assets/epub/cover/TheGreatGatsby.png"
+  },
+  {
+    "title": "Moby Dick",
+    "path": "../../assets/epub/MobyDick.epub",
+    "cover": "../../assets/epub/cover/MobyDick.png"
+  },
+  {
+    "title": "Hamlet",
+    "path": "../../assets/epub/Hamlet.epub",
+    "cover": "../../assets/epub/cover/Hamlet.png"
+  },
+  {
+    "title": "1984",
+    "path": "../../assets/epub/1984.epub",
+    "cover": "../../assets/epub/cover/1984.png"
+  },
+  {
+    "title": "Crime and Punishment",
+    "path": "../../assets/epub/CrimeandPunishment.epub",
+    "cover": "../../assets/epub/cover/CrimeandPunishment.png"
+  },
+  {
+    "title": "The Coming Wave",
+    "path": "../../assets/epub/The_Coming_Wave_-_Mustafa_Suleyman_Michael_Bhaska.epub",
+    "cover": "../../assets/epub/cover/The_Coming_Wave_-_Mustafa_Suleyman_Michael_Bhaska.png"
+  },
+  {
+    "title": "A Monk's Guide",
+    "path": "../../assets/epub/A Monk's Guide to a Clean House and Mind - Shoukei Matsumoto.epub",
+    "cover": "../../assets/epub/cover/A Monk's Guide to a Clean House and Mind - Shoukei Matsumoto.png"
+  },
+  {
+    "title": "Thinking",
+    "path": "../../assets/epub/A Practical Guide to Critical Thinking - Greg R. Haskins.epub",
+    "cover": "../../assets/epub/cover/A Practical Guide to Critical Thinking - Greg R. Haskins.png"
+  },
+  {
+    "title": "Achieve Anything",
+    "path": "../../assets/epub/Achieve Anything In Just One Year.epub",
+    "cover": "../../assets/epub/cover/Achieve Anything In Just One Year.png"
+  },
+  {
+    "title": "Bloom Paul",
+    "path": "../../assets/epub/against_empathy_bloom_paul.epub",
+    "cover": "../../assets/epub/cover/against_empathy_bloom_paul.png"
+  },
+  {
+    "title": "Aladdin",
+    "path": "../../assets/epub/Aladdin-Ruth_Hobart.epub",
+    "cover": "../../assets/epub/cover/Aladdin-Ruth_Hobart.png"
+  },
+  {
+    "title": "Alice",
+    "path": "../../assets/epub/Alice.epub",
+    "cover": "../../assets/epub/cover/Alice.png"
+  },
+  {
+    "title": "Amy Alkon",
+    "path": "../../assets/epub/Amy Alkon - Unf_ckology.epub",
+    "cover": "../../assets/epub/cover/Amy Alkon - Unf_ckology.png"
+  },
+  {
+    "title": "As A Dog Thinketh",
+    "path": "../../assets/epub/As A Dog Thinketh - Monique Anstee.epub",
+    "cover": "../../assets/epub/cover/As A Dog Thinketh - Monique Anstee.png"
+  },
+  {
+    "title": "Awareness Games",
+    "path": "../../assets/epub/Awareness Games_ Playing with Y - O'Connor, Brian Tom.epub",
+    "cover": "../../assets/epub/cover/Awareness Games_ Playing with Y - O'Connor, Brian Tom.png"
+  },
+  {
+    "title": "Black Hat Python",
+    "path": "../../assets/epub/Black Hat Python_ Python Programming for Hackers and Pentesters.epub",
+    "cover": "../../assets/epub/cover/Black Hat Python_ Python Programming for Hackers and Pentesters.png"
+  },
+  {
+    "title": "Book of Mistakes",
+    "path": "../../assets/epub/Book of Mistakes_ 9 Secrets to Creating a Successful Future, The - Skip Prichard.epub",
+    "cover": "../../assets/epub/cover/Book of Mistakes_ 9 Secrets to Creating a Successful Future, The - Skip Prichard.png"
+  },
+  {
+    "title": "Brain Hacks",
+    "path": "../../assets/epub/Brain Hacks_ 200_ Ways to Boost Your Brain - Adams Media.epub",
+    "cover": "../../assets/epub/cover/Brain Hacks_ 200_ Ways to Boost Your Brain - Adams Media.png"
+  },
+  {
+    "title": "Bryan Caplan",
+    "path": "../../assets/epub/Bryan Caplan - Selfish Reasons to Have More Kids.epub",
+    "cover": "../../assets/epub/cover/Bryan Caplan - Selfish Reasons to Have More Kids.png"
+  },
+  {
+    "title": "Cinderella",
+    "path": "../../assets/epub/Cinderella-Ruth_Hobart.epub",
+    "cover": "../../assets/epub/cover/Cinderella-Ruth_Hobart.png"
+  },
+  {
+    "title": "Developing",
+    "path": "../../assets/epub/Developing Unrelenting Drive, Dedication, and Determination.epub",
+    "cover": "../../assets/epub/cover/Developing Unrelenting Drive, Dedication, and Determination.png"
+  },
+  {
+    "title": "Dont..Scientist",
+    "path": "../../assets/epub/Dont Be Such a Scientist - Dr. Randy Olson.epub",
+    "cover": "../../assets/epub/cover/Dont Be Such a Scientist - Dr. Randy Olson.png"
+  },
+  {
+    "title": "Easy Money",
+    "path": "../../assets/epub/Easy Money - gail vaz-oxlade.epub",
+    "cover": "../../assets/epub/cover/Easy Money - gail vaz-oxlade.png"
+  },
+  {
+    "title": "Emotional Intelligence",
+    "path": "../../assets/epub/Emotional Intelligence 2.0 - Travis Bradberry.epub",
+    "cover": "../../assets/epub/cover/Emotional Intelligence 2.0 - Travis Bradberry.png"
+  },
+  {
+    "title": "Emotional Success",
+    "path": "../../assets/epub/Emotional_Success_by_David_DeSteno.epub",
+    "cover": "../../assets/epub/cover/Emotional_Success_by_David_DeSteno.png"
+  },
+  {
+    "title": "Everybody Lies 2017",
+    "path": "../../assets/epub/Everybody.Lies.2017.epub",
+    "cover": "../../assets/epub/cover/Everybody.Lies.2017.png"
+  },
+  {
+    "title": "Freakonomics",
+    "path": "../../assets/epub/Freakonomics_ A Rogue Economist Explores - Steven D. Levitt; Stephen J. Dubner.epub",
+    "cover": "../../assets/epub/cover/Freakonomics_ A Rogue Economist Explores - Steven D. Levitt; Stephen J. Dubner.png"
+  },
+  {
+    "title": "Gabriella Coleman",
+    "path": "../../assets/epub/Gabriella Coleman - Hacker, Hoaxer, Whistleblower, Spy- The Many Faces of Anonymous (retail) (epub).epub",
+    "cover": "../../assets/epub/cover/Gabriella Coleman - Hacker, Hoaxer, Whistleblower, Spy- The Many Faces of Anonymous.png"
+  },
+  {
+    "title": "Ghost in the Wires",
+    "path": "../../assets/epub/Ghost_in_the_Wires_-_Kevin_Mitnick_&_Steve_Wozniak_&_William_L._Simon.epub",
+    "cover": "../../assets/epub/cover/Ghost_in_the_Wires_-_Kevin_Mitnick_&_Steve_Wozniak_&_William_L._Simon.png"
+  },
+  {
+    "title": "Happy..Healthy",
+    "path": "../../assets/epub/Happy Is the New Healthy_ 31 Wa - Dave Romanelli.epub",
+    "cover": "../../assets/epub/cover/Happy Is the New Healthy_ 31 Wa - Dave Romanelli.png"
+  },
+  {
+    "title": "How to analyze",
+    "path": "../../assets/epub/how to analyze people at first sight.epub",
+    "cover": "../../assets/epub/cover/how to analyze people at first sight.png"
+  },
+  {
+    "title": "How to Keep People",
+    "path": "../../assets/epub/How to Keep People From Pushing - Albert Ellis.epub",
+    "cover": "../../assets/epub/cover/How to Keep People From Pushing - Albert Ellis.png"
+  },
+  {
+    "title": "How to Listen",
+    "path": "../../assets/epub/How to Listen So People Will Ta - Becky Harling.epub",
+    "cover": "../../assets/epub/cover/How to Listen So People Will Ta - Becky Harling.png"
+  },
+  {
+    "title": "Against Empathy",
+    "path": "../../assets/epub/against_empathy_bloom_paul.epub",
+    "cover": "../../assets/epub/cover/against_empathy_bloom_paul.png"
+  },
+  {
+    "title": "Book of Mistakes",
+    "path": "../../assets/epub/Book of Mistakes_ 9 Secrets to Creating a Successful Future, The - Skip Prichard.epub",
+    "cover": "../../assets/epub/cover/Book of Mistakes_ 9 Secrets to Creating a Successful Future, The - Skip Prichard.png"
+  },
+  {
+    "title": "Developing",
+    "path": "../../assets/epub/Developing Unrelenting Drive, Dedication, and Determination.epub",
+    "cover": "../../assets/epub/cover/Developing Unrelenting Drive, Dedication, and Determination.png"
+  },
+  {
+    "title": "Dont..Scientist",
+    "path": "../../assets/epub/Dont Be Such a Scientist - Dr. Randy Olson.epub",
+    "cover": "../../assets/epub/cover/Dont Be Such a Scientist - Dr. Randy Olson.png"
+  },
+  {
+    "title": "Emotional Success",
+    "path": "../../assets/epub/Emotional_Success_by_David_DeSteno.epub",
+    "cover": "../../assets/epub/cover/Emotional_Success_by_David_DeSteno.png"
+  },
+  {
+    "title": "Everybody Lies 2017",
+    "path": "../../assets/epub/Everybody.Lies.2017.epub",
+    "cover": "../../assets/epub/cover/Everybody.Lies.2017.png"
+  },
+  {
+    "title": "Getting Shot Done",
+    "path": "../../assets/epub/Getting Sh_t Done_ How to Power - Stefan Cain.epub",
+    "cover": "../../assets/epub/cover/Getting Sh_t Done_ How to Power - Stefan Cain.png"
+  },
+  {
+    "title": "Ghost in the Wires",
+    "path": "../../assets/epub/Ghost_in_the_Wires_-_Kevin_Mitnick_&_Steve_Wozniak_&_William_L._Simon.epub",
+    "cover": "../../assets/epub/cover/Ghost_in_the_Wires_-_Kevin_Mitnick_&_Steve_Wozniak_&_William_L._Simon.png"
+  },
+  {
+    "title": "Happy Is the New Healthy",
+    "path": "../../assets/epub/Happy Is the New Healthy_ 31 Wa - Dave Romanelli.epub",
+    "cover": "../../assets/epub/cover/Happy Is the New Healthy_ 31 Wa - Dave Romanelli.png"
+  },
+  {
+    "title": "How to analyze",
+    "path": "../../assets/epub/how to analyze people at first sight.epub",
+    "cover": "../../assets/epub/cover/how to analyze people at first sight.png"
+  },
+  {
+    "title": "How to Keep People",
+    "path": "../../assets/epub/How to Keep People From Pushing - Albert Ellis.epub",
+    "cover": "../../assets/epub/cover/How to Keep People From Pushing - Albert Ellis.png"
+  },
+  {
+    "title": "TheBeauty and the Beast",
+    "path": "../../assets/epub/The_Beauty_and_the_Beast-Jeanne_Marie_Leprince_De_Beaumont.epub",
+    "cover": "../../assets/epub/cover/TheBeauty.png"
+  },
+  {
+    "title": "The Man Who Would Be King",
+    "path": "../../assets/epub/The_Man_Who_Would_Be_King-Rudyard_Kipling.epub",
+    "cover": "../../assets/epub/cover/manking.png"
+  }
+]

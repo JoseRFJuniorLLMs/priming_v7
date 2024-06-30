@@ -1,0 +1,58 @@
+<div class="game-container">
+  <div class="score-container">
+    <button value="{{ score }}" color="primary" matBadge="{{ score }}" matBadgeSize="large"
+      matTooltip="{{ score }}" matBadgePosition="after" matBadgeColor="warn" class="score-container">
+      <i class="fa fa-btc" aria-hidden="true" style="font-size: 60px; color: rgb(248, 187, 2);"></i>
+      Satoshi
+      <i class="fa fa-battery-quarter" aria-hidden="true" style="font-size: 40px; color: green;"></i>
+    </button>
+  
+
+    <select id="voiceSelect" (change)="onVoiceChange($event)" matTooltip="Voice Select Menu">
+      <option *ngFor="let voice of voiceRecognitionService.voices" [value]="voice.name">
+        {{ voice.name }}
+      </option>
+    </select>
+    <label for="voiceSelect" matTooltip="Select Voice">
+      <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
+        voice_chat
+      </span>
+    </label>
+  </div>
+  
+  <div #tableContainer class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>English</th>
+          <th>Figured Pronunciation</th>
+          <th>Portuguese Translation</th>
+          <th>Unlikely Association</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of vocabulary; let i = index" [ngClass]="{'error': isError(i), 'correct': isCorrect(i)}">
+          <td [ngClass]="{'covered': !isShown(i) && isCovered(i, 'english'), 'english': !isCovered(i, 'english'), 'uncovered': isShown(i), 'error': isError(i)}">
+            <i *ngIf="!isShown(i) && isCovered(i, 'english')" class="fa fa-bomb" aria-hidden="true" style="font-size: 40px; color: black;"></i>
+            {{ item.english }}
+          </td>
+          <td [ngClass]="{'covered': !isShown(i) && isCovered(i, 'pronunciation'), 'pronunciation': !isCovered(i, 'pronunciation'), 'uncovered': isShown(i), 'error': isError(i)}">
+            <i *ngIf="!isShown(i) && isCovered(i, 'pronunciation')" class="fa fa-bomb" aria-hidden="true" style="font-size: 40px; color: black;"></i>
+            {{ item.pronunciation }}
+          </td>
+          <td [ngClass]="{'covered': !isShown(i) && isCovered(i, 'translation'), 'translation': !isCovered(i, 'translation'), 'uncovered': isShown(i), 'error': isError(i)}">
+            <i *ngIf="!isShown(i) && isCovered(i, 'translation')" class="fa fa-bomb" aria-hidden="true" style="font-size: 40px; color: black;"></i>
+            {{ item.translation }}
+          </td>
+          <td [ngClass]="{'covered': !isShown(i) && isCovered(i, 'association'), 'unlikely-association': !isCovered(i, 'association'), 'uncovered': isShown(i), 'error': isError(i)}">
+            <i *ngIf="!isShown(i) && isCovered(i, 'association')" class="fa fa-bomb" aria-hidden="true" style="font-size: 40px; color: black;"></i>
+            {{ item.association }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div #mic class="mic-icon">
+    <i class="material-icons">mic</i>
+  </div>
+</div>

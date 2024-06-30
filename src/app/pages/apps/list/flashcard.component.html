@@ -1,0 +1,46 @@
+<mat-dialog-content>
+  <div class="flashcard-container">
+    <mat-card class="flashcard">
+      <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>
+            <div class="waveform-container">
+<!--               <button *ngIf="audioAvailable" (click)="playAudio()" matTooltip="Play Audio" mat-fab type="button">
+                <span class="material-symbols-outlined" style="font-size: 30px; color: white;">play_arrow</span>
+              </button> -->
+              <div #waveform class="waveform"></div>
+            </div>
+            <div class="flashcard" @fade *ngIf="currentNote">
+              <div class="description">{{ currentNote.description }}</div>
+              <div class="answer" *ngIf="showTranslation">{{ currentNote.answer }}</div>
+            </div>
+          </mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-title-group>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</mat-dialog-content>
+
+<mat-card-actions>
+  <div class="flex">
+    <button (click)="toggleTranslation()" matTooltip="Show Answer" color="primary" mat-fab type="button">
+      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">visibility</span>
+    </button>
+    <button (click)="answer('hard')" matTooltip="Hard" color="primary" mat-fab type="button">
+      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_very_dissatisfied</span>
+    </button>
+    <button (click)="answer('good')" matTooltip="Good" color="primary" mat-fab type="button">
+      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_satisfied</span>
+    </button>
+    <button (click)="answer('easy')" matTooltip="Easy" color="primary" mat-fab type="button">
+      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_very_satisfied</span>
+    </button>
+  </div>
+  <div>
+    <label for="voiceSelect">Select Voice:</label>
+    <select id="voiceSelect" (change)="onVoiceChange($event)">
+      <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
+    </select>
+  </div>
+</mat-card-actions>

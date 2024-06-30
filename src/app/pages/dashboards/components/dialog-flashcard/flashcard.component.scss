@@ -1,0 +1,49 @@
+.audio-container {
+  display: flex;
+  align-items: center;
+}
+
+.audio-container button {
+  margin-right: 10px;
+}
+
+.waveform-container {
+  flex: 1;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: center; // Centraliza os botões horizontalmente
+  align-items: center; // Centraliza os botões verticalmente
+  width: 100%; // Ocupa toda a largura do contêiner pai
+}
+
+.flex {
+  display: flex;
+  justify-content: center; // Centraliza os botões horizontalmente dentro de .flex
+  align-items: center; // E verticalmente
+  width: 100%; // Garante que .flex ocupa toda a largura disponível
+}
+
+.flashcard-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Centraliza verticalmente e horizontalmente
+  height: 100vh; // Ajuste conforme necessário para o tamanho desejado
+  background-color: #f5f5f5; // Cor de fundo para o contêiner do flashcard
+}
+
+.flashcard {
+  background-color: #fff;
+  border-radius: 10px; // Bordas arredondadas
+  padding: 20px;
+  text-align: center; // Centraliza o texto horizontalmente
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Adiciona uma sombra para o cartão
+  margin: 20px; // Espaçamento ao redor do flashcard
+}
+
+.word, .translation {
+  font-size: 3em; // Tamanho das letras aumentado
+  font-weight: bold; // Texto em negrito
+  color: #333; // Cor do texto
+}

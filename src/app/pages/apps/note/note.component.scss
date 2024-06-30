@@ -1,0 +1,56 @@
+// Definindo as variáveis de cor
+$primary-color: #b5d1ec; // Blue
+$secondary-color: #d7d0b9; // Yellow
+$highlight-color: #f7a452; // Bright color for highlighting
+
+.card {
+  background-color: $primary-color;
+  border: 1px solid #e2e8f0; // Lighter border
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex; // Make cards flex containers
+  flex-direction: column; // Arrange content vertically
+
+  // Optional subtle stripe pattern (adjust as needed)
+  background-image: linear-gradient(45deg, $primary-color 25%, $secondary-color 75%);
+
+  // Adjust content color for better contrast
+  .card-content {
+    color: black;
+
+    // Cor branca apenas para a descrição
+    p.description {
+      color: white;
+    }
+
+    // Estilo para destacar o campo "Permanent" se a nota for permanente
+    .highlight-permanent {
+      background-color: $highlight-color;
+      padding: 5px;
+      border-radius: 3px;
+      font-weight: bold;
+    }
+  }
+
+  // Optional: Add a top header section with rounded corners
+  .card-header {
+    background-color: $secondary-color;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 10px; // Adjust padding as needed
+  }
+}
+
+.drag-handle {
+  cursor: move; /* This will show a move cursor */
+}
+
+cdk-drag-preview {
+  cursor: progress; /* This will show an hourglass cursor when dragging */
+}
+
+.example-handle {
+  cursor: move;
+}

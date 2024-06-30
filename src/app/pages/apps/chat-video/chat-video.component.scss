@@ -1,0 +1,115 @@
+.video-chat-container {
+  width: 80vw; // Ajusta para ocupar toda a largura da janela
+  height: 80vh; // Ajusta para ocupar toda a altura da janela
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.videos {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
+  align-items: center;
+  padding: 20px;
+}
+
+video {
+  width: 60%; // Aumenta a largura dos vídeos
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.connection-status {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.controls {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+textarea {
+  width: 45%; // Alinhado para dois campos de texto lado a lado
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+mat-form-field {
+  width: 45%; // Alinhado para dois campos de formulário lado a lado
+}
+
+.button-container {
+  width: 100%; // Ajusta para ocupar toda a largura
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.toolbar button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.toolbar button:hover {
+  color: #bbb;
+}
+// No seu arquivo .scss
+
+$red: red;
+$green: green;
+
+.icon {
+  &-red {
+    color: $red;
+  }
+
+  &-green {
+    color: $green;
+  }
+}
+
+.toolbar {
+  .button {
+    margin: 0 10px;
+
+    i {
+      font-size: 24px;
+    }
+  }
+}
+
+
+/* online-status.scss */
+
+.online-status {
+  position: fixed;
+  bottom: 50px; /* Distância da parte inferior da tela */
+  left: 20px;  /* Distância da parte esquerda da tela */
+  z-index: 1000; // Garante que fique por cima de outros elementos (opcional)
+
+  i {
+    font-size: 4rem;
+  }
+}

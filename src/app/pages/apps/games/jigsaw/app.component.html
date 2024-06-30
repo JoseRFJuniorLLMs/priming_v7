@@ -1,0 +1,11 @@
+<mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
+    <mat-grid-tile *ngFor="let piece of pieces" 
+        cdkDrag 
+        [cdkDragData]="piece"
+        (cdkDragStarted)="handlePieceDragStart($event)"
+        (cdkDropDropped)="handleDrop($event)">
+      <app-piece [piece]="piece"></app-piece>
+    </mat-grid-tile>
+  </mat-grid-list>
+  
+  

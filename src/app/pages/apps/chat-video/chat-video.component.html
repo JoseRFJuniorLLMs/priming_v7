@@ -1,0 +1,28 @@
+<div *ngIf="otherUserOnline" class="online-status">
+  <span class="material-symbols-outlined" style="color: green;">
+    online_prediction
+  </span>Online
+</div>
+<div class="video-chat-container">
+  <div class="videos">
+    <video #webcamVideo autoplay muted></video>
+    <video #remoteVideo autoplay></video>
+  </div>
+  <div class="toolbar">
+    <button mat-button color="primary" matTooltip="Mute" (click)="muteMicrophone()">
+      <i class="fas fa-microphone-slash"></i>
+    </button>
+    <button mat-button color="primary" matTooltip="Turn off camera" (click)="turnOffCamera()">
+      <i class="fas fa-video-slash"></i>
+    </button>
+    <button mat-button color="primary" matTooltip="Share screen" (click)="shareScreen()">
+      <i class="fas fa-desktop"></i>
+    </button>
+    <button mat-button color="primary" matTooltip="Open chat" (click)="openChat()">
+      <i class="fas fa-comment"></i>
+    </button>
+    <button matTooltip="Call..." mat-button [ngClass]="inCall ? 'red-button' : 'green-button'" (click)="toggleCall()">
+      <i [ngClass]="inCall ? 'fas fa-phone-slash icon-red' : 'fas fa-phone icon-green'"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Notes</span>
+    <span class="spacer"></span>
+
+    <button matTooltip="View Flashcard" (click)="openFlashcard()" type="button">
+      <span matTooltip="FlashCard" class="material-symbols-outlined centered-and-enlarged" style="font-size: 40px; color: rgb(255, 2, 2);">
+        self_improvement
+      </span>
+      FlashCard
+      <span class="material-symbols-outlined" style="font-size: 30px; color: rgb(254, 1, 1);">
+        skull
+        </span>
+    </button>
+    
+<!--     <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="Search notes">
+
+      <button mat-icon-button matSuffix>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field> -->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container" cdkDropList (cdkDropListDropped)="drop($event)">
+  <div class="card" *ngFor="let note of dataSource.data; trackBy: trackById" cdkDrag>
+
+    <div class="example-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    
+    <div class="card-header">
+      <h4>{{ note.title }}</h4>
+    </div>
+
+    <div class="card-content">
+      <p class="description">{{ note.description }}</p>
+      <p>Tags: {{ note.tags}}</p>
+      <p>Answer: {{ note.answer }}</p>
+      <p>Level: {{ note.level }}</p>
+      <p>Last Revision Date: {{ convertToDate(note.last_revision_date) | date: 'short' }}</p>
+      <p>Next Revision Date: {{ convertToDate(note.next_revision_date) | date: 'short' }}</p>
+      <p>Image: <img [src]="note.image" alt="Note image" *ngIf="note.image"></p>
+      <p [ngClass]="{'highlight-permanent': note.permanent}">Permanent: {{ note.permanent ? 'Yes' : 'No' }}</p>
+      <p>Created at: {{ convertToDate(note.created_at) | date: 'short' }}</p>
+    </div>
+    <div class="card-footer">
+
+      <button mat-mini-fab matTooltip="Speak Notes" (click)="speak(note)">
+        <span class="material-symbols-outlined">
+          text_to_speech
+          </span>
+      </button>
+      <button mat-mini-fab disabled matTooltip="List Notes" (click)="speak(note)">
+        <span class="material-symbols-outlined">
+          format_list_numbered
+          </span>
+      </button>
+      <button mat-mini-fab disabled matTooltip="Edit Notes" (click)="speak(note)">
+        <span class="material-symbols-outlined">
+          edit
+          </span>
+      </button>
+      <button mat-mini-fab matTooltip="Permanent Notes" (click)="togglePermanent(note)">
+        <span class="material-symbols-outlined">
+          deceased
+          </span>
+      </button>
+      <button mat-mini-fab matTooltip="Delete Notes" (click)="deleteNote(note._id)">
+        <span class="material-symbols-outlined" mat-mini-fab matTooltip="Delete Notes">
+          delete
+          </span>
+      </button>
+
+    </div>
+  </div>
+</div>

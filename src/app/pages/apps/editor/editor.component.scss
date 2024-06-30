@@ -1,0 +1,41 @@
+/**
+ * quill overwrites
+ */
+ .ql-toolbar.ql-snow {
+  @apply border-0 rounded-t px-4 py-4 shadow;
+}
+
+.ql-container.ql-snow {
+  @apply border-0 rounded-b;
+}
+
+.ql-toolbar.ql-snow .ql-picker .ql-picker-label:focus {
+  @apply outline-none;
+}
+
+.ql-toolbar.ql-snow button.ql-active {
+  @apply bg-primary-600 rounded text-on-primary-600;
+
+  .ql-stroke {
+    @apply stroke-current;
+  }
+
+  .ql-fill {
+    @apply fill-current;
+  }
+}
+
+.video-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow: auto;
+  max-height: 100vh; // Limita a altura máxima para a viewport
+  max-width: 100%;   // Limita a largura máxima para a viewport
+}
+
+.video-gallery iframe {
+  flex: 1 1 560px;
+  max-width: 560px;
+  height: 315px;
+}

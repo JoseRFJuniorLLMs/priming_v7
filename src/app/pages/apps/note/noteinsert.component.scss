@@ -1,0 +1,42 @@
+.note-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .note-form {
+    width: 100%;
+    max-width: 800px;
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .tags-container {
+      margin-bottom: 20px;
+    }
+
+    .buttons-container {
+        margin-top: 10px;
+        margin-right: 10px;
+        display: inline-flex;
+        align-items: center;
+
+        button {
+          margin-top: 10px;
+          margin-right: 10px;
+          display: inline-flex;
+          align-items: center;
+    
+          mat-icon {
+            margin-right: 5px;
+          }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+mat-grid-list {
+    margin: 20px auto; /* Centraliza a grade do puzzle */
+    max-width: 600px;  /* Opcional: Ajusta largura máxima do puzzle */
+  }
+  
+  mat-grid-tile {
+    background-color: #eee; /* Cor de fundo opcional */
+    margin: 5px;  /* Adiciona espaçamento entre as peças */
+  }
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); /* Suaviza a animação de arrastar */
+  }
+  
+  .cdk-drag-placeholder {
+    opacity: 0.6; /* Torna o espaço ocupado mais transparente enquanto a peça é arrastada */
+  }
+  

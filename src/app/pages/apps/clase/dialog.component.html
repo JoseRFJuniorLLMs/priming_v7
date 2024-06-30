@@ -1,0 +1,22 @@
+<div style="position: relative;">
+  <span (click)="onNoClick()" class="material-symbols-outlined centered-and-enlarged">
+    spa
+  </span>
+  <h2 mat-dialog-title>Wait a bit, Attention !</h2>
+  <mat-dialog-content>
+    <p>All your ZettelKasten notes are being saved, and will then be listed and reviewed for you to study!</p>
+  </mat-dialog-content>
+  <span (click)="onYesClick()" matTooltip="OK I understand that!, If you understood the message click here!" class="material-symbols-outlined centered-and-enlarged">
+    self_improvement
+  </span>
+  <div class="close-button">
+    <button matTooltip="Close" (click)="onNoClick()">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button class="custom-button" matTooltip="OK I understand that!, If you understood the message click here!" (click)="onYesClick()">OK I understand that!
+    <mat-icon svgIcon="mat:open_in_browser"></mat-icon>
+  </button>
+</div>

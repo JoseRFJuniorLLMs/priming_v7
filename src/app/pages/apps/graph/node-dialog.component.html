@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Node Details</h1>
+<div mat-dialog-content>
+  <p><strong>ID:</strong> {{data.node.id}}</p>
+  <p><strong>Title:</strong> {{data.node.label}}</p>
+  <p><strong>Created At:</strong> {{data.node.created_at | date:'short'}}</p>
+  <p><strong>Description:</strong> {{data.node.description}}</p>
+  <p><strong>TAG:</strong> {{data.node.tag}}</p>
+
+  <div *ngIf="data.node.student">
+<!--     <h2>Student Information</h2>
+    <p><strong>Student ID:</strong> {{data.node.student._id}}</p>
+    <p><strong>Student Name:</strong> {{data.node.student.name}}</p> -->
+    <!-- Add other student properties here if needed -->
+  </div>
+
+  <div *ngIf="data.node.tags && data.node.tags.length">
+    <h2>Tags</h2>
+    <ul>
+      <li *ngFor="let tag of data.node.tags">{{ tag }}</li>
+    </ul>
+  </div>
+
+  <p><strong>Permanent:</strong> {{data.node.permanent ? 'Yes' : 'No'}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-icon-button mat-dialog-close matTooltip="Close" aria-label="Close">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+  
+</div>

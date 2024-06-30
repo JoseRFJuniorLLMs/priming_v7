@@ -1,0 +1,62 @@
+.highlighted-yellow {
+  line-height: 1.5;
+  background-color: hsla(0, 90%, 92%, 0.511);
+  font-weight: bold;
+  font-size: 30px; /* Ajuste para o tamanho de letra desejado */
+}
+
+.highlighted-gray {
+  line-height: 1.5;
+  background-color: hsla(0, 90%, 92%, 0.511);
+  font-weight: bold;
+  font-size: 40px; /* Mantenha consistente com o tamanho da letra amarela */
+}
+
+// Estilo para o botão de reprodução
+.play-sound-button {
+  position: fixed;
+  left: 50%; // Centraliza o botão na horizontal
+  bottom: 0px; // Posiciona o botão na parte inferior da tela
+  transform: translateX(-50%); // Ajusta a posição horizontal para centralizar exatamente
+  z-index: 1050; // Garante que o botão fique visível acima dos outros elementos
+  width: 90px; // Largura do botão (ajuste conforme necessário)
+  height: 90px; // Altura do botão (ajuste conforme necessário)
+  
+  mat-icon {
+    font-size: 60px; // Ajuste o tamanho conforme necessário
+    height: 60px; // Ajuste a altura conforme necessário
+    width: 60px; // Ajuste a largura conforme necessário
+  }
+}
+
+.play-sound-button2 {
+  width: 90px; // Largura do botão (ajuste conforme necessário)
+  height: 90px; // Altura do botão (ajuste conforme necessário)
+  margin-right: 20px; // Espaçamento entre os botões (ajuste conforme necessário)
+  
+  mat-icon {
+    font-size: 60px; // Tamanho do ícone (ajuste conforme necessário)
+    height: 60px; // Altura do ícone (ajuste conforme necessário)
+    width: 60px; // Largura do ícone (ajuste conforme necessário)
+  }
+}
+
+// Definição da classe para o contêiner do WaveSurfer
+.waveform-container {
+  cursor: pointer; // Define o cursor como ponteiro
+  width: 100%; // Largura de 100%
+  height: 10px; // Altura fixa de 10px (ajuste conforme necessário)
+}
+
+.close-button {
+  position: absolute; /* Alterado de 'fixed' para 'absolute' */
+  right: 0px; /* Posicionamento no canto superior direito */
+  top: 0px; /* Posicionamento no canto superior direito */
+  z-index: 1050; /* Mantém acima dos outros elementos */
+  width: 90px; /* Largura do botão */
+  height: 90px; /* Altura do botão */
+}
+
+.card {
+  position: relative;
+}

@@ -1,0 +1,29 @@
+<div class="example-box" cdkDrag>
+  <div class="puzzle-block-container">
+
+    <div #mic id="mic" class="waveform-container"></div>
+
+    <button matTooltip="Start/Stop Microphone" mat-fab [color]="isRecording ? 'warn' : 'primary'"
+      (click)="toggleRecording()">
+
+      <mat-icon *ngIf="!isRecording" mat-icon-button>
+        <span class="material-symbols-outlined" matTooltip="GPT-4o AI">
+          graphic_eq
+        </span>
+      </mat-icon>
+
+
+      <!-- Ícone de Pause -->
+      <mat-icon *ngIf="isRecording" mat-icon-button>
+        <span class="material-symbols-outlined">
+          voice_over_off
+        </span>
+      </mat-icon>
+
+    </button>
+
+    <label for="mic-select" matTooltip="You can choose between microphones">Mic:</label>
+    <select #micSelect id="mic-select" class="mic-selection" matTooltip="You can choose between microphones">
+    </select>
+  </div>
+</div>

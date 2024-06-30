@@ -1,0 +1,27 @@
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Isso deveria ser suficiente para manter o texto à esquerda e a imagem à direita */
+  width: 50%;
+  margin: auto;
+}
+
+.message {
+  font-size: 20px;
+  width: 50%;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.image {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.image img {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}

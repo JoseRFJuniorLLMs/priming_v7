@@ -1,0 +1,200 @@
+<mat-dialog-content>
+
+  <div class="container p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="loading-indicator" *ngIf="isLoading">
+      <mat-progress-spinner mode="indeterminate" color="warn"></mat-progress-spinner>
+      <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+      <mat-progress-bar mode="buffer" color="warn"></mat-progress-bar>
+      <mat-progress-bar mode="query" color="warn"></mat-progress-bar>
+    </div>
+    <div class="error-message" *ngIf="errorText">
+      <p>{{ errorText }}</p>
+    </div>
+  </div>
+
+  <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+    <ng-template matStepperIcon="edit">
+      <mat-icon svgIcon="mat:done_all"></mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <mat-icon svgIcon="mat:done_all"></mat-icon>
+    </ng-template>
+
+    <mat-step>
+      <ng-template matStepLabel>Listen</ng-template>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>
+              <!-- Usando interpolação de strings para exibir o texto com palavras destacadas -->
+              <span class="highlighted-yellow" [innerHTML]="displayedHtml"></span>
+            </mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+        </mat-card-content>
+      </mat-card>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Read</ng-template>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title-group (click)="playSound()">
+            <mat-card-title>
+              <!-- Usando interpolação de strings para exibir o texto com palavras destacadas -->
+              <span  [innerHTML]="displayedHtml"></span>
+            </mat-card-title>
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+        </mat-card-content>
+      </mat-card>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Speak</ng-template>
+      <mat-card class="example-card">
+
+        <mat-dialog-actions>
+
+          <button class="play-sound-button2" mat-icon-button [color]="isRecording ? 'warn' : 'red'" type="button"
+            matTooltip="Start Recording" (click)="startRecording()">
+            <mat-icon svgIcon="mat:mic"></mat-icon>
+          </button>
+
+          <button class="play-sound-button2" mat-icon-button [color]="isRecording ? 'red' : 'warn'" type="button"
+            matTooltip="Stop Recording" (click)="stopRecording()">
+            <mat-icon svgIcon="mat:stop"></mat-icon>
+          </button>
+
+        </mat-dialog-actions>
+
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>
+              <!-- Usando interpolação de strings para exibir o texto com palavras destacadas -->
+              <span class="highlighted-yellow" [innerHTML]="displayedHtml"></span>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <div class="p-6">
+              <div>
+                <!-- <h1>Analysis of "{{ textNLP }}"</h1>
+                <div *ngIf="pronouns.length">
+                  <p><strong>Pronouns:</strong></p>
+                  <div *ngFor="let pronoun of pronouns">
+                    <button mat-button color="accent" matTooltip="pronoun">{{ pronoun }}</button>
+                  </div>
+                </div>
+                <div *ngIf="verbs.length">
+                  <p><strong>Verbs:</strong></p>
+                  <div *ngFor="let verb of verbs">
+                    <button mat-button color="accent" matTooltip="verb">{{ verb }}</button>
+                  </div>
+                </div>
+                <div *ngIf="nouns.length">
+                  <p><strong>Nouns:</strong></p>
+                  <div *ngFor="let noun of nouns">
+                    <button mat-button color="accent" matTooltip="noun">{{ noun }}</button>
+                  </div>
+                </div>
+                <div *ngIf="adjectives.length">
+                  <p><strong>Adjectives:</strong></p>
+                  <div *ngFor="let adjective of adjectives">
+                    <button mat-button color="accent" matTooltip="adjective">{{ adjective }}</button>
+                  </div>
+                </div>
+                <div *ngIf="adverbs.length">
+                  <p><strong>Adverbs:</strong></p>
+                  <div *ngFor="let adverb of adverbs">
+                    <button mat-button color="accent" matTooltip="adverb">{{ adverb }}</button>
+                  </div>
+                </div>
+                <div *ngIf="people.length">
+                  <p><strong>People:</strong></p>
+                  <div *ngFor="let person of people">
+                    <button mat-button color="accent" matTooltip="person">{{ person }}</button>
+                  </div>
+                </div>
+                <div *ngIf="places.length">
+                  <p><strong>Places:</strong></p>
+                  <div *ngFor="let place of places">
+                    <button mat-button color="accent" matTooltip="place">{{ place }}</button>
+                  </div>
+                </div>
+                <div *ngIf="organizations.length">
+                  <p><strong>Organizations:</strong></p>
+                  <div *ngFor="let organization of organizations">
+                    <button mat-button color="accent" matTooltip="organization">{{ organization }}</button>
+                  </div>
+                </div>
+                <div *ngIf="clauses.length">
+                  <p><strong>Clauses:</strong></p>
+                  <div *ngFor="let clause of clauses">
+                    <button mat-button color="accent" matTooltip="clause">{{ clause }}</button>
+                  </div>
+                </div>
+                <div *ngIf="questions.length">
+                  <p><strong>Questions:</strong></p>
+                  <div *ngFor="let question of questions">
+                    <button mat-button color="accent" matTooltip="question">{{ question }}</button>
+                  </div>
+                </div>
+                <div *ngIf="acronyms.length">
+                  <p><strong>Acronyms:</strong></p>
+                  <div *ngFor="let acronym of acronyms">
+                    <button mat-button color="accent" matTooltip="acronym">{{ acronym }}</button>
+                  </div>
+                </div>
+                <div *ngIf="emails.length">
+                  <p><strong>Emails:</strong></p>
+                  <div *ngFor="let email of emails">
+                    <button mat-button color="accent" matTooltip="email">{{ email }}</button>
+                  </div>
+                </div>
+                <div *ngIf="urls.length">
+                  <p><strong>URLs:</strong></p>
+                  <div *ngFor="let url of urls">
+                    <button mat-button color="accent" matTooltip="url">{{ url }}</button>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+ 
+
+          </mat-card-content>
+        </mat-card>
+
+      </mat-card>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+
+
+<mat-progress-bar id="1" mode="buffer"></mat-progress-bar>
+
+<!-- Div para o Transcription -->
+<div class="highlighted-yellow">
+  {{ transcribedText }}
+</div>
+
+<!-- Div para o WaveSurfer -->
+<div #waveform class="waveform-container" style="cursor: pointer;"></div> 
+<div #playbackContainer class="waveform-container" style="cursor: pointer;"></div>
+
+
+<span class="example-spacer"></span>
+<mat-progress-bar id="2" class="play-sound-button" color="warn" mode="buffer"></mat-progress-bar>
+
+<button mat-fab style="cursor: pointer;" class="play-sound-button" color="warn"
+  matTooltip="Play : Repeat as many times as necessary!" type="button" (click)="playSound()">
+  <mat-icon svgIcon="mat:play_arrow"></mat-icon>
+</button>
+
+<button mat-icon-button matTooltip="Close" class="close-button" color="warn" format_align_left type="button"
+  (click)="closeDialog()">
+  <mat-icon svgIcon="mat:close"></mat-icon>
+</button>
