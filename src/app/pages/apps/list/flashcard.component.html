@@ -19,7 +19,6 @@
     </mat-card>
   </div>
 </mat-dialog-content>
-
 <mat-card-actions>
   <div class="flex">
     <button (click)="toggleTranslation()" matTooltip="Show Answer" color="primary" mat-fab type="button">
@@ -41,7 +40,6 @@
       <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
     </select>
   </div>
-
   <button mat-icon-button class="close-button" matTooltip="Close" (click)="closeClick()">
     <span class="material-symbols-outlined" style="color: red;">close</span>
   </button>

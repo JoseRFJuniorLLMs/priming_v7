@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DataListService } from './data-list.service';
@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FlashcardComponent } from './flashcard.component';
 import { NoteDialogComponent } from './note-dialog.component';
 import { VoiceCardRecognitionService } from './voice-card-recognition.service';
+import { RsvpreaderComponent } from '../../dashboards/components/dialog-rsvpreader/rsvpreader.component';
 
 @Component({
   selector: 'note-list',
@@ -27,12 +28,13 @@ import { VoiceCardRecognitionService } from './voice-card-recognition.service';
     MatTooltipModule
   ]
 })
-export class NoteListComponent implements OnInit {
+export class NoteListComponent implements OnInit, OnDestroy {
   
   notes$!: Observable<NoteCollection[]>;
   filteredNotes$!: Observable<NoteCollection[]>;
   searchTerm: string = '';
-  private dialogRef: any;
+  private flashcardDialogRef: any;
+  private srvpDialogRef: any;
 
   constructor(
     private dataListService: DataListService, 
@@ -78,20 +80,40 @@ export class NoteListComponent implements OnInit {
 
   openFlashcard(): void {
     this.filteredNotes$.subscribe(notes => {
-      if (!this.dialogRef) {
-        this.dialogRef = this.dialog.open(FlashcardComponent, {
+      if (!this.flashcardDialogRef) {
+        this.flashcardDialogRef = this.dialog.open(FlashcardComponent, {
           width: '80vw',
           height: '80vh',
           data: { notes },
           hasBackdrop: false
         });
 
-        this.dialogRef.afterClosed().subscribe(() => {
-          this.dialogRef = null;
+        this.flashcardDialogRef.afterClosed().subscribe(() => {
+          this.flashcardDialogRef = null;
         });
       } else {
-        this.dialogRef.componentInstance.updateNotes(notes);
+        this.flashcardDialogRef.componentInstance.updateNotes(notes);
       }
     });
   }
-}//fim
+
+  openSRVP(): void {
+    this.filteredNotes$.subscribe(notes => {
+      if (!this.srvpDialogRef) {
+        this.srvpDialogRef = this.dialog.open(RsvpreaderComponent, {
+          width: '80vw',
+          height: '80vh',
+          data: { notes },
+          hasBackdrop: false
+        });
+
+        this.srvpDialogRef.afterClosed().subscribe(() => {
+          this.srvpDialogRef = null;
+        });
+      } else {
+        this.srvpDialogRef.componentInstance.updateNotes(notes);
+      }
+    });
+  }
+
+}
