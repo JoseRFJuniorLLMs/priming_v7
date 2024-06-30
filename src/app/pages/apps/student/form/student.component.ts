@@ -21,7 +21,6 @@ import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
 
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-import { StudentCollection } from './student-collection';
 import { StudentService } from '../student.service';
 
 @Component({
@@ -55,9 +54,6 @@ import { StudentService } from '../student.service';
 
 export class StudentComponent implements OnInit {
 
-  //==========Variaveis=============//
-  studentCollection$: Observable<StudentCollection[]>;
-
   //==========Construtor=============//
   constructor(
     private http: HttpClient,
@@ -69,12 +65,12 @@ export class StudentComponent implements OnInit {
     private studentService: StudentService
 
   ) {
-    this.studentCollection$ = studentService.studentCollection$;
+  
   }
 
 
   ngOnInit(): void {
-    console.log(StudentCollection);
+
   }
 
 

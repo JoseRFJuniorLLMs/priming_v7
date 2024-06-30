@@ -1,4 +1,4 @@
-export class StudentCollection {
+export class Student {
   _id?: string;
   name?: string;
   bitcoin?: string[];
@@ -25,7 +25,7 @@ export class StudentCollection {
   tax_ident_number?: string;
   tiktok?: string;
 
-  constructor(init?: Partial<StudentCollection>) {
+  constructor(init?: Partial<Student>) {
     Object.assign(this, init);
   }
 }

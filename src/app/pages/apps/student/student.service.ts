@@ -1,27 +1,32 @@
-import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
-
-import { StudentCollection } from './form/student-collection';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable, of } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
+import { Student } from 'src/app/model/student/student';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
 
-  studentCollection$!: Observable<StudentCollection[]>;
+  constructor(private firestore: AngularFirestore, private afAuth: AngularFireAuth) {}
 
-  constructor(
-    private http: HttpClient,
-    @Inject(Firestore) private firestore: Firestore,
-  ) {
-    const studentCollection = collection(this.firestore, 'StudentCollection');
-    this.studentCollection$ = collectionData(studentCollection) as Observable<StudentCollection[]>;
+  getStudentData(): Observable<Student | null> {
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.firestore.doc<Student>(`students/${user.uid}`).valueChanges().pipe(
+            map(student => student || null) // Ensure undefined is converted to null
+          );
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
-  ngOnInit(): void {
-    console.log(StudentCollection);
+  addStudentData(student: Student) {
+    return this.firestore.doc(`students/${student._id}`).set(student);
   }
-
 }
