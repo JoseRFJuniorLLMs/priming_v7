@@ -2,7 +2,7 @@
   <div @fadeInUp class="card overflow-hidden w-full max-w-md">
     <div class="p-6 pb-0 flex flex-col items-center justify-center">
       <div class="fill-current text-center">
-        <img class="w-16" src="assets/img/icons/flags/united-states.svg" src="assets/img/icons/flags/united-states.svg" />
+        <img class="w-16" src="assets/img/icons/flags/united-states.svg" />
       </div>
     </div>
 
@@ -18,8 +18,8 @@
         <mat-form-field class="flex-1">
           <mat-label>E-Mail</mat-label>
           <input formControlName="email" matInput required />
-          <mat-error *ngIf="form.controls.email.hasError('required')"
-          >We need an email address to log you in
+          <mat-error *ngIf="form.controls.email.hasError('required')">
+            We need an email address to log you in
           </mat-error>
         </mat-form-field>
         <mat-form-field class="flex-1">
@@ -39,17 +39,17 @@
             <mat-icon *ngIf="!visible" svgIcon="mat:visibility_off"></mat-icon>
           </button>
           <mat-hint>Click the eye to toggle visibility</mat-hint>
-          <mat-error *ngIf="form.controls.password.hasError('required')"
-          >We need a password to log you in
+          <mat-error *ngIf="form.controls.password.hasError('required')">
+            We need a password to log you in
           </mat-error>
         </mat-form-field>
       </div>
 
       <div class="flex items-center justify-between">
         <mat-checkbox class="caption" color="primary">Remember Me</mat-checkbox>
-        <a [routerLink]="['/forgot-password']" class="caption"
-        >Forgot Password?</a
-        >
+        <a [routerLink]="['/forgot-password']" class="caption">
+          Forgot Password?
+        </a>
       </div>
 
       <button (click)="send()" color="primary" mat-raised-button type="button">

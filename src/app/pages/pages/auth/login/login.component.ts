@@ -1,11 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'vex-login',
@@ -31,13 +28,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatTooltipModule,
     MatIconModule,
     MatCheckboxModule,
-    RouterLink,
-    MatSnackBarModule
+    RouterLink
   ]
 })
 export class LoginComponent {
   form = this.fb.group({
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   });
 
@@ -48,29 +44,34 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
-  send() {
-    this.router.navigate(['/']);
-    this.snackbar.open(
-      "Lucky you! Looks like you didn't need a password or email address! For a real application we provide validators to prevent this. ;)",
-      'THANKS',
-      {
-        duration: 10000
+  async send() {
+    if (this.form.valid) {
+      const { email, password } = this.form.value;
+      try {
+        await this.authService.login(email!, password!);
+        this.snackbar.open('Login successful!', 'Close', { duration: 3000 });
+        this.router.navigate(['/']); // Navigate to home page or dashboard
+      } catch (error) {
+        console.error('Login error:', error);
+        this.snackbar.open('Login failed. Please check your credentials and try again.', 'Close', { duration: 5000 });
       }
-    );
+    } else {
+      this.snackbar.open('Please enter a valid email and password.', 'Close', { duration: 3000 });
+    }
   }
-
+  
   toggleVisibility() {
     if (this.visible) {
       this.inputType = 'password';
       this.visible = false;
-      this.cd.markForCheck();
     } else {
       this.inputType = 'text';
       this.visible = true;
-      this.cd.markForCheck();
     }
+    this.cd.markForCheck();
   }
 }
