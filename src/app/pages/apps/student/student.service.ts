@@ -3,8 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { Student } from './form/student';
-
+import { Student } from 'src/app/model/student/student';
 
 @Injectable({
   providedIn: 'root'

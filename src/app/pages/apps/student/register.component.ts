@@ -14,12 +14,27 @@ export class RegisterComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
     name: ['', Validators.required],
+    bitcoin: [''],
+    books: [''],
     city: [''],
     country: [''],
     courses: [''],
+    date_create: [''],
+    end: [''],
+    facebook: [''],
     gender: [''],
-    phone: ['']
-    
+    image_url: [''],
+    instagram: [''],
+    lessons_done: [''],
+    linkedin: [''],
+    list_word_text: [''],
+    login: [''],
+    personal_ident_number: [''],
+    phone: [''],
+    spoken_language: [''],
+    status: [''],
+    tax_ident_number: [''],
+    tiktok: ['']
   });
 
   constructor(
