@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { RouterModule } from '@angular/router';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { MatSelectModule } from '@angular/material/select';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'noteinsert',
@@ -39,7 +40,7 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
   noteCollection$ = new Observable<NoteCollection[]>();
   layoutCtrl: any;
   dataSource = new MatTableDataSource<NoteCollection>();
-  searchTerm: string = ''; // Campo para armazenar o termo de pesquisa
+  searchTerm: string = '';
 
   newNote: NoteCollection = new NoteCollection({
     _id: '',
@@ -50,7 +51,6 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
     title: '',
     permanent: false
   });
-  newTag: string = '';
 
   @ViewChild('descriptionInput') descriptionInput!: ElementRef;
 
@@ -59,6 +59,7 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
     @Inject(Firestore) private firestore: Firestore,
     private noteService: NoteService,
     private soundService: SoundService,
+    private afAuth: AngularFireAuth
   ) {}
 
   ngOnInit(): void {}
@@ -78,7 +79,7 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
     }
   }
 
-  createNote(): void {
+  async createNote(): Promise<void> {
     if (!this.newNote.title || !this.newNote.description) {
       console.error('Title and description are required');
       return;
@@ -86,6 +87,12 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
   
     if (!this.newNote.tags || this.newNote.tags.length === 0) {
       console.error('At least one tag is required');
+      return;
+    }
+
+    const user = await this.afAuth.currentUser;
+    if (!user) {
+      console.error('User not authenticated');
       return;
     }
   
@@ -104,17 +111,14 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
       next_revision_date: this.newNote.next_revision_date || '',
       level: this.newNote.level || '',
       image: this.newNote.image || '',
+      student: { _id: user.uid } // Adiciona o ID do usuário à nota
     };
-  
-    if (this.newNote.student && this.newNote.student._id) {
-      noteToSave.student = this.newNote.student;
-    }
   
     this.noteService
       .createNote(noteToSave as NoteCollection)
       .then(() => {
         console.log('Note created successfully');
-        this.resetForm(); // Reset the form after creating a note
+        this.resetForm();
       })
       .catch((error) => {
         console.error('Error creating note:', error);
@@ -136,7 +140,6 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
       level: '',
       image: ''
     });
-    this.newTag = '';
   }
      
   convertToDate(dateString: string | undefined): Date | undefined {
