@@ -80,13 +80,18 @@
     border: none;
     cursor: pointer;
   }
-  
+
   .text-container {
     font-size: 25px;
     line-height: 1.6;
     text-align: justify;
     position: relative;
     padding: 0 20px;
+    
+    .word {
+      display: inline-block;
+      transition: color 0.5s ease;
+    }
   }
 
   table {
@@ -176,7 +181,7 @@
     text-align: center;
     font-size: 35px;
     padding: 50px 100px;
-    line-height: 1.6; 
+    line-height: 1.6;
     z-index: 1000;
   }
 
@@ -228,29 +233,29 @@
     letter-spacing: 0.1em;
     word-spacing: 0.2em;
   }
-  
+
   @font-face {
     font-family: 'OpenDyslexic';
-    src: url('/assets/fonts/opendyslexic-regular.woff2') format('woff2')
+    src: url('/assets/fonts/opendyslexic-regular.woff2') format('woff2');
   }
 
   .filter-container {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-  
+
     .filter-label {
       font-size: 18px;
       color: #1E90FF;
       display: flex;
       align-items: center;
-  
+
       .filter-icon {
         margin-right: 8px;
         font-size: 24px;
       }
     }
-  
+
     .custom-select {
       margin-left: 10px;
       padding: 8px;
@@ -260,12 +265,12 @@
       color: #1E90FF;
       background-color: #f0f8ff;
       transition: all 0.3s ease;
-  
+
       &:hover {
         border-color: #4682B4;
         background-color: #e0ffff;
       }
-  
+
       &:focus {
         outline: none;
         box-shadow: 0 0 5px #4682B4;
