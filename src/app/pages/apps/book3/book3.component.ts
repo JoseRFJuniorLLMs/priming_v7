@@ -726,35 +726,46 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   }
   
   applyBeeLineReader() {
-    const textContainer = this.textContainer.nativeElement;
-    const words = textContainer.innerText.split(' ');
-    const colors = [
-      [0, 0, 255],    // Azul
-      [75, 0, 130],   // Índigo
-      [255, 0, 0],    // Vermelho
-      [0, 0, 0]       // Preto
-    ];
-    const totalWords = words.length;
-    const gradientWords = 50; // Número de palavras por ciclo de degradê
-    const colorStops = colors.length - 1;
-    const wordsPerStop = Math.floor(gradientWords / colorStops);
+    if (this.isBeeLineActive) {
+      this.clearBeeLineReader();
+    } else {
+      const textContainer = this.textContainer.nativeElement;
+      const words = textContainer.innerText.split(' ');
+      const colors = [
+        [0, 0, 255],    // Azul
+        [75, 0, 130],   // Índigo
+        [255, 0, 0],    // Vermelho
+        [0, 0, 0]       // Preto
+      ];
+      const totalWords = words.length;
+      const gradientWords = 50; // Número de palavras por ciclo de degradê
+      const colorStops = colors.length - 1;
+      const wordsPerStop = Math.floor(gradientWords / colorStops);
   
-    let gradientText = words.map((word: any, index: number) => {
-      const stopIndex = Math.floor((index % gradientWords) / wordsPerStop);
-      const t = ((index % gradientWords) % wordsPerStop) / wordsPerStop;
-      const startColor = colors[stopIndex];
-      const endColor = colors[(stopIndex + 1) % colors.length];
-      const color = this.interpolateColor(startColor, endColor, t);
-      return `<span style="color: rgb(${color.join(',')})">${word}</span>`;
-    }).join(' ');
+      let gradientText = words.map((word: any, index: number) => {
+        const stopIndex = Math.floor((index % gradientWords) / wordsPerStop);
+        const t = ((index % gradientWords) % wordsPerStop) / wordsPerStop;
+        const startColor = colors[stopIndex];
+        const endColor = colors[(stopIndex + 1) % colors.length];
+        const color = this.interpolateColor(startColor, endColor, t);
+        return `<span style="color: rgb(${color.join(',')})">${word}</span>`;
+      }).join(' ');
   
-    textContainer.innerHTML = gradientText;
-    this.isBeeLineActive = !this.isBeeLineActive;
+      textContainer.innerHTML = gradientText;
+      this.isBeeLineActive = true;  // Define o estado como ativo
+    }
   }
   
   interpolateColor(startColor: number[], endColor: number[], t: number): number[] {
     return startColor.map((start, i) => Math.round(start + (endColor[i] - start) * t));
   }
-   
+      
+  clearBeeLineReader() {
+    if (this.currentText) {
+      this.processText();  
+      this.isBeeLineActive = false;  
+    }
+  }
+  
         
 }//fim

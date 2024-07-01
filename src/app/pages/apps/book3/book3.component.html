@@ -21,10 +21,11 @@
       </button>
 
       <button (click)="applyBeeLineReader()" matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
-        <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(34, 139, 34)' : 'rgb(0, 153, 255)'" [style.fontSize]="'50px'">
+        <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
           {{ isBeeLineActive ? 'palette' : 'color_lens' }}
         </span>
       </button>
+      
       
       <button (click)="toggleCaptions()" matTooltip="Toggle Captions">
         <span class="material-symbols-outlined" [style.color]="showCaptions ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
