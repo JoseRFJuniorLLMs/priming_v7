@@ -99,21 +99,20 @@ export class NoteListComponent implements OnInit, OnDestroy {
 
   openSRVP(): void {
     this.filteredNotes$.subscribe(notes => {
+      const combinedText = notes.map(note => note.description).join(' '); // Concatena as descrições das notas
       if (!this.srvpDialogRef) {
         this.srvpDialogRef = this.dialog.open(RsvpreaderComponent, {
           width: '80vw',
           height: '80vh',
-          data: { notes },
+          data: { texto: combinedText }, // Passa o texto combinado para o componente `RsvpreaderComponent`
           hasBackdrop: false
         });
-
+  
         this.srvpDialogRef.afterClosed().subscribe(() => {
           this.srvpDialogRef = null;
         });
-      } else {
-        this.srvpDialogRef.componentInstance.updateNotes(notes);
       }
     });
   }
-
-}
+  
+}//fim
