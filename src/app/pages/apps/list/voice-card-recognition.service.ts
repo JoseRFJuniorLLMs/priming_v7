@@ -123,9 +123,9 @@ export class VoiceCardRecognitionService implements OnInit {
         //progressColor: 'rgb(0, 0, 0)',
         progressColor: 'transparent',
         barGap: 1,
-        barWidth: 2,
-        barHeight: 10,
-        barRadius: 50,
+        barWidth: 1,
+        barHeight: 1,
+        barRadius: 1,
         backend: 'WebAudio'
       });
 

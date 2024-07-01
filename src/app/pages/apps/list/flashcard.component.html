@@ -15,23 +15,22 @@
           <mat-card-subtitle></mat-card-subtitle>
         </mat-card-title-group>
       </mat-card-header>
-
     </mat-card>
   </div>
 </mat-dialog-content>
 <mat-card-actions>
   <div class="flex">
-    <button (click)="toggleTranslation()" matTooltip="Show Answer" color="primary" mat-fab type="button">
-      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">visibility</span>
+    <button mat-fab (click)="toggleTranslation()" matTooltip="Show Answer">
+      <span class="material-symbols-outlined" style="font-size: 30px;">visibility</span>
     </button>
-    <button (click)="answer('hard')" matTooltip="Hard" color="primary" mat-fab type="button">
-      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_very_dissatisfied</span>
+    <button mat-fab (click)="answer('hard')" matTooltip="Hard" >
+      <span class="material-symbols-outlined" style="font-size: 30px;">sentiment_very_dissatisfied</span>
     </button>
-    <button (click)="answer('good')" matTooltip="Good" color="primary" mat-fab type="button">
-      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_satisfied</span>
+    <button mat-fab (click)="answer('good')" matTooltip="Good">
+      <span class="material-symbols-outlined" style="font-size: 30px;">sentiment_satisfied</span>
     </button>
-    <button (click)="answer('easy')" matTooltip="Easy" color="primary" mat-fab type="button">
-      <span class="material-symbols-outlined" style="font-size: 30px; color: white;">sentiment_very_satisfied</span>
+    <button mat-fab (click)="answer('easy')" matTooltip="Easy" >
+      <span class="material-symbols-outlined" style="font-size: 30px;">sentiment_very_satisfied</span>
     </button>
   </div>
   <div>
