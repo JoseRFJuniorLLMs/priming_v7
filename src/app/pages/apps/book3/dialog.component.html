@@ -26,8 +26,7 @@
       <td>
         <button 
           matTooltip="Speak Sentence" 
-          (click)="speakSentence(i)" 
-          [disabled]="canSpeak && currentSentenceIndex === i ? false : true">
+          (click)="toggleSpeakSentence(i)">
           <span class="material-symbols-outlined" 
                 [style.color]="speakClicked[i] ? 'rgb(255, 69, 0)' : 'rgb(50, 205, 50)'" 
                 [style.fontSize]="'50px'">

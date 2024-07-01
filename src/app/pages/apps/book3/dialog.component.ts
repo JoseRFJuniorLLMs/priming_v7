@@ -41,23 +41,13 @@ export class DialogComponent implements OnInit {
   ) {
     this.sentences = data.sentences;
     this.nlpResults = data.nlpResults;
-    this.playClicked = Array(this.sentences.length).fill(true);
-    this.speakClicked = Array(this.sentences.length).fill(true);
-    this.playClicked[0] = false; // Inicializa o primeiro botão "Play" como verde
+    this.playClicked = Array(this.sentences.length).fill(false);
+    this.speakClicked = Array(this.sentences.length).fill(false);
   }
 
   ngOnInit(): void {
     this.voiceRecognitionService.spokenText$.subscribe(spokenText => {
       this.spokenText = spokenText;
-      this.instructions = 'Sentence spoken';
-      if (this.currentSentenceIndex !== -1) {
-        this.speakClicked[this.currentSentenceIndex] = true;
-        this.playClicked[this.currentSentenceIndex] = true;
-        if (this.currentSentenceIndex + 1 < this.sentences.length) {
-          this.playClicked[this.currentSentenceIndex + 1] = false;
-        }
-        this.instructions = 'Next sentence';
-      }
     });
 
     this.loadVoices();
@@ -84,6 +74,7 @@ export class DialogComponent implements OnInit {
   }
 
   togglePlaySentence(index: number): void {
+    this.playClicked[index] = !this.playClicked[index];
     if (this.playClicked[index]) {
       this.stopSentence();
     } else {
@@ -108,24 +99,28 @@ export class DialogComponent implements OnInit {
     utterance.onend = () => {
       this.canSpeak = true;
       this.currentSentenceIndex = index;
-      this.speakClicked[index] = false;
-      this.instructions = 'Speak the sentence';
     };
 
     speechSynthesis.speak(utterance);
-    this.playClicked[index] = true;
   }
 
   stopSentence(): void {
     speechSynthesis.cancel();
   }
 
+  toggleSpeakSentence(index: number): void {
+    this.speakClicked[index] = !this.speakClicked[index];
+    if (this.speakClicked[index]) {
+      this.voiceRecognitionService.stopListening();
+    } else {
+      this.speakSentence(index);
+    }
+  }
+
   speakSentence(index: number): void {
-    if (!this.canSpeak || this.currentSentenceIndex !== index) return;
+    if (!this.canSpeak) return;
 
     this.voiceRecognitionService.startListening();
-    this.speakClicked[index] = true;
-    this.instructions = 'Listening to your sentence';
   }
 
   highlightWord(charIndex: number, sentence: string): void {

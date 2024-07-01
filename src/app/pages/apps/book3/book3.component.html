@@ -20,6 +20,12 @@
         </span>
       </button>
 
+      <button (click)="applyBeeLineReader()" matTooltip="Apply BeeLine Reader: BeeLine Reader is a software system which adds color gradients to digital text to improve reading ability and focus. The text at the end of each line is colored the same as the beginning of the next, so the color of the text acts as a flag post that directs the reader's eyes through the text more easily. In each line, the color of the text transitions from one color to another, with each character being slightly different than the preceding and following characters.">
+        <span class="material-symbols-outlined" style="color: rgb(0, 153, 255); font-size: 50px;">
+          color_lens
+        </span>
+      </button>
+      
       <button (click)="toggleCaptions()" matTooltip="Toggle Captions">
         <span class="material-symbols-outlined" [style.color]="showCaptions ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
           {{ showCaptions ? 'closed_caption_disabled' : 'closed_caption' }}
