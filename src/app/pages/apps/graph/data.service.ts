@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import words from '../../../../assets/json/word.json';
-
 import { NoteCollection } from '../note/note-collection';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-
 import {
   Firestore,
   collection,
@@ -13,9 +11,12 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  Timestamp
+  query,
+  where
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -34,23 +35,29 @@ export class DataService {
 
   constructor(
     private firestore: Firestore,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private afAuth: AngularFireAuth
   ) {
     this.loadPrimeToTargetMapping();
     this.noteCollection$ = this.getNotes();
   }
 
   getNotes(): Observable<NoteCollection[]> {
-    return collectionData(this.noteCollectionRef, {
-      idField: '_id'
-    }) as Observable<NoteCollection[]>;
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const userNotesQuery = query(this.noteCollectionRef, where('student._id', '==', user.uid));
+          return collectionData(userNotesQuery, { idField: '_id' }) as Observable<NoteCollection[]>;
+        } else {
+          return of<NoteCollection[]>([]);
+        }
+      })
+    );
   }
 
   getNoteById(id: string): Observable<NoteCollection> {
     const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
-    return docData(noteDocRef, {
-      idField: '_id'
-    }) as Observable<NoteCollection>;
+    return docData(noteDocRef, { idField: '_id' }) as Observable<NoteCollection>;
   }
 
   private loadPrimeToTargetMapping() {

@@ -48,7 +48,7 @@ import { FlashcardComponent } from '../../dashboards/components/dialog-flashcard
 })
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  studentCollection$!: Observable<any[]>;
+  student$!: Observable<any[]>;
 
   @ViewChild('mic') micElement!: ElementRef<HTMLDivElement>;
   @ViewChild('micSelect') micSelectElement!: ElementRef<HTMLSelectElement>;
@@ -93,8 +93,8 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     private soundService: SoundService,
     private voiceRecognitionService: VoiceRecognitionService
   ) {
-    const studentCollection = collection(this.firestore, 'StudentCollection');
-    this.studentCollection$ = collectionData(studentCollection) as Observable<any[]>;
+    const student = collection(this.firestore, 'Student');
+    this.student$ = collectionData(student) as Observable<any[]>;
 
     this.totalCombinations = this.whos.length * this.whys.length * this.actions.length * this.wheres.length;
     this.generateCombinations();
