@@ -21,8 +21,8 @@
       </button>
 
       <button (click)="applyBeeLineReader()" matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
-        <span class="material-symbols-outlined" style="color: rgb(0, 153, 255); font-size: 50px;">
-          color_lens
+        <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(34, 139, 34)' : 'rgb(0, 153, 255)'" [style.fontSize]="'50px'">
+          {{ isBeeLineActive ? 'palette' : 'color_lens' }}
         </span>
       </button>
       

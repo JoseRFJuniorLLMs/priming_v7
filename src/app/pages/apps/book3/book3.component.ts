@@ -38,6 +38,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   previousWordElement: HTMLElement | null = null;
   isReading: boolean = false;
   isFocusMode: boolean = false;
+  isBeeLineActive: boolean = false;
 
   voices: SpeechSynthesisVoice[] = [];
   selectedVoice: SpeechSynthesisVoice | null = null;
@@ -730,7 +731,6 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     const colors = [
       [0, 0, 255],    // Azul
       [75, 0, 130],   // Índigo
-      [238, 130, 238],// Violeta
       [255, 0, 0],    // Vermelho
       [0, 0, 0]       // Preto
     ];
@@ -749,6 +749,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     }).join(' ');
   
     textContainer.innerHTML = gradientText;
+    this.isBeeLineActive = !this.isBeeLineActive;
   }
   
   interpolateColor(startColor: number[], endColor: number[], t: number): number[] {
