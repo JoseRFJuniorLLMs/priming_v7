@@ -322,6 +322,906 @@
       "image": "",
       "word": "Waves",
       "type": "word"
+    },
+    {
+      "id": 55,
+      "image": "",
+      "word": "Hello",
+      "type": "word"
+    },
+    {
+      "id": 56,
+      "image": "",
+      "word": "How are you?",
+      "type": "word"
+    },
+    {
+      "id": 57,
+      "image": "",
+      "word": "Good morning",
+      "type": "word"
+    },
+    {
+      "id": 58,
+      "image": "",
+      "word": "Good afternoon",
+      "type": "word"
+    },
+    {
+      "id": 59,
+      "image": "",
+      "word": "Good evening",
+      "type": "word"
+    },
+    {
+      "id": 60,
+      "image": "",
+      "word": "Good night",
+      "type": "word"
+    },
+    {
+      "id": 61,
+      "image": "",
+      "word": "Thank you",
+      "type": "word"
+    },
+    {
+      "id": 62,
+      "image": "",
+      "word": "You're welcome",
+      "type": "word"
+    },
+    {
+      "id": 63,
+      "image": "",
+      "word": "Please",
+      "type": "word"
+    },
+    {
+      "id": 64,
+      "image": "",
+      "word": "Excuse me",
+      "type": "word"
+    },
+    {
+      "id": 65,
+      "image": "",
+      "word": "I'm sorry",
+      "type": "word"
+    },
+    {
+      "id": 66,
+      "image": "",
+      "word": "Yes",
+      "type": "word"
+    },
+    {
+      "id": 67,
+      "image": "",
+      "word": "No",
+      "type": "word"
+    },
+    {
+      "id": 68,
+      "image": "",
+      "word": "What's your name?",
+      "type": "word"
+    },
+    {
+      "id": 69,
+      "image": "",
+      "word": "My name is...",
+      "type": "word"
+    },
+    {
+      "id": 70,
+      "image": "",
+      "word": "Nice to meet you",
+      "type": "word"
+    },
+    {
+      "id": 71,
+      "image": "",
+      "word": "How much is this?",
+      "type": "word"
+    },
+    {
+      "id": 72,
+      "image": "",
+      "word": "Where is the bathroom?",
+      "type": "word"
+    },
+    {
+      "id": 73,
+      "image": "",
+      "word": "I don't understand",
+      "type": "word"
+    },
+    {
+      "id": 74,
+      "image": "",
+      "word": "Can you help me?",
+      "type": "word"
+    },
+    {
+      "id": 75,
+      "image": "",
+      "word": "I need a doctor",
+      "type": "word"
+    },
+    {
+      "id": 76,
+      "image": "",
+      "word": "Call the police",
+      "type": "word"
+    },
+    {
+      "id": 77,
+      "image": "",
+      "word": "What time is it?",
+      "type": "word"
+    },
+    {
+      "id": 78,
+      "image": "",
+      "word": "I am hungry",
+      "type": "word"
+    },
+    {
+      "id": 79,
+      "image": "",
+      "word": "I am thirsty",
+      "type": "word"
+    },
+    {
+      "id": 80,
+      "image": "",
+      "word": "Where is the exit?",
+      "type": "word"
+    },
+    {
+      "id": 81,
+      "image": "",
+      "word": "How far is it?",
+      "type": "word"
+    },
+    {
+      "id": 82,
+      "image": "",
+      "word": "I like it",
+      "type": "word"
+    },
+    {
+      "id": 83,
+      "image": "",
+      "word": "I don't like it",
+      "type": "word"
+    },
+    {
+      "id": 84,
+      "image": "",
+      "word": "Do you speak English?",
+      "type": "word"
+    },
+    {
+      "id": 85,
+      "image": "",
+      "word": "A table for two, please",
+      "type": "word"
+    },
+    {
+      "id": 86,
+      "image": "",
+      "word": "Where is the train station?",
+      "type": "word"
+    },
+    {
+      "id": 87,
+      "image": "",
+      "word": "Can I have the bill, please?",
+      "type": "word"
+    },
+    {
+      "id": 88,
+      "image": "",
+      "word": "I am lost",
+      "type": "word"
+    },
+    {
+      "id": 89,
+      "image": "",
+      "word": "What is this?",
+      "type": "word"
+    },
+    {
+      "id": 90,
+      "image": "",
+      "word": "How do you say...?",
+      "type": "word"
+    },
+    {
+      "id": 91,
+      "image": "",
+      "word": "Where can I find...?",
+      "type": "word"
+    },
+    {
+      "id": 92,
+      "image": "",
+      "word": "Is it nearby?",
+      "type": "word"
+    },
+    {
+      "id": 93,
+      "image": "",
+      "word": "What's happening?",
+      "type": "word"
+    },
+    {
+      "id": 94,
+      "image": "",
+      "word": "I don't know",
+      "type": "word"
+    },
+    {
+      "id": 95,
+      "image": "",
+      "word": "Can I use your phone?",
+      "type": "word"
+    },
+    {
+      "id": 96,
+      "image": "",
+      "word": "I am tired",
+      "type": "word"
+    },
+    {
+      "id": 97,
+      "image": "",
+      "word": "I am sick",
+      "type": "word"
+    },
+    {
+      "id": 98,
+      "image": "",
+      "word": "How much does it cost?",
+      "type": "word"
+    },
+    {
+      "id": 99,
+      "image": "",
+      "word": "Do you have...?",
+      "type": "word"
+    },
+    {
+      "id": 100,
+      "image": "",
+      "word": "I am looking for...",
+      "type": "word"
+    },
+    {
+      "id": 101,
+      "image": "",
+      "word": "What is your phone number?",
+      "type": "word"
+    },
+    {
+      "id": 102,
+      "image": "",
+      "word": "I need a taxi",
+      "type": "word"
+    },
+    {
+      "id": 103,
+      "image": "",
+      "word": "Can I sit here?",
+      "type": "word"
+    },
+    {
+      "id": 104,
+      "image": "",
+      "word": "Where are you from?",
+      "type": "word"
+    },
+    {
+      "id": 105,
+      "image": "",
+      "word": "I am from...",
+      "type": "word"
+    },
+    {
+      "id": 106,
+      "image": "",
+      "word": "I don't speak English well",
+      "type": "word"
+    },
+    {
+      "id": 107,
+      "image": "",
+      "word": "Can you repeat that?",
+      "type": "word"
+    },
+    {
+      "id": 108,
+      "image": "",
+      "word": "I don't have any money",
+      "type": "word"
+    },
+    {
+      "id": 109,
+      "image": "",
+      "word": "Do you have change?",
+      "type": "word"
+    },
+    {
+      "id": 110,
+      "image": "",
+      "word": "Where is the nearest ATM?",
+      "type": "word"
+    },
+    {
+      "id": 111,
+      "image": "",
+      "word": "I need to go to the hospital",
+      "type": "word"
+    },
+    {
+      "id": 112,
+      "image": "",
+      "word": "Can you show me?",
+      "type": "word"
+    },
+    {
+      "id": 113,
+      "image": "",
+      "word": "I am lost, can you help me?",
+      "type": "word"
+    },
+    {
+      "id": 114,
+      "image": "",
+      "word": "Where is the bus stop?",
+      "type": "word"
+    },
+    {
+      "id": 115,
+      "image": "",
+      "word": "How long does it take?",
+      "type": "word"
+    },
+    {
+      "id": 116,
+      "image": "",
+      "word": "Do you have a map?",
+      "type": "word"
+    },
+    {
+      "id": 117,
+      "image": "",
+      "word": "Where is the nearest gas station?",
+      "type": "word"
+    },
+    {
+      "id": 118,
+      "image": "",
+      "word": "Can you give me a discount?",
+      "type": "word"
+    },
+    {
+      "id": 119,
+      "image": "",
+      "word": "I don't feel well",
+      "type": "word"
+    },
+    {
+      "id": 120,
+      "image": "",
+      "word": "I need an interpreter",
+      "type": "word"
+    },
+    {
+      "id": 121,
+      "image": "",
+      "word": "Can you speak slowly?",
+      "type": "word"
+    },
+    {
+      "id": 122,
+      "image": "",
+      "word": "How do I get to...?",
+      "type": "word"
+    },
+    {
+      "id": 123,
+      "image": "",
+      "word": "Do you have vegetarian food?",
+      "type": "word"
+    },
+    {
+      "id": 124,
+      "image": "",
+      "word": "I am allergic to...",
+      "type": "word"
+    },
+    {
+      "id": 125,
+      "image": "",
+      "word": "Where is the nearest pharmacy?",
+      "type": "word"
+    },
+    {
+      "id": 126,
+      "image": "",
+      "word": "Can I get a receipt?",
+      "type": "word"
+    },
+    {
+      "id": 127,
+      "image": "",
+      "word": "I need a ticket",
+      "type": "word"
+    },
+    {
+      "id": 128,
+      "image": "",
+      "word": "I need a room",
+      "type": "word"
+    },
+    {
+      "id": 129,
+      "image": "",
+      "word": "Where is the emergency exit?",
+      "type": "word"
+    },
+    {
+      "id": 130,
+      "image": "",
+      "word": "What is the exchange rate?",
+      "type": "word"
+    },
+    {
+      "id": 131,
+      "image": "",
+      "word": "Can I make a reservation?",
+      "type": "word"
+    },
+    {
+      "id": 132,
+      "image": "",
+      "word": "What is the weather like?",
+      "type": "word"
+    },
+    {
+      "id": 133,
+      "image": "",
+      "word": "Is there a charge?",
+      "type": "word"
+    },
+    {
+      "id": 134,
+      "image": "",
+      "word": "Where can I rent a car?",
+      "type": "word"
+    },
+    {
+      "id": 135,
+      "image": "",
+      "word": "Do you have an English menu?",
+      "type": "word"
+    },
+    {
+      "id": 136,
+      "image": "",
+      "word": "Can I try this on?",
+      "type": "word"
+    },
+    {
+      "id": 137,
+      "image": "",
+      "word": "Can you recommend a restaurant?",
+      "type": "word"
+    },
+    {
+      "id": 138,
+      "image": "",
+      "word": "Is there a bus to...?",
+      "type": "word"
+    },
+    {
+      "id": 139,
+      "image": "",
+      "word": "What time does it open?",
+      "type": "word"
+    },
+    {
+      "id": 140,
+      "image": "",
+      "word": "What time does it close?",
+      "type": "word"
+    },
+    {
+      "id": 141,
+      "image": "",
+      "word": "Where can I buy...?",
+      "type": "word"
+    },
+    {
+      "id": 142,
+      "image": "",
+      "word": "Can you tell me more about...?",
+      "type": "word"
+    },
+    {
+      "id": 143,
+      "image": "",
+      "word": "Do you have any recommendations?",
+      "type": "word"
+    },
+    {
+      "id": 144,
+      "image": "",
+      "word": "Can you give me directions?",
+      "type": "word"
+    },
+    {
+      "id": 145,
+      "image": "",
+      "word": "Is there a place to park?",
+      "type": "word"
+    },
+    {
+      "id": 146,
+      "image": "",
+      "word": "What is your address?",
+      "type": "word"
+    },
+    {
+      "id": 147,
+      "image": "",
+      "word": "Where is the entrance?",
+      "type": "word"
+    },
+    {
+      "id": 148,
+      "image": "",
+      "word": "What is the best way to get to...?",
+      "type": "word"
+    },
+    {
+      "id": 149,
+      "image": "",
+      "word": "Is there a fee?",
+      "type": "word"
+    },
+    {
+      "id": 150,
+      "image": "",
+      "word": "Can I get a refund?",
+      "type": "word"
+    },
+    {
+      "id": 151,
+      "image": "",
+      "word": "What is your email address?",
+      "type": "word"
+    },
+    {
+      "id": 152,
+      "image": "",
+      "word": "Is there a hospital nearby?",
+      "type": "word"
+    },
+    {
+      "id": 153,
+      "image": "",
+      "word": "Can I get a map?",
+      "type": "word"
+    },
+    {
+      "id": 154,
+      "image": "",
+      "word": "Is there a restaurant nearby?",
+      "type": "word"
+    },
+    {
+      "id": 155,
+      "image": "",
+      "word": "Can you recommend a hotel?",
+      "type": "word"
+    },
+    {
+      "id": 156,
+      "image": "",
+      "word": "Where is the nearest market?",
+      "type": "word"
+    },
+    {
+      "id": 157,
+      "image": "",
+      "word": "Where can I get a taxi?",
+      "type": "word"
+    },
+    {
+      "id": 158,
+      "image": "",
+      "word": "Is it safe here?",
+      "type": "word"
+    },
+    {
+      "id": 159,
+      "image": "",
+      "word": "Can I take your picture?",
+      "type": "word"
+    },
+    {
+      "id": 160,
+      "image": "",
+      "word": "Do you have Wi-Fi?",
+      "type": "word"
+    },
+    {
+      "id": 161,
+      "image": "",
+      "word": "Can I pay by credit card?",
+      "type": "word"
+    },
+    {
+      "id": 162,
+      "image": "",
+      "word": "Do you have a pen?",
+      "type": "word"
+    },
+    {
+      "id": 163,
+      "image": "",
+      "word": "What is your website?",
+      "type": "word"
+    },
+    {
+      "id": 164,
+      "image": "",
+      "word": "Is there a tourist office nearby?",
+      "type": "word"
+    },
+    {
+      "id": 165,
+      "image": "",
+      "word": "Do you have a room available?",
+      "type": "word"
+    },
+    {
+      "id": 166,
+      "image": "",
+      "word": "What is the check-out time?",
+      "type": "word"
+    },
+    {
+      "id": 167,
+      "image": "",
+      "word": "Can you call me a taxi?",
+      "type": "word"
+    },
+    {
+      "id": 168,
+      "image": "",
+      "word": "Do you accept US dollars?",
+      "type": "word"
+    },
+    {
+      "id": 169,
+      "image": "",
+      "word": "Is there an English guide available?",
+      "type": "word"
+    },
+    {
+      "id": 170,
+      "image": "",
+      "word": "Can you write it down?",
+      "type": "word"
+    },
+    {
+      "id": 171,
+      "image": "",
+      "word": "What is the password?",
+      "type": "word"
+    },
+    {
+      "id": 172,
+      "image": "",
+      "word": "Can I get a ticket online?",
+      "type": "word"
+    },
+    {
+      "id": 173,
+      "image": "",
+      "word": "Is there a gift shop?",
+      "type": "word"
+    },
+    {
+      "id": 174,
+      "image": "",
+      "word": "Do you have any brochures?",
+      "type": "word"
+    },
+    {
+      "id": 175,
+      "image": "",
+      "word": "Can I have some water?",
+      "type": "word"
+    },
+    {
+      "id": 176,
+      "image": "",
+      "word": "Is breakfast included?",
+      "type": "word"
+    },
+    {
+      "id": 177,
+      "image": "",
+      "word": "Can you recommend a good place to eat?",
+      "type": "word"
+    },
+    {
+      "id": 178,
+      "image": "",
+      "word": "Can I have some coffee?",
+      "type": "word"
+    },
+    {
+      "id": 179,
+      "image": "",
+      "word": "What are the opening hours?",
+      "type": "word"
+    },
+    {
+      "id": 180,
+      "image": "",
+      "word": "Where is the tourist information center?",
+      "type": "word"
+    },
+    {
+      "id": 181,
+      "image": "",
+      "word": "Can you give me a wake-up call?",
+      "type": "word"
+    },
+    {
+      "id": 182,
+      "image": "",
+      "word": "Do you have a reservation?",
+      "type": "word"
+    },
+    {
+      "id": 183,
+      "image": "",
+      "word": "Is it free?",
+      "type": "word"
+    },
+    {
+      "id": 184,
+      "image": "",
+      "word": "What is the entrance fee?",
+      "type": "word"
+    },
+    {
+      "id": 185,
+      "image": "",
+      "word": "Is it open on weekends?",
+      "type": "word"
+    },
+    {
+      "id": 186,
+      "image": "",
+      "word": "Is there air conditioning?",
+      "type": "word"
+    },
+    {
+      "id": 187,
+      "image": "",
+      "word": "Do you have a non-smoking room?",
+      "type": "word"
+    },
+    {
+      "id": 188,
+      "image": "",
+      "word": "Is there a balcony?",
+      "type": "word"
+    },
+    {
+      "id": 189,
+      "image": "",
+      "word": "What time is breakfast?",
+      "type": "word"
+    },
+    {
+      "id": 190,
+      "image": "",
+      "word": "Is there an elevator?",
+      "type": "word"
+    },
+    {
+      "id": 191,
+      "image": "",
+      "word": "Do you have a shuttle service?",
+      "type": "word"
+    },
+    {
+      "id": 192,
+      "image": "",
+      "word": "Where is the meeting point?",
+      "type": "word"
+    },
+    {
+      "id": 193,
+      "image": "",
+      "word": "Can I leave my luggage here?",
+      "type": "word"
+    },
+    {
+      "id": 194,
+      "image": "",
+      "word": "Can I extend my stay?",
+      "type": "word"
+    },
+    {
+      "id": 195,
+      "image": "",
+      "word": "Is there a safe in the room?",
+      "type": "word"
+    },
+    {
+      "id": 196,
+      "image": "",
+      "word": "Do you have a laundry service?",
+      "type": "word"
+    },
+    {
+      "id": 197,
+      "image": "",
+      "word": "Can I have an extra blanket?",
+      "type": "word"
+    },
+    {
+      "id": 198,
+      "image": "",
+      "word": "Can I have an extra pillow?",
+      "type": "word"
+    },
+    {
+      "id": 199,
+      "image": "",
+      "word": "Where is the gym?",
+      "type": "word"
+    },
+    {
+      "id": 200,
+      "image": "",
+      "word": "Is there a swimming pool?",
+      "type": "word"
+    },
+    {
+      "id": 201,
+      "image": "",
+      "word": "Can I get a late check-out?",
+      "type": "word"
+    },
+    {
+      "id": 202,
+      "image": "",
+      "word": "Can I book a tour?",
+      "type": "word"
+    },
+    {
+      "id": 203,
+      "image": "",
+      "word": "What time does the bus leave?",
+      "type": "word"
+    },
+    {
+      "id": 204,
+      "image": "",
+      "word": "Where can I buy a ticket?",
+      "type": "word"
     }
   ]
   

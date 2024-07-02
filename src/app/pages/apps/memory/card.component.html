@@ -1,21 +1,16 @@
-<div class="control-panel">
-  <button mat-raised-button color="primary" (click)="newGame()">Novo Jogo</button>
-</div>
-<mat-divider></mat-divider>
-<div class="status-panel">
-  <span>Pares de Cartas Restantes: {{remainingPairs}}</span>
-  <span>Movimentos: {{moves}}</span>
-</div>
 <div class="board" [style.width.px]="boardWidth">
-  <mat-card *ngFor="let card of cards; let i = index" (click)="cardFlipped(card)" [ngClass]="{ 'flipped': card.isFlipped || card.isMatched, 'rotate-x': card.isFlipped && !card.isMatched && i % 2 === 0, 'rotate-y': card.isFlipped && !card.isMatched && i % 2 !== 0 }">
+  <mat-card *ngFor="let card of cards" (click)="cardFlipped(card)" [ngClass]="{ 'flipped': card.isFlipped, 'rotate-x': card.rotateX, 'rotate-y': card.rotateY }">
     <mat-card-content>
-      <ng-container *ngIf="card">
-        <img *ngIf="!card.isFlipped && !card.isMatched" class="back" src="../../../../assets/img/card/card-back.png" alt="Card back" />
-        <ng-container *ngIf="card.isFlipped || card.isMatched">
-          <img *ngIf="card.type === 'image'" [src]="card.image" alt="Card image" />
-          <span *ngIf="card.type === 'word'">{{ card.word }}</span>
-        </ng-container>
+      <ng-container *ngIf="!card.isMatched">
+        <img *ngIf="!card.isFlipped" class="back" src="assets/img/card/card-back.png" alt="Card back" />
+        <img *ngIf="card.isFlipped && card.image" [src]="card.image" alt="Card image" />
+        <span *ngIf="card.isFlipped && !card.image">{{ card.word }}</span>
       </ng-container>
     </mat-card-content>
   </mat-card>
 </div>
+
+  <span>Pares de Cartas Restantes: {{remainingPairs}}</span>
+  <span>Movimentos: {{moves}}</span>
+  <button mat-raised-button color="primary" (click)="newGame()">Novo Jogo</button>
+

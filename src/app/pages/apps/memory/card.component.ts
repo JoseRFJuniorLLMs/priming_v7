@@ -30,8 +30,16 @@ export class CardComponent implements OnInit {
     this.cardService.getCards().subscribe(cards => {
       if (cards.length > 0) {
         const shuffled = cards.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 14);
-        this.cards = [...selected, ...selected].sort(() => 0.5 - Math.random()).map(card => ({ ...card, isFlipped: false, isMatched: false }));
+        const selected = shuffled.slice(0, 8); // Seleciona 8 pares (16 cartas)
+        this.cards = [...selected, ...selected]
+          .sort(() => 0.5 - Math.random())
+          .map(card => ({
+            ...card,
+            isFlipped: false,
+            isMatched: false,
+            rotateX: Math.random() > 0.5,
+            rotateY: Math.random() <= 0.5
+          }));
         this.moves = 0;
         this.remainingPairs = this.cards.length / 2;
         this.calculateWidth();
@@ -42,7 +50,7 @@ export class CardComponent implements OnInit {
   }
 
   calculateWidth() {
-    const columns = 7;
+    const columns = 8;
     this.boardWidth = columns * 110;
   }
 
