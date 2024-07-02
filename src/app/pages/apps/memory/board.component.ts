@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CardService } from './card.service';
+import { CardService } from '../card.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from '../card/card.component';
 
 @Component({
   selector: 'app-board',

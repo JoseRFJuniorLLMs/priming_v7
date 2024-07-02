@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 
@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   imports: [CommonModule, MatCardModule]
 })
-export class CardComponent {
+export class CardComponent implements OnInit {
   @Input() card: any;
   @Input() isFlipped: boolean = false;
   @Output() flipped = new EventEmitter<void>();
