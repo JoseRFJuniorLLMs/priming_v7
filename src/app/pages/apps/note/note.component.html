@@ -1,7 +1,4 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>Notes</span>
-    <span class="spacer"></span>
+
 
     <button matTooltip="View Flashcard" (click)="openFlashcard()" type="button">
       <span matTooltip="FlashCard" class="material-symbols-outlined centered-and-enlarged" style="font-size: 40px; color: rgb(255, 2, 2);">
@@ -12,8 +9,7 @@
         skull
       </span>
     </button>
-  </mat-toolbar-row>
-</mat-toolbar>
+
 
 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container" cdkDropList (cdkDropListDropped)="drop($event)">
   <div class="card" *ngFor="let note of notes$ | async; trackBy: trackById" cdkDrag>
