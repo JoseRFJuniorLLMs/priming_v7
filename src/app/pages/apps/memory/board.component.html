@@ -1,0 +1,17 @@
+<div class="control-panel">
+  <mat-radio-group [(ngModel)]="cardCount" aria-label="Select an option">
+    <mat-radio-button [value]="8">8x2</mat-radio-button>
+    <mat-radio-button [value]="12">12x2</mat-radio-button>
+    <mat-radio-button [value]="16">16x2</mat-radio-button>
+    <mat-radio-button [value]="24">24x2</mat-radio-button>
+  </mat-radio-group>
+  <button mat-raised-button color="primary" (click)="newGame()">New Game</button>
+</div>
+<mat-divider></mat-divider>
+<div class="status-panel">
+  <span>Remaining Card Pairs: {{remainingPairs}}</span>
+  <span>Moves: {{moves}}</span>
+</div>
+<div class="board" [style.width.px]="boardWidth">
+  <app-card *ngFor="let card of cards" [card]="card" (flipped)="cardFlipped(card)"></app-card>
+</div>

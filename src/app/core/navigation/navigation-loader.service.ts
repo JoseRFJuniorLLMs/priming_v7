@@ -77,6 +77,12 @@ export class NavigationLoaderService {
                 label: 'Priming RC7 Game',
                 route: '/apps/voicegame5',
                 icon: 'mat:speaker_notes'
+              },
+              {
+                type: 'link',
+                label: 'Priming Memory',
+                route: '/apps/card',
+                icon: 'mat:speaker_notes'
               }
             ]
           },

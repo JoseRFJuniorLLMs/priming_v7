@@ -1,0 +1,9 @@
+<mat-card (click)="onClick()" [ngClass]="{ 'flipped': isFlipped }">
+  <mat-card-content>
+    <ng-container *ngIf="card">
+      <img *ngIf="card.type === 'image' && isFlipped" [src]="card.image" alt="Card image" />
+      <div *ngIf="card.type === 'word' && isFlipped">{{ card.word }}</div>
+      <img *ngIf="!isFlipped" src="assets/img/card/card-back.png" alt="Card back" />
+    </ng-container>
+  </mat-card-content>
+</mat-card>

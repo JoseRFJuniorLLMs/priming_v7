@@ -91,6 +91,7 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
+
           {
             path: 'voicegame5',
             loadComponent: () =>
@@ -101,6 +102,18 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
+          
+          {
+            path: 'card',
+            loadComponent: () =>
+              import('./pages/apps/memory/card.component').then(
+                (m) => m.CardComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          
           {
             path: 'book3',
             loadComponent: () =>
