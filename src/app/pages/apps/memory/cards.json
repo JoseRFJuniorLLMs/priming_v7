@@ -1,0 +1,327 @@
+[
+    {
+      "id": 1,
+      "image": "../../../../assets/img/card/anion.png",
+      "word": "Anion",
+      "type": "image"
+    },
+    {
+      "id": 2,
+      "image": "",
+      "word": "Anion",
+      "type": "word"
+    },
+    {
+      "id": 3,
+      "image": "../../../../assets/img/card/apple.png",
+      "word": "Apple",
+      "type": "image"
+    },
+    {
+      "id": 4,
+      "image": "",
+      "word": "Apple",
+      "type": "word"
+    },
+    {
+      "id": 5,
+      "image": "../../../../assets/img/card/avocado.png",
+      "word": "Avocado",
+      "type": "image"
+    },
+    {
+      "id": 6,
+      "image": "",
+      "word": "Avocado",
+      "type": "word"
+    },
+    {
+      "id": 7,
+      "image": "../../../../assets/img/card/beach.png",
+      "word": "Beach",
+      "type": "image"
+    },
+    {
+      "id": 8,
+      "image": "",
+      "word": "Beach",
+      "type": "word"
+    },
+    {
+      "id": 9,
+      "image": "../../../../assets/img/card/birthday cake.png",
+      "word": "Birthday Cake",
+      "type": "image"
+    },
+    {
+      "id": 10,
+      "image": "",
+      "word": "Birthday Cake",
+      "type": "word"
+    },
+    {
+      "id": 11,
+      "image": "../../../../assets/img/card/gloves.png",
+      "word": "Gloves",
+      "type": "image"
+    },
+    {
+      "id": 12,
+      "image": "",
+      "word": "Gloves",
+      "type": "word"
+    },
+    {
+      "id": 13,
+      "image": "../../../../assets/img/card/grapes.png",
+      "word": "Grapes",
+      "type": "image"
+    },
+    {
+      "id": 14,
+      "image": "",
+      "word": "Grapes",
+      "type": "word"
+    },
+    {
+      "id": 15,
+      "image": "../../../../assets/img/card/hamburger.png",
+      "word": "Hamburger",
+      "type": "image"
+    },
+    {
+      "id": 16,
+      "image": "",
+      "word": "Hamburger",
+      "type": "word"
+    },
+    {
+      "id": 17,
+      "image": "../../../../assets/img/card/hotdog.png",
+      "word": "Hotdog",
+      "type": "image"
+    },
+    {
+      "id": 18,
+      "image": "",
+      "word": "Hotdog",
+      "type": "word"
+    },
+    {
+      "id": 19,
+      "image": "../../../../assets/img/card/ice cream.png",
+      "word": "Ice Cream",
+      "type": "image"
+    },
+    {
+      "id": 20,
+      "image": "",
+      "word": "Ice Cream",
+      "type": "word"
+    },
+    {
+      "id": 21,
+      "image": "../../../../assets/img/card/ice.png",
+      "word": "Ice",
+      "type": "image"
+    },
+    {
+      "id": 22,
+      "image": "",
+      "word": "Ice",
+      "type": "word"
+    },
+    {
+      "id": 23,
+      "image": "../../../../assets/img/card/juice.png",
+      "word": "Juice",
+      "type": "image"
+    },
+    {
+      "id": 24,
+      "image": "",
+      "word": "Juice",
+      "type": "word"
+    },
+    {
+      "id": 25,
+      "image": "../../../../assets/img/card/meat.png",
+      "word": "Meat",
+      "type": "image"
+    },
+    {
+      "id": 26,
+      "image": "",
+      "word": "Meat",
+      "type": "word"
+    },
+    {
+      "id": 27,
+      "image": "../../../../assets/img/card/pear.png",
+      "word": "Pear",
+      "type": "image"
+    },
+    {
+      "id": 28,
+      "image": "",
+      "word": "Pear",
+      "type": "word"
+    },
+    {
+      "id": 29,
+      "image": "../../../../assets/img/card/pineapple.png",
+      "word": "Pineapple",
+      "type": "image"
+    },
+    {
+      "id": 30,
+      "image": "",
+      "word": "Pineapple",
+      "type": "word"
+    },
+    {
+      "id": 31,
+      "image": "../../../../assets/img/card/popcorn.png",
+      "word": "Popcorn",
+      "type": "image"
+    },
+    {
+      "id": 32,
+      "image": "",
+      "word": "Popcorn",
+      "type": "word"
+    },
+    {
+      "id": 33,
+      "image": "../../../../assets/img/card/potato.png",
+      "word": "Potato",
+      "type": "image"
+    },
+    {
+      "id": 34,
+      "image": "",
+      "word": "Potato",
+      "type": "word"
+    },
+    {
+      "id": 35,
+      "image": "../../../../assets/img/card/rice.png",
+      "word": "Rice",
+      "type": "image"
+    },
+    {
+      "id": 36,
+      "image": "",
+      "word": "Rice",
+      "type": "word"
+    },
+    {
+      "id": 37,
+      "image": "../../../../assets/img/card/salt.png",
+      "word": "Salt",
+      "type": "image"
+    },
+    {
+      "id": 38,
+      "image": "",
+      "word": "Salt",
+      "type": "word"
+    },
+    {
+      "id": 39,
+      "image": "../../../../assets/img/card/steak.png",
+      "word": "Steak",
+      "type": "image"
+    },
+    {
+      "id": 40,
+      "image": "",
+      "word": "Steak",
+      "type": "word"
+    },
+    {
+      "id": 41,
+      "image": "../../../../assets/img/card/strawberry.png",
+      "word": "Strawberry",
+      "type": "image"
+    },
+    {
+      "id": 42,
+      "image": "",
+      "word": "Strawberry",
+      "type": "word"
+    },
+    {
+      "id": 43,
+      "image": "../../../../assets/img/card/summer.png",
+      "word": "Summer",
+      "type": "image"
+    },
+    {
+      "id": 44,
+      "image": "",
+      "word": "Summer",
+      "type": "word"
+    },
+    {
+      "id": 45,
+      "image": "../../../../assets/img/card/sunglasses.png",
+      "word": "Sunglasses",
+      "type": "image"
+    },
+    {
+      "id": 46,
+      "image": "",
+      "word": "Sunglasses",
+      "type": "word"
+    },
+    {
+      "id": 47,
+      "image": "../../../../assets/img/card/tomato.png",
+      "word": "Tomato",
+      "type": "image"
+    },
+    {
+      "id": 48,
+      "image": "",
+      "word": "Tomato",
+      "type": "word"
+    },
+    {
+      "id": 49,
+      "image": "../../../../assets/img/card/water.png",
+      "word": "Water",
+      "type": "image"
+    },
+    {
+      "id": 50,
+      "image": "",
+      "word": "Water",
+      "type": "word"
+    },
+    {
+      "id": 51,
+      "image": "../../../../assets/img/card/watermelon.png",
+      "word": "Watermelon",
+      "type": "image"
+    },
+    {
+      "id": 52,
+      "image": "",
+      "word": "Watermelon",
+      "type": "word"
+    },
+    {
+      "id": 53,
+      "image": "../../../../assets/img/card/waves.png",
+      "word": "Waves",
+      "type": "image"
+    },
+    {
+      "id": 54,
+      "image": "",
+      "word": "Waves",
+      "type": "word"
+    }
+  ]
+  
