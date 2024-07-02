@@ -8,8 +8,8 @@ import { CardComponent } from './card.component';
 
 @Component({
   selector: 'app-board',
-  templateUrl: 'board.component.html',
-  styleUrls: ['board.component.scss'],
+  templateUrl: './board.component.html',
+  styleUrls: ['./board.component.scss'],
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatRadioModule, MatDividerModule, CardComponent]
 })
