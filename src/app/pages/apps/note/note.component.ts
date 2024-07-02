@@ -3,21 +3,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { Firestore } from '@angular/fire/firestore';
 import { NoteService } from './note.service';
 import { NoteCollection } from './note-collection';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { Student } from '../student/form/student';
 import { CdkDragDrop, moveItemInArray, DragDropModule } from '@angular/cdk/drag-drop';
 import { VoiceRecognitionService } from '../../../pages/apps/voice-comand/voice-recognition.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
-import { forkJoin } from 'rxjs';
 import { FlashcardComponent } from '../list/flashcard.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'notes',
@@ -26,22 +21,15 @@ import { FlashcardComponent } from '../list/flashcard.component';
   styleUrls: ['./note.component.scss'],
   imports: [
     CommonModule,
-    MatTableModule,
+    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule,
-    MatToolbarModule,
     DragDropModule,
     MatTooltipModule,
     FormsModule
   ]
 })
 export class NoteComponent implements OnInit {
-  noteCollection$ = new Observable<NoteCollection[]>();
-  layoutCtrl: any;
-  dataSource = new MatTableDataSource<NoteCollection>();
-  searchValue: string = '';
-
   notes$!: Observable<NoteCollection[]>;
   filteredNotes$!: Observable<NoteCollection[]>;
   searchTerm: string = '';
@@ -62,39 +50,18 @@ export class NoteComponent implements OnInit {
   }
 
   loadNotes(): void {
-    this.noteService.noteCollection$
-      .pipe(
-        switchMap((notes) => {
-          const studentObservables = notes.map((note) =>
-            note.student?._id
-              ? this.noteService.getStudentById(note.student._id).pipe(
-                  map((student) => ({
-                    ...note,
-                    studentName: student?.name ?? 'Unknown',
-                    student: student 
-                  })),
-                  catchError(() => of({ ...note, studentName: 'Unknown' }))
-                )
-              : of({ ...note, studentName: 'Unknown' })
-          );
-
-          return forkJoin(studentObservables);
-        })
-      )
-      .subscribe((notesWithDetails) => {
-        this.dataSource.data = notesWithDetails.map((noteData: any) => {
-          const note = new NoteCollection(noteData);
-          return this.noteService.formatNoteDate(note);
-        });
-      });
+    this.notes$ = this.noteService.noteCollection$;
+    this.notes$.subscribe(notes => {
+      console.log('Loaded notes:', notes); // Adicionando logs para verificar se as notas foram carregadas
+    });
   }
 
-  createNote(student: Student): void {
+  createNote(): void {
     const newNote = new NoteCollection({
       _id: '', // Generate a unique ID for the new note if necessary
       created_at: new Date().toISOString(),
       description: '',
-      student: student,
+      student: { _id: '123' }, // Exemplo de estudante
       tags: '',
       title: '',
       permanent: false 
@@ -152,9 +119,11 @@ export class NoteComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<NoteCollection[]>): void {
-    const prevIndex = this.dataSource.data.findIndex((d) => d === event.item.data);
-    moveItemInArray(this.dataSource.data, prevIndex, event.currentIndex);
-    this.dataSource.data = [...this.dataSource.data];
+    console.log('Drop event:', event);
+    this.notes$.subscribe(notes => {
+      const prevIndex = notes.findIndex((d) => d === event.item.data);
+      moveItemInArray(notes, prevIndex, event.currentIndex);
+    });
   }
 
   speak(note: NoteCollection): void {
@@ -169,32 +138,27 @@ export class NoteComponent implements OnInit {
     this.voiceService.speak(text);
   }
 
-  // Method to review a note
   reviewNote(note: NoteCollection, correctAnswer: boolean): void {
-    // A lógica do review foi simplificada para chamar calculateNextReview diretamente
     const response = correctAnswer ? 'good' : 'fail';
     note.calculateNextReview(response);
     this.updateNote(note._id, note);
   }
 
-  // Removido o método que causava erro
-
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.searchTerm = filterValue.trim().toLowerCase();
   }
 
   openFlashcard(): void {
-    this.filteredNotes$.subscribe(notes => {
+    this.notes$.subscribe(notes => {
       const dialogRef = this.dialog.open(FlashcardComponent, {
-        width: '80vw',  // 80% da largura da viewport
-        height: '80vh', // 80% da altura da viewport
+        width: '80vw',
+        height: '80vh',
         data: { notes },
         hasBackdrop: false
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        // Chamando ngOnDestroy manualmente para garantir a limpeza
         if (dialogRef.componentInstance) {
           dialogRef.componentInstance.ngOnDestroy();
         }
@@ -203,7 +167,6 @@ export class NoteComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-
+    // Implementa a lógica necessária para limpar recursos, se necessário
   }
-
 }

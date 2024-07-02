@@ -9,11 +9,14 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
+  query,
+  where,
   Timestamp
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { NoteCollection } from './note-collection';
-import { Student } from '../student/form/student';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,6 @@ import { Student } from '../student/form/student';
 export class NoteService {
 
   private noteCollectionRef = collection(this.firestore, 'NoteCollection');
-  private studentCollectionRef = collection(this.firestore, 'StudentCollection');
   noteCollection$!: Observable<NoteCollection[]>;
 
   durationInSeconds = 90;
@@ -30,47 +32,73 @@ export class NoteService {
 
   constructor(
     private firestore: Firestore,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private afAuth: AngularFireAuth
   ) {
     this.noteCollection$ = this.getNotes();
   }
 
   getNotes(): Observable<NoteCollection[]> {
-    return collectionData(this.noteCollectionRef, {
-      idField: '_id'
-    }) as Observable<NoteCollection[]>;
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const userNotesQuery = query(this.noteCollectionRef, where('student._id', '==', user.uid));
+          return collectionData(userNotesQuery, { idField: '_id' }) as Observable<NoteCollection[]>;
+        } else {
+          return of<NoteCollection[]>([]);
+        }
+      })
+    );
   }
 
   getNoteById(id: string): Observable<NoteCollection> {
     const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
-    return docData(noteDocRef, {
-      idField: '_id'
-    }) as Observable<NoteCollection>;
-  }
-
-  getStudentById(id: string): Observable<Student | any> {
-    if (!id) return of(undefined);
-    const studentDocRef = doc(this.firestore, `StudentCollection/${id}`);
-    return docData(studentDocRef, {
-      idField: '_id'
-    }) as Observable<Student>;
+    return docData(noteDocRef, { idField: '_id' }) as Observable<NoteCollection>;
   }
 
   createNote(note: NoteCollection): Promise<void> {
-    this.openSnackBar('Create Note OK !');
-    return addDoc(this.noteCollectionRef, { ...note }).then(() => {});
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          note.student = { _id: user.uid }; // Associa a nota ao usuário autenticado
+          return addDoc(this.noteCollectionRef, { ...note }).then(() => {
+            this.openSnackBar('Create Note OK !');
+          });
+        } else {
+          return of(undefined);
+        }
+      })
+    ).toPromise();
   }
 
   updateNote(id: string, note: Partial<NoteCollection>): Promise<void> {
-    this.openSnackBar('Update Note OK !');
-    const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
-    return updateDoc(noteDocRef, note);
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
+          return updateDoc(noteDocRef, note).then(() => {
+            this.openSnackBar('Update Note OK !');
+          });
+        } else {
+          return of(undefined);
+        }
+      })
+    ).toPromise();
   }
 
   deleteNote(id: string): Promise<void> {
-    this.openSnackBar('Delete Note OK !');
-    const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
-    return deleteDoc(noteDocRef);
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const noteDocRef = doc(this.firestore, `NoteCollection/${id}`);
+          return deleteDoc(noteDocRef).then(() => {
+            this.openSnackBar('Delete Note OK !');
+          });
+        } else {
+          return of(undefined);
+        }
+      })
+    ).toPromise();
   }
 
   private isTimestamp(value: any): value is Timestamp {

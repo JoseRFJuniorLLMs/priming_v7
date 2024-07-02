@@ -87,19 +87,19 @@ export class NavigationLoaderService {
             children: [
               {
                 type: 'link',
-                label: 'Notes List',
+                label: 'List Notes',
                 route: '/apps/list',
                 icon: 'mat:gamepad'
               },
               {
                 type: 'link',
-                label: 'Notes Graph',
+                label: 'Graph Notes',
                 route: '/apps/graph',
                 icon: 'mat:bubble_chart'
               },
               {
                 type: 'link',
-                label: 'Notes Card',
+                label: 'Shared Notes',
                 route: '/apps/notes',
                 icon: 'mat:speaker_notes'
               }

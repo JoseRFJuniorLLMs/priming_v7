@@ -1,4 +1,4 @@
-import { Student } from '../student/form/student';
+import { Student } from "src/app/model/student/student";
 
 export class NoteCollection {
   _id!: string;
