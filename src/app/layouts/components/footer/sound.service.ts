@@ -247,13 +247,13 @@ export class SoundService {
     }
   }
 
-  playTroasty() {
+  playToasty() {
     if (this.audioPlayer && !this.audioPlayer.paused) {
       this.audioPlayer.pause();
       this.isPlaying = false;
     } else {
       if (!this.audioPlayer) {
-        this.audioPlayer = new Audio('../../../../assets/audio/troasty.mp3');
+        this.audioPlayer = new Audio('../../../../assets/audio/toasty.mp3');
         this.audioPlayer.volume = this.volume; // Defina o volume do player de áudio
       }
       this.audioPlayer

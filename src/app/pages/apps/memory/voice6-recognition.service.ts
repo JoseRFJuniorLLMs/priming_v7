@@ -54,7 +54,7 @@ export class Voice6RecognitionService {
         const command = lastResult[0].transcript.trim().toLowerCase();
         console.log('Recognized command:', command);
         this.command$.next(command);
-        this.spokenText$.next(command);
+        this.spokenText$.next("That's right, yes baby!" + command);
         this.stopListening(); 
       }
     });

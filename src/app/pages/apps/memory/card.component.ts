@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CardService } from './card.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { Voice6RecognitionService } from './voice6-recognition.service'; 
-
+import { Voice6RecognitionService } from './voice6-recognition.service'; // Certifique-se de importar o serviço VoiceRecognitionService corretamente
+import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 interface Card {
   id: number;
   word: string;
@@ -26,7 +26,10 @@ export class CardComponent implements OnInit, OnDestroy {
   private flippedCards: Card[] = [];
   gameCount = 0;
 
-  constructor(private cardService: CardService, private voiceService: Voice6RecognitionService) {}
+  constructor(
+    private cardService: CardService, 
+    public voiceService: Voice6RecognitionService, 
+    public soundService: SoundService) {} 
 
   ngOnInit(): void {
     this.newGame();
@@ -75,6 +78,7 @@ export class CardComponent implements OnInit, OnDestroy {
         card1.isMatched = card2.isMatched = true;
         this.remainingPairs--;
 
+        // Falar o nome da palavra
         this.voiceService.speak(card1.word);
 
         if (this.remainingPairs === 0) {
@@ -84,6 +88,9 @@ export class CardComponent implements OnInit, OnDestroy {
         }
       } else {
         card1.isFlipped = card2.isFlipped = false;
+
+        // Tocar o som quando erra o par de cartas
+        this.soundService.playToasty();
       }
 
       this.flippedCards = [];
