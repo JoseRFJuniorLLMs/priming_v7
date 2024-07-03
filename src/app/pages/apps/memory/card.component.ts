@@ -2,23 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { CardService } from './card.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatCardModule } from '@angular/material/card';
+
+interface Card {
+  word: string;
+  image?: string;
+  isFlipped: boolean;
+  isMatched: boolean;
+}
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatCardModule]
+  imports: [CommonModule, MatButtonModule]
 })
 export class CardComponent implements OnInit {
-  cards: any[] = [];
-  boardWidth!: number;
+  cards: Card[] = [];
   moves: number = 0;
   remainingPairs: number = 0;
-  private flippedCards: any[] = [];
-  private checkInProgress = false;
+  private flippedCards: Card[] = [];
 
   constructor(private cardService: CardService) {}
 
@@ -30,55 +33,44 @@ export class CardComponent implements OnInit {
     this.cardService.getCards().subscribe(cards => {
       if (cards.length > 0) {
         const shuffled = cards.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 8); // Seleciona 8 pares (16 cartas)
+        const selected = shuffled.slice(0, 6);
         this.cards = [...selected, ...selected]
           .sort(() => 0.5 - Math.random())
           .map(card => ({
             ...card,
             isFlipped: false,
-            isMatched: false,
-            rotateX: Math.random() > 0.5,
-            rotateY: Math.random() <= 0.5
+            isMatched: false
           }));
         this.moves = 0;
         this.remainingPairs = this.cards.length / 2;
-        this.calculateWidth();
       } else {
         console.error('No valid cards found');
       }
     });
   }
 
-  calculateWidth() {
-    const columns = 8;
-    this.boardWidth = columns * 110;
-  }
-
-  cardFlipped(card: any) {
-    if (this.checkInProgress || card.isFlipped || card.isMatched) {
-      return;
-    }
+  flipCard(card: Card) {
+    if (card.isFlipped || card.isMatched || this.flippedCards.length === 2) return;
 
     card.isFlipped = true;
     this.flippedCards.push(card);
 
     if (this.flippedCards.length === 2) {
-      this.checkInProgress = true;
       this.moves++;
-      if (this.flippedCards[0].word === this.flippedCards[1].word) {
-        this.flippedCards[0].isMatched = true;
-        this.flippedCards[1].isMatched = true;
-        this.remainingPairs--;
-        this.flippedCards = [];
-        this.checkInProgress = false;
-      } else {
-        setTimeout(() => {
-          this.flippedCards[0].isFlipped = false;
-          this.flippedCards[1].isFlipped = false;
-          this.flippedCards = [];
-          this.checkInProgress = false;
-        }, 1000);
-      }
+      this.checkMatch();
     }
+  }
+
+  private checkMatch() {
+    setTimeout(() => {
+      const [card1, card2] = this.flippedCards;
+      if (card1.word === card2.word) {
+        card1.isMatched = card2.isMatched = true;
+        this.remainingPairs--;
+      } else {
+        card1.isFlipped = card2.isFlipped = false;
+      }
+      this.flippedCards = [];
+    }, 1000);
   }
 }
