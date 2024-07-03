@@ -79,7 +79,7 @@ export class CardComponent implements OnInit, OnDestroy {
         this.remainingPairs--;
 
         // Falar o nome da palavra
-        this.voiceService.speak(card1.word);
+        this.voiceService.speak("That's right, yes baby!" + card1.word);
 
         if (this.remainingPairs === 0) {
           setTimeout(() => {

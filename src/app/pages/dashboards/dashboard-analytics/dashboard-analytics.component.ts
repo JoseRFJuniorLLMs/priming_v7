@@ -84,6 +84,7 @@ import { ChatVideoComponent } from '../../apps/chat-video/chat-video.component';
 import { ClaseComponent } from '../../apps/clase/clase.component';
 import { Book3Component } from '../../apps/book3/book3.component';
 import { NoteListComponent } from '../../apps/list/note-list.component';
+import { CardComponent } from '../../apps/memory/card.component';
 
 
 // Interface para descrever a estrutura da resposta da API
@@ -140,7 +141,9 @@ interface ResponseData {
     MatExpansionModule,
     ClaseComponent,
     Book3Component,
-    NoteListComponent
+    NoteListComponent,
+    CardComponent
+
   ]
 })
 export class DashboardAnalyticsComponent implements OnInit, AfterViewInit {
