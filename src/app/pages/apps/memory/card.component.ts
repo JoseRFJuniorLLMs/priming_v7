@@ -22,6 +22,7 @@ export class CardComponent implements OnInit {
   moves: number = 0;
   remainingPairs: number = 0;
   private flippedCards: Card[] = [];
+  gameCount: number = 0; // Contador de partidas
 
   constructor(private cardService: CardService) {}
 
@@ -33,9 +34,7 @@ export class CardComponent implements OnInit {
     this.cardService.getCards().subscribe(cards => {
       if (cards.length > 0) {
         const shuffled = cards.sort(() => 0.5 - Math.random());
-        const selected = shuffled.slice(0, 6);
-        this.cards = [...selected, ...selected]
-          .sort(() => 0.5 - Math.random())
+        this.cards = [...shuffled]
           .map(card => ({
             ...card,
             isFlipped: false,
@@ -43,6 +42,25 @@ export class CardComponent implements OnInit {
           }));
         this.moves = 0;
         this.remainingPairs = this.cards.length / 2;
+        this.gameCount++; // Incrementa o contador de partidas
+
+        // Adiciona classe de animação inicial
+        setTimeout(() => {
+          document.querySelectorAll('.card').forEach(element => {
+            element.classList.add('initial-flip');
+          });
+        });
+
+        // Remove a classe de animação após 1 segundo e desvira as cartas
+        setTimeout(() => {
+          document.querySelectorAll('.card').forEach(element => {
+            element.classList.remove('initial-flip');
+          });
+          this.cards = this.cards.map(card => ({
+            ...card,
+            isFlipped: false
+          }));
+        }, 3000);
       } else {
         console.error('No valid cards found');
       }
@@ -67,6 +85,12 @@ export class CardComponent implements OnInit {
       if (card1.word === card2.word) {
         card1.isMatched = card2.isMatched = true;
         this.remainingPairs--;
+        if (this.remainingPairs === 0) {
+          // Se todos os pares foram encontrados, inicia um novo jogo
+          setTimeout(() => {
+            this.newGame();
+          }, 1000); // Aguarda 1 segundo antes de iniciar uma nova partida
+        }
       } else {
         card1.isFlipped = card2.isFlipped = false;
       }

@@ -1,3 +1,12 @@
+@keyframes rotateXY {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  100% {
+    transform: rotateY(180deg) rotateX(0deg);
+  }
+}
+
 .board {
   display: flex;
   flex-wrap: wrap;
@@ -26,12 +35,16 @@
   transform-style: preserve-3d;
 }
 
+.card.initial-flip .card-inner {
+  animation: rotateXY 1s ease forwards;
+}
+
 .card.flipped .card-inner {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) rotateX(0deg);
 }
 
 .card.matched .card-inner {
-  transform: rotateX(180deg);
+  transform: rotateY(180deg) rotateX(0deg);
 }
 
 .card-front, .card-back {
@@ -43,11 +56,11 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-front {
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   font-size: 24px;
   font-weight: bold;
@@ -55,7 +68,7 @@
 
 .card-back {
   background-color: white;
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) rotateX(0deg);
 }
 
 .card-back img {
