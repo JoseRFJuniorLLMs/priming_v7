@@ -1,12 +1,10 @@
-/* tetris.component.scss */
+.tetris-container {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  height: 100vh; /* Altura igual à altura da viewport */
+}
 
-:host {
-    display: block;
-    text-align: center;
-  }
-  
-  canvas {
-    border: 1px solid #333;
-    background-color: #f0f0f0;
-  }
-  
+canvas {
+  border: 1px solid #ccc;
+}

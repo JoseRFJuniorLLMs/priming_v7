@@ -130,18 +130,44 @@ export class TetrisComponent implements OnInit {
       case 'ArrowDown':
         this.movePieceDown();
         break;
+      case 'ArrowUp':
+        this.rotatePiece();
+        break;
     }
   }
 
   movePieceLeft(): void {
-    if (this.currentPiece.x > 0) {
+    if (this.canMoveHorizontal(-1)) {
       this.currentPiece.x--;
     }
   }
 
   movePieceRight(): void {
-    if (this.currentPiece.x + this.currentPiece.letters[0].length < this.boardWidth) {
+    if (this.canMoveHorizontal(1)) {
       this.currentPiece.x++;
+    }
+  }
+
+  canMoveHorizontal(direction: number): boolean {
+    const newPosX = this.currentPiece.x + direction;
+    return newPosX >= 0 && newPosX + this.currentPiece.letters[0].length <= this.boardWidth;
+  }
+
+  rotatePiece(): void {
+    const rotatedPiece: string[] = [];
+    for (let x = 0; x < this.currentPiece.letters[0].length; x++) {
+      let newRow = '';
+      for (let y = this.currentPiece.letters.length - 1; y >= 0; y--) {
+        newRow += this.currentPiece.letters[y][x];
+      }
+      rotatedPiece.push(newRow);
+    }
+
+    // Check if rotated piece fits within the board
+    const rotatedWidth = rotatedPiece[0].length;
+    const rotatedHeight = rotatedPiece.length;
+    if (this.currentPiece.x + rotatedWidth <= this.boardWidth && this.currentPiece.y + rotatedHeight <= this.boardHeight) {
+      this.currentPiece.letters = rotatedPiece;
     }
   }
 
