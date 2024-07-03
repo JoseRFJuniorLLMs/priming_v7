@@ -6,7 +6,7 @@
       </div>
       <div class="card-back">
         <img *ngIf="card.image" [src]="card.image" [alt]="card.word">
-        <span *ngIf="!card.image">{{ card.word }}</span>
+        <span *ngIf="!card.image" class="card-text">{{ card.word }}</span>
       </div>
     </div>
   </div>

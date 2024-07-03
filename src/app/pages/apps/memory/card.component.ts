@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 
 interface Card {
+  id: number; // Adicionar um identificador único para cada carta
   word: string;
   image?: string;
   isFlipped: boolean;
@@ -31,27 +32,27 @@ export class CardComponent implements OnInit {
   }
 
   newGame() {
-    this.cardService.getCards().subscribe(cards => {
+    this.cardService.getCardsForGame().subscribe(cards => {
       if (cards.length > 0) {
         const shuffled = cards.sort(() => 0.5 - Math.random());
-        this.cards = [...shuffled]
-          .map(card => ({
-            ...card,
-            isFlipped: false,
-            isMatched: false
-          }));
+        this.cards = shuffled.map((card, index) => ({
+          ...card,
+          id: index, // Atribuir um ID único para cada carta
+          isFlipped: false,
+          isMatched: false
+        }));
         this.moves = 0;
-        this.remainingPairs = this.cards.length / 2;
-        this.gameCount++; // Incrementa o contador de partidas
+        this.remainingPairs = this.cards.length / 2; // Contar pares de cartas restantes
+        this.gameCount++;
 
-        // Adiciona classe de animação inicial
+        // Adicionar classe de animação inicial
         setTimeout(() => {
           document.querySelectorAll('.card').forEach(element => {
             element.classList.add('initial-flip');
           });
         });
 
-        // Remove a classe de animação após 1 segundo e desvira as cartas
+        // Remover classe de animação após 1 segundo e desvirar as cartas
         setTimeout(() => {
           document.querySelectorAll('.card').forEach(element => {
             element.classList.remove('initial-flip');
@@ -62,18 +63,18 @@ export class CardComponent implements OnInit {
           }));
         }, 3000);
       } else {
-        console.error('No valid cards found');
+        console.error('Nenhuma carta válida encontrada');
       }
     });
   }
 
   flipCard(card: Card) {
-    if (card.isFlipped || card.isMatched || this.flippedCards.length === 2) return;
+    if (card.isFlipped) return; // Se a carta já estiver virada, não faz nada
 
     card.isFlipped = true;
     this.flippedCards.push(card);
 
-    if (this.flippedCards.length === 2) {
+    if (this.flippedCards.length === 2 || this.flippedCards.length === 3) {
       this.moves++;
       this.checkMatch();
     }
@@ -81,20 +82,37 @@ export class CardComponent implements OnInit {
 
   private checkMatch() {
     setTimeout(() => {
-      const [card1, card2] = this.flippedCards;
-      if (card1.word === card2.word) {
-        card1.isMatched = card2.isMatched = true;
-        this.remainingPairs--;
-        if (this.remainingPairs === 0) {
-          // Se todos os pares foram encontrados, inicia um novo jogo
-          setTimeout(() => {
-            this.newGame();
-          }, 1000); // Aguarda 1 segundo antes de iniciar uma nova partida
+      const [card1, card2, card3] = this.flippedCards;
+
+      if (this.flippedCards.length === 2) { // Verifica se é um par
+        if (card1.word === card2.word) {
+          card1.isMatched = card2.isMatched = true;
+          this.remainingPairs--;
+
+          if (this.remainingPairs === 0) {
+            setTimeout(() => {
+              this.newGame();
+            }, 1000); // Aguarda 1 segundo antes de iniciar uma nova partida
+          }
+        } else {
+          card1.isFlipped = card2.isFlipped = false;
         }
-      } else {
-        card1.isFlipped = card2.isFlipped = false;
+      } else if (this.flippedCards.length === 3) { // Verifica se é uma trinca
+        if (card1.word === card2.word && card1.word === card3.word) {
+          card1.isMatched = card2.isMatched = card3.isMatched = true;
+          this.remainingPairs--;
+
+          if (this.remainingPairs === 0) {
+            setTimeout(() => {
+              this.newGame();
+            }, 1000); // Aguarda 1 segundo antes de iniciar uma nova partida
+          }
+        } else {
+          card1.isFlipped = card2.isFlipped = card3.isFlipped = false;
+        }
       }
+
       this.flippedCards = [];
-    }, 1000);
+    }, 1000); // Aguarda 1 segundo antes de verificar as cartas viradas
   }
 }
