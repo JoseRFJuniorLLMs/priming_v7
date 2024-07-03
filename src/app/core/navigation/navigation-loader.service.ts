@@ -83,6 +83,12 @@ export class NavigationLoaderService {
                 label: 'Priming Memory Game',
                 route: '/apps/card',
                 icon: 'mat:speaker_notes'
+              },
+              {
+                type: 'link',
+                label: 'Priming Tetris Game',
+                route: '/apps/teris',
+                icon: 'mat:speaker_notes'
               }
             ]
           },

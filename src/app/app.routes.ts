@@ -103,6 +103,19 @@ export const appRoutes: VexRoutes = [
             }
           },
           
+          
+
+          {
+            path: 'teris',
+            loadComponent: () =>
+              import('./pages/apps/teris/tetris.component').then(
+                (m) => m.TetrisComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+
           {
             path: 'card',
             loadComponent: () =>
