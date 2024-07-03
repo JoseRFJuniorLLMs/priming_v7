@@ -80,7 +80,7 @@ export class NavigationLoaderService {
               },
               {
                 type: 'link',
-                label: 'Priming Memory',
+                label: 'Priming Memory Game',
                 route: '/apps/card',
                 icon: 'mat:speaker_notes'
               }
