@@ -55,7 +55,6 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.startPeriodicCheck();
   }
 
-
   ngOnDestroy(): void {
     if (this.checkUserOnlineInterval) {
       clearInterval(this.checkUserOnlineInterval);
@@ -97,7 +96,18 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   }
 
   async startCall() {
-    await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo);
+    const currentUser = await this.chatVideoService.authService.getCurrentUser();
+    
+    // Verificar se já existe uma chamada ativa
+    const callDoc = await this.chatVideoService.getCallDoc(currentUser?.uid);
+    if (callDoc) {
+      // Consumir as informações existentes
+      await this.chatVideoService.consumeExistingCall(callDoc, this.webcamVideo, this.remoteVideo);
+    } else {
+      // Iniciar uma nova chamada
+      await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo);
+    }
+
     this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
       this.chatVideoService.callDocId
     );
@@ -131,6 +141,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.finishCall();
     this.inCall = false;
   }
+
   toggleCollapse() {
     this.collapsed
       ? this.layoutService.expandSidenav()

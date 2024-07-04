@@ -34,7 +34,7 @@ export class ChatVideoService {
     private _snackBar: MatSnackBar,
     private firestore: Firestore,
     private soundService: SoundService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   // Open a SnackBar with a message
@@ -381,5 +381,52 @@ export class ChatVideoService {
       await deleteDoc(callDoc);
       this.callDocId = '';
     }
+  }
+
+  // Get existing call document for user
+  async getCallDoc(userId: string | undefined) {
+    if (!userId) return null;
+    const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
+    return callsSnapshot.docs.find(doc => doc.data()['userId'] === userId) || null;
+  }
+
+  // Consume existing call information
+  async consumeExistingCall(callDoc: DocumentSnapshot, webcamVideo: ElementRef<HTMLVideoElement>, remoteVideo: ElementRef<HTMLVideoElement>) {
+    this.callDocId = callDoc.id;
+    const callData = callDoc.data();
+    
+    // Configurar peer connection e streams
+    this.setupPeerConnection(webcamVideo, remoteVideo);
+    
+    // Configurar local description
+    const offerDescription = new RTCSessionDescription(callData?.['offer']);
+    await this.pc.setLocalDescription(offerDescription);
+
+    // Configurar remote description se já existir
+    if (callData?.['answer']) {
+      const answerDescription = new RTCSessionDescription(callData['answer']);
+      await this.pc.setRemoteDescription(answerDescription);
+    }
+
+    // Adicionar candidatos ICE existentes
+    const offerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
+    onSnapshot(offerCandidatesCollection, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          const candidate = new RTCIceCandidate(change.doc.data());
+          this.pc.addIceCandidate(candidate);
+        }
+      });
+    });
+
+    const answerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/answerCandidates`);
+    onSnapshot(answerCandidatesCollection, (snapshot) => {
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          const candidate = new RTCIceCandidate(change.doc.data());
+          this.pc.addIceCandidate(candidate);
+        }
+      });
+    });
   }
 }
