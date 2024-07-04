@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; 
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -33,7 +33,8 @@ export class AuthService {
       const student: Student = {
         _id: user.uid,
         email: user.email,
-        ...studentData
+        ...studentData,
+        online: true // Setting online status to true at registration
       };
 
       console.log('Adding student data to Firestore:', student);
@@ -49,7 +50,18 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       console.log('Logging in user with email:', email);
-      await this.afAuth.signInWithEmailAndPassword(email, password);
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      if (user && user.uid) {
+        // Verifica se o documento do usuário existe e atualiza o campo online
+        const userDoc = this.firestore.collection('students').doc(user.uid);
+        const userDocSnapshot = await userDoc.get().toPromise();
+        if (userDocSnapshot && userDocSnapshot.exists) {
+          await userDoc.update({ online: true });
+        } else {
+          await userDoc.set({ online: true }, { merge: true });
+        }
+      }
       this.loginErrorSubject.next(null); // Clear any previous error
       this.router.navigate(['/dashboards/analytics']); // Redirect to dashboard after successful login
     } catch (error) {
@@ -60,6 +72,11 @@ export class AuthService {
 
   async logout() {
     try {
+      const user = await this.afAuth.currentUser;
+      if (user && user.uid) {
+        // Atualiza o status do usuário para offline
+        await this.firestore.collection('students').doc(user.uid).update({ online: false });
+      }
       console.log('Logging out user');
       await this.afAuth.signOut();
       this.router.navigate(['/login']);
