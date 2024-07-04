@@ -20,9 +20,15 @@ export class DinossauroComponent implements OnInit {
   dinoHeight = 0;
   jumpHeight = 150;
   words: Word[] = [];
-  currentDinoFrame = '-1338px -2px';
+  currentDinoFrame = 0;
+  dinoFrames = [
+    '-1338px -2px',  // Run frame 1
+    '-1514px -2px',  // Run frame 2
+  ];
   jumping = false;
   gameLoop: any;
+  lastFrameTime = 0;
+  frameDuration = 100; // Duração de cada frame em milissegundos
 
   constructor(private dinoService: DinoService) {}
 
@@ -63,13 +69,16 @@ export class DinossauroComponent implements OnInit {
     this.moveWords(deltaTime);
     this.checkCollision();
     this.updateDinoPosition(deltaTime);
+    this.animateDino(deltaTime);
   }
 
   moveWords(deltaTime: number): void {
-    const speed = 0.2; // Ajuste conforme necessário
+    const speed = 0.3; // Aumentado para mover as palavras mais rápido
     this.words.forEach((word) => {
       word.position -= speed * deltaTime;
     });
+    // Remover palavras que saíram da tela
+    this.words = this.words.filter(word => word.position > -100);
   }
 
   checkCollision(): void {
@@ -103,21 +112,26 @@ export class DinossauroComponent implements OnInit {
 
   updateDinoPosition(deltaTime: number): void {
     if (this.jumping) {
-      // Implement jump physics here
-      // This is a simple example, you might want to use more complex easing functions
-      const jumpSpeed = 0.5; // Adjust as needed
+      const jumpSpeed = 0.8; // Aumentado para um pulo mais alto
       this.dinoHeight += jumpSpeed * deltaTime;
       if (this.dinoHeight >= this.jumpHeight) {
         this.dinoHeight = this.jumpHeight;
         this.jumping = false;
       }
     } else if (this.dinoHeight > 0) {
-      // Falling
-      const fallSpeed = 0.5; // Adjust as needed
+      const fallSpeed = 0.5;
       this.dinoHeight -= fallSpeed * deltaTime;
       if (this.dinoHeight <= 0) {
         this.dinoHeight = 0;
       }
+    }
+  }
+
+  animateDino(deltaTime: number): void {
+    this.lastFrameTime += deltaTime;
+    if (this.lastFrameTime >= this.frameDuration) {
+      this.currentDinoFrame = (this.currentDinoFrame + 1) % this.dinoFrames.length;
+      this.lastFrameTime = 0;
     }
   }
 
@@ -131,5 +145,12 @@ export class DinossauroComponent implements OnInit {
     if (this.gameLoop) {
       cancelAnimationFrame(this.gameLoop);
     }
+  }
+
+  getDinoStyle(): any {
+    return {
+      backgroundPosition: this.dinoFrames[this.currentDinoFrame],
+      bottom: `${this.dinoHeight}px`
+    };
   }
 }
