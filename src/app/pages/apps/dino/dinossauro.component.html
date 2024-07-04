@@ -9,7 +9,7 @@
   <div *ngIf="showScore" class="score">
     Words: {{ wordsCaptured }}
   </div>
-  <div *ngIf="showScore" class="last-word">
-    Last Captured Word: {{ words.length ? words[words.length - 1].value : '' }}
+  <div *ngIf="lastCapturedWord" class="last-word">
+    {{ lastCapturedWord }}
   </div>
 </div>

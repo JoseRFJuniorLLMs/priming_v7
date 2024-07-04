@@ -37,6 +37,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   wordsCaptured = 0; // Contador de palavras capturadas
   dinoPosition = 20; // Posição inicial do dinossauro
   showScore = false; // Variável para controlar a exibição do score temporário
+  lastCapturedWord: string | null = null; // Armazenar a última palavra capturada
 
   constructor(private dinoService: DinoService, private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
@@ -52,6 +53,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   startGame(): void {
     this.gameStarted = true;
     this.wordsCaptured = 0; // Reset contador
+    this.lastCapturedWord = null; // Reset última palavra capturada
     this.generateWords();
     this.startGameLoop();
     this.voiceService.startListening(); // Iniciar reconhecimento de voz
@@ -144,6 +146,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
       ) {
         // Collision detected, play sound and remove the word
         this.wordsCaptured++; // Incrementar contador
+        this.lastCapturedWord = word.value; // Atualizar última palavra capturada
 
         const isRedWord = word.color.toUpperCase() === '#FF0000';
         const isPhrase = word.value.includes(' ');
