@@ -1,0 +1,9 @@
+<div class="game-container" (click)="startGame()" *ngIf="!gameStarted">
+  <h1>Clique para começar</h1>
+</div>
+<div class="game-container" *ngIf="gameStarted">
+  <div class="dinosaur" [style.backgroundPosition]="currentDinoFrame" [style.bottom.px]="dinoHeight"></div>
+  <div *ngFor="let word of words" class="word" [class.top]="word.positionType === 'top'" [class.bottom]="word.positionType === 'bottom'" [style.left.px]="word.position">
+    {{ word.value }}
+  </div>
+</div>

@@ -102,9 +102,7 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
-          
-          
-
+     
           {
             path: 'teris',
             loadComponent: () =>
@@ -115,6 +113,18 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
+
+          {
+            path: 'dino',
+            loadComponent: () =>
+              import('./pages/apps/dino/dinossauro.component').then(
+                (m) => m.DinossauroComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+
 
           {
             path: 'card',

@@ -1,0 +1,56 @@
+$sprite-url: '../../../../assets/img/game/offline-sprite-2x.png';
+$dino-width: 88px;
+$dino-height: 94px;
+$game-height: 300px;
+
+.game-container {
+  position: relative;
+  width: 100%;
+  height: $game-height;
+  background: url($sprite-url) repeat-x;
+  background-position: 0 -104px;
+  overflow: hidden;
+
+  h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .dinosaur {
+    position: absolute;
+    left: 20px;
+    width: $dino-width;
+    height: $dino-height;
+    background: url($sprite-url) no-repeat;
+    background-size: 2404px $dino-height;
+    transition: bottom 0.1s linear;
+  }
+
+  .word {
+    position: absolute;
+    font-size: 24px;
+    white-space: nowrap;
+
+    &.top {
+      top: 60px;
+    }
+
+    &.bottom {
+      bottom: 60px;
+    }
+  }
+}
+
+@keyframes dinoRun {
+  0% { background-position: -1338px -2px; }
+  50% { background-position: -1514px -2px; }
+  100% { background-position: -1338px -2px; }
+}
+
+.game-started .dinosaur {
+  animation: dinoRun 0.3s steps(2) infinite;
+}

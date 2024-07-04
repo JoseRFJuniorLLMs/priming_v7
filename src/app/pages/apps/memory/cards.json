@@ -1798,7 +1798,75 @@
         "image": "",
         "word": "build",
         "type": "word"
+      },
+      {
+        "id": 301,
+        "image": "../../../../assets/img/card/yellow.png",
+        "word": "yellow",
+        "type": "image"
+      },
+      {
+        "id": 302,
+        "image": "../../../../assets/img/card/word.png",
+        "word": "word",
+        "type": "image"
+      },
+      {
+        "id": 303,
+        "image": "../../../../assets/img/card/any.png",
+        "word": "any",
+        "type": "image"
+      },
+      {
+        "id": 304,
+        "image": "../../../../assets/img/card/baby.png",
+        "word": "baby",
+        "type": "image"
+      },
+      {
+        "id": 305,
+        "image": "../../../../assets/img/card/blue.png",
+        "word": "blue",
+        "type": "image"
+      },
+      {
+        "id": 306,
+        "image": "../../../../assets/img/card/purple.png",
+        "word": "purple",
+        "type": "image"
+      },
+      {
+        "id": 307,
+        "image": "../../../../assets/img/card/gray.png",
+        "word": "gray",
+        "type": "image"
+      },
+      {
+        "id": 308,
+        "image": "../../../../assets/img/card/dino.png",
+        "word": "dino",
+        "type": "image"
+      },
+      {
+        "id": 309,
+        "image": "../../../../assets/img/card/ears.png",
+        "word": "ears",
+        "type": "image"
+      },
+      {
+        "id": 310,
+        "image": "../../../../assets/img/card/flower.png",
+        "word": "flower",
+        "type": "image"
+      },
+
+      {
+        "id": 311,
+        "image": "../../../../assets/img/card/glove.png",
+        "word": "glove",
+        "type": "image"
       }
+
     ]
     
   

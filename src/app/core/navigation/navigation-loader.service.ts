@@ -90,6 +90,13 @@ export class NavigationLoaderService {
                 route: '/apps/teris',
                 icon: 'mat:speaker_notes'
               }
+              ,
+              {
+                type: 'link',
+                label: 'Priming Dino Game',
+                route: '/apps/dino',
+                icon: 'mat:speaker_notes'
+              }
             ]
           },
           {
