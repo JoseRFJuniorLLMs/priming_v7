@@ -9,7 +9,8 @@ import {
   addDoc,
   writeBatch,
   DocumentSnapshot,
-  getDoc
+  getDoc,
+  deleteDoc
 } from '@angular/fire/firestore';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
@@ -110,17 +111,23 @@ export class ChatVideoService {
     const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
     const existingCallDoc = callsSnapshot.docs[0];
 
+    const currentUser = await this.authService.getCurrentUser();
+
     if (existingCallDoc) {
       this.callDocId = existingCallDoc.id;
       await this.answerCall(existingCallDoc);
     } else {
-      await this.createOffer();
+      if (currentUser && currentUser.uid) {
+        await this.createOffer(currentUser.uid);
+      } else {
+        console.error('No user is currently logged in');
+      }
     }
     await this.updateOnlineStatus(true);
   }
 
   // Create an offer for a new call
-  async createOffer() {
+  async createOffer(userId: string) {
     const callDoc = doc(collection(this.firestore, 'calls'));
     this.callDocId = callDoc.id;
 
@@ -129,7 +136,7 @@ export class ChatVideoService {
     this.openSnackBar('Offer created: ' + offerDescription);
     await this.pc.setLocalDescription(offerDescription);
 
-    await setDoc(callDoc, { offer: offerDescription });
+    await setDoc(callDoc, { offer: offerDescription, userId });
 
     onSnapshot(callDoc, async (snapshot) => {
       const data = snapshot.data();
@@ -319,5 +326,60 @@ export class ChatVideoService {
   endCall() {
     this.finishCall();
     this.soundService.playClose();
+  }
+
+  // Configure WebRTC for the logged in user
+  async setupWebRTCForUser(userId: string) {
+    // Start local media stream (camera and microphone)
+    await this.startLocalStream();
+    
+    // Setup peer connection for WebRTC
+    this.pc = new RTCPeerConnection({
+      iceServers: [
+        { urls: 'stun:stun1.l.google.com:19302' },
+        { urls: 'stun:stun2.l.google.com:19302' }
+      ]
+    });
+
+    this.localStream.getTracks().forEach((track) => {
+      this.pc.addTrack(track, this.localStream);
+    });
+
+    // Store WebRTC information in Firestore
+    const userDoc = doc(this.firestore, `students/${userId}`);
+    await setDoc(userDoc, {
+      webrtc: {
+        localStream: this.localStream.id,
+        remoteStream: this.remoteStream.id,
+        pc: this.pc.localDescription
+      }
+    }, { merge: true });
+  }
+
+  // Teardown WebRTC for the logged out user
+  async tearDownWebRTCForUser(userId: string) {
+    // Clean up WebRTC resources
+    if (this.pc) {
+      this.pc.close();
+    }
+    if (this.localStream) {
+      this.localStream.getTracks().forEach((track) => track.stop());
+    }
+    if (this.remoteStream) {
+      this.remoteStream.getTracks().forEach((track) => track.stop());
+    }
+
+    // Remove WebRTC information from Firestore
+    const userDoc = doc(this.firestore, `students/${userId}`);
+    await setDoc(userDoc, { webrtc: null }, { merge: true });
+  }
+
+  // Delete call information from Firestore
+  async deleteCallInfo() {
+    if (this.callDocId) {
+      const callDoc = doc(this.firestore, `calls/${this.callDocId}`);
+      await deleteDoc(callDoc);
+      this.callDocId = '';
+    }
   }
 }

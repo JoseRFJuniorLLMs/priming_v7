@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Student } from 'src/app/model/student/student';
+import { ChatVideoService } from 'src/app/pages/apps/chat-video/chat-video.service';
 import { StudentService } from 'src/app/pages/apps/student/student.service';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
     private router: Router,
+    private chatVideoService: ChatVideoService,
     private studentService: StudentService
   ) {}
 
@@ -53,7 +55,6 @@ export class AuthService {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
       const user = userCredential.user;
       if (user && user.uid) {
-        // Verifica se o documento do usuário existe e atualiza o campo online
         const userDoc = this.firestore.collection('students').doc(user.uid);
         const userDocSnapshot = await userDoc.get().toPromise();
         if (userDocSnapshot && userDocSnapshot.exists) {
@@ -61,12 +62,17 @@ export class AuthService {
         } else {
           await userDoc.set({ online: true }, { merge: true });
         }
+
+        // Inicialize WebRTC para o usuário e salve as informações no Firestore
+        await this.chatVideoService.setupWebRTCForUser(user.uid);
+        // Crie uma oferta para iniciar a chamada
+        await this.chatVideoService.createOffer(user.uid);
       }
-      this.loginErrorSubject.next(null); // Clear any previous error
-      this.router.navigate(['/dashboards/analytics']); // Redirect to dashboard after successful login
+      this.loginErrorSubject.next(null);
+      this.router.navigate(['/dashboards/analytics']);
     } catch (error) {
       console.error('Error during login:', error);
-      this.loginErrorSubject.next('Incorrect email or password.'); // Set error message
+      this.loginErrorSubject.next('Incorrect email or password.');
     }
   }
 
@@ -74,8 +80,10 @@ export class AuthService {
     try {
       const user = await this.afAuth.currentUser;
       if (user && user.uid) {
-        // Atualiza o status do usuário para offline
         await this.firestore.collection('students').doc(user.uid).update({ online: false });
+        await this.chatVideoService.tearDownWebRTCForUser(user.uid);
+        // Remova as informações da chamada
+        await this.chatVideoService.deleteCallInfo();
       }
       console.log('Logging out user');
       await this.afAuth.signOut();
@@ -89,7 +97,6 @@ export class AuthService {
     return this.afAuth.authState.pipe(map(user => !!user));
   }
 
-  // Método para obter o usuário atual
   async getCurrentUser() {
     return this.afAuth.currentUser;
   }
