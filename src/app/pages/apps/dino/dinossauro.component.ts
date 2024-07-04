@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DinoService } from './dinoservice';
 import { Voice7RecognitionService } from './voice7-recognition.service'; // Importar o serviço
 
-
 interface Word {
   value: string;
   position: number;
@@ -37,8 +36,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   jumpSound = new Audio('../../../../assets/audio/jump.wav'); // Adicionado o som de pulo
   wordsCaptured = 0; // Contador de palavras capturadas
 
-  constructor(private dinoService: DinoService, 
-    private voiceService: Voice7RecognitionService) {} // Injete o serviço
+  constructor(private dinoService: DinoService, private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
   ngOnInit(): void {
     // Inscreva-se no comando de voz para pular
@@ -132,11 +130,16 @@ export class DinossauroComponent implements OnInit, OnDestroy {
       ) {
         // Collision detected, play sound and remove the word
         this.wordsCaptured++; // Incrementar contador
-        if (word.color.toUpperCase() === '#FF0000') { // Verifica se a palavra é vermelha
+
+        const isRedWord = word.color.toUpperCase() === '#FF0000';
+        const isPhrase = word.value.includes(' ');
+
+        if (isRedWord || isPhrase) { // Verifica se a palavra é vermelha ou uma frase
           this.powerupSound.play();
         } else {
           this.coinSound.play();
         }
+        
         this.voiceService.speakSelectedText(word.value); // Falar a palavra capturada
         return false;
       }

@@ -1,5 +1,5 @@
 <div class="game-container" (click)="startGame()" *ngIf="!gameStarted">
-  <h1>Clique para começar</h1>
+  <h1>Click</h1>
 </div>
 <div class="game-container" *ngIf="gameStarted">
   <div class="dinosaur" [ngStyle]="getDinoStyle()"></div>
@@ -7,6 +7,6 @@
     {{ word.value }}
   </div>
   <div class="score">
-    Palavras Capturadas: {{ wordsCaptured }}
+    Words: {{ wordsCaptured }}
   </div>
 </div>

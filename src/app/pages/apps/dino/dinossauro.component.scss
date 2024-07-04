@@ -1,4 +1,5 @@
 $sprite-url: '../../../../assets/img/game/offline-sprite-2x.png';
+$background-url: '../../../../assets/img/game/frag.png'; // Caminho para a imagem de fundo
 $dino-width: 88px;
 $dino-height: 94px;
 $game-height: 300px;
@@ -7,8 +8,8 @@ $game-height: 300px;
   position: relative;
   width: 100%;
   height: $game-height;
-  background: url($sprite-url) repeat-x;
-  background-position: 0 -104px;
+  background: url($background-url) no-repeat center center; // Usando a imagem de fundo
+  background-size: cover; // Ajustando a imagem de fundo para cobrir todo o container
   overflow: hidden;
 
   h1 {
@@ -54,6 +55,7 @@ $game-height: 300px;
 .game-started .dinosaur {
   animation: dinoRun 0.3s steps(2) infinite;
 }
+
 .score {
   position: absolute;
   top: 10px;
