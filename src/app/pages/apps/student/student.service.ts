@@ -25,6 +25,16 @@ export class StudentService {
     );
   }
 
+  getStudents(): Observable<Student[]> {
+    return this.firestore.collection<Student>('students').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Student;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
   addStudentData(student: Student) {
     console.log('Adding student data:', student);
     return this.firestore.doc(`students/${student._id}`).set(student);

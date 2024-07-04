@@ -208,6 +208,16 @@ export const appRoutes: VexRoutes = [
             }
           },
           {
+            path: 'aio-table',
+            loadComponent: () =>
+              import('./pages/apps/student/list/aio-table.component').then(
+                (m) => m.AioTableComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
             path: 'graph',
             loadComponent: () =>
               import('./pages/apps/graph/graph.component').then(

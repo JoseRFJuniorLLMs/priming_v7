@@ -88,4 +88,9 @@ export class AuthService {
   isAuthenticated(): Observable<boolean> {
     return this.afAuth.authState.pipe(map(user => !!user));
   }
+
+  // Método para obter o usuário atual
+  async getCurrentUser() {
+    return this.afAuth.currentUser;
+  }
 }

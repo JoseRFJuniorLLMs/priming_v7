@@ -12,12 +12,8 @@ import {
   getDoc
 } from '@angular/fire/firestore';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
-
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { AuthService } from '../../pages/auth/login/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +32,8 @@ export class ChatVideoService {
   constructor(
     private _snackBar: MatSnackBar,
     private firestore: Firestore,
-    private soundService: SoundService
+    private soundService: SoundService,
+    private authService: AuthService
   ) {}
 
   // Open a SnackBar with a message
@@ -85,23 +82,15 @@ export class ChatVideoService {
         inboundStream.addTrack(event.track);
         remoteVideo.nativeElement.srcObject = inboundStream;
       }
-      console.log(
-        'Remote video element srcObject:',
-        remoteVideo.nativeElement.srcObject
-      );
-      this.openSnackBar(
-        'Remote video element srcObject: ' + remoteVideo.nativeElement.srcObject
-      );
+      console.log('Remote video element srcObject:', remoteVideo.nativeElement.srcObject);
+      this.openSnackBar('Remote video element srcObject: ' + remoteVideo.nativeElement.srcObject);
     };
 
     this.pc.onicecandidate = (event) => {
       if (event.candidate) {
         console.log('ICE Candidate:', event.candidate);
         this.openSnackBar('ICE Candidate: ' + event.candidate);
-        const candidatesCollection = collection(
-          this.firestore,
-          `calls/${this.callDocId}/offerCandidates`
-        );
+        const candidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
         addDoc(candidatesCollection, event.candidate.toJSON());
       }
     };
@@ -152,10 +141,7 @@ export class ChatVideoService {
       }
     });
 
-    const answerCandidatesCollection = collection(
-      this.firestore,
-      `calls/${this.callDocId}/answerCandidates`
-    );
+    const answerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/answerCandidates`);
     onSnapshot(answerCandidatesCollection, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === 'added') {
@@ -186,10 +172,7 @@ export class ChatVideoService {
 
       await setDoc(callDoc.ref, { answer: answerDescription });
 
-      const offerCandidatesCollection = collection(
-        this.firestore,
-        `calls/${this.callDocId}/offerCandidates`
-      );
+      const offerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
       onSnapshot(offerCandidatesCollection, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
@@ -201,10 +184,7 @@ export class ChatVideoService {
         });
       });
 
-      const answerCandidatesCollection = collection(
-        this.firestore,
-        `calls/${this.callDocId}/answerCandidates`
-      );
+      const answerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/answerCandidates`);
       onSnapshot(answerCandidatesCollection, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === 'added') {
@@ -241,9 +221,7 @@ export class ChatVideoService {
       });
 
       await batch.commit();
-      this.openSnackBar(
-        'The call has ended and all call documents have been deleted.'
-      );
+      this.openSnackBar('The call has ended and all call documents have been deleted.');
     }
 
     if (this.pc) {
@@ -263,12 +241,13 @@ export class ChatVideoService {
 
   // Update the user's online status in Firestore
   async updateOnlineStatus(status: boolean) {
-    if (!this.callDocId) {
-      console.error('Invalid callDocId');
-      return;
+    const user = await this.authService.getCurrentUser();
+    if (user) {
+      const userDoc = doc(this.firestore, `students/${user.uid}`);
+      await setDoc(userDoc, { online: status }, { merge: true });
+    } else {
+      console.error('No user is currently logged in');
     }
-    const userDoc = doc(this.firestore, `users/${this.callDocId}`);
-    await setDoc(userDoc, { online: status }, { merge: true });
   }
 
   // Check if a user is online based on the call document ID
@@ -278,10 +257,9 @@ export class ChatVideoService {
       console.error('Invalid callDocId');
       return false;
     }
-    const userDoc = doc(this.firestore, `users/${callDocId}`);
+    const userDoc = doc(this.firestore, `students/${callDocId}`);
     const userSnapshot = await getDoc(userDoc);
-    const onlineStatus =
-      userSnapshot.exists() && userSnapshot.data()?.['online'];
+    const onlineStatus = userSnapshot.exists() && userSnapshot.data()?.['online'];
     console.log(`Checked user online status for ${callDocId}: ${onlineStatus}`);
     return onlineStatus;
   }
@@ -308,9 +286,7 @@ export class ChatVideoService {
   async shareScreen() {
     this.soundService.playDone();
     try {
-      const screenStream = await (
-        navigator.mediaDevices as any
-      ).getDisplayMedia({ video: true });
+      const screenStream = await (navigator.mediaDevices as any).getDisplayMedia({ video: true });
       const screenTrack = screenStream.getVideoTracks()[0];
 
       this.pc.getSenders().forEach((sender) => {
@@ -336,8 +312,7 @@ export class ChatVideoService {
   // Open chat
   openChat() {
     console.log('Open chat function called');
-    //TODO:
-    // Implementar lógica para abrir chat (pode ser um modal, um painel lateral, etc.)
+    // TODO: Implement chat logic (e.g., modal, side panel, etc.)
   }
 
   // End the current call
