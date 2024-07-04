@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DinoService } from './dinoservice';
 import { Voice7RecognitionService } from './voice7-recognition.service'; // Importar o serviço
 
+
 interface Word {
   value: string;
   position: number;
@@ -36,17 +37,24 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   jumpSound = new Audio('../../../../assets/audio/jump.wav'); // Adicionado o som de pulo
   wordsCaptured = 0; // Contador de palavras capturadas
 
-  constructor(
-    private dinoService: DinoService, 
+  constructor(private dinoService: DinoService, 
     private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Inscreva-se no comando de voz para pular
+    this.voiceService.command$.subscribe(command => {
+      if (command === 'jump') {
+        this.jump();
+      }
+    });
+  }
 
   startGame(): void {
     this.gameStarted = true;
     this.wordsCaptured = 0; // Reset contador
     this.generateWords();
     this.startGameLoop();
+    this.voiceService.startListening(); // Iniciar reconhecimento de voz
   }
 
   generateWords(): void {
@@ -162,7 +170,13 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:keydown.space', ['$event'])
-  jump(event: KeyboardEvent): void {
+  onKeydownHandler(event: KeyboardEvent): void {
+    if (event.code === 'Space') {
+      this.jump();
+    }
+  }
+
+  jump(): void {
     if (!this.gameStarted || this.jumping || this.dinoHeight > 0) return;
     this.jumping = true;
     this.jumpSound.play(); // Tocar som de pulo
@@ -172,6 +186,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
     if (this.gameLoop) {
       cancelAnimationFrame(this.gameLoop);
     }
+    this.voiceService.stopListening(); // Parar reconhecimento de voz quando o componente é destruído
   }
 
   getDinoStyle(): any {
