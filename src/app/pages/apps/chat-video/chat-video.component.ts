@@ -17,6 +17,7 @@ import { OnlineUserDialogComponent } from './online-user-dialog.component';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
 import screenfull from 'screenfull';
+import { NotificationService } from './notification.service';
 
 @Component({
   selector: 'chat-video',
@@ -47,6 +48,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     public firestore: Firestore,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: { targetUserId: string }
   ) {
     this.targetUserId = data.targetUserId;

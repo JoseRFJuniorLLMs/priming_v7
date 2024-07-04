@@ -41,3 +41,14 @@
 .call-button-offline {
   color: red;
 }
+
+
+::ng-deep .full-screen-dialog .mat-dialog-container {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  overflow: hidden;
+}

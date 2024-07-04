@@ -133,12 +133,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    if (screenfull.isEnabled) {
-      this.layoutService.collapseSidenav();
-      screenfull.request().catch(err => {
-        console.warn('Error attempting to enable full-screen mode:', err);
-      });
-    }
+    this.tryEnterFullscreen();
   
     this.voiceRecognitionService.setupWaveSurfer(this.micElement);
   
@@ -149,11 +144,29 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   
     document.addEventListener('mouseup', this.handleMouseUp.bind(this));
   }
-
+  
+  
   handleMouseUp() {
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) {
       this.confirmCopyText();
+    }
+  }
+  
+  tryEnterFullscreen() {
+    if (screenfull.isEnabled) {
+      screenfull.request().catch(err => {
+        console.warn('Error attempting to enable full-screen mode:', err);
+        document.addEventListener('click', this.requestFullscreenOnInteraction.bind(this), { once: true });
+      });
+    }
+  }
+  
+  requestFullscreenOnInteraction() {
+    if (screenfull.isEnabled) {
+      screenfull.request().catch(err => {
+        console.warn('Error attempting to enable full-screen mode on interaction:', err);
+      });
     }
   }
   
