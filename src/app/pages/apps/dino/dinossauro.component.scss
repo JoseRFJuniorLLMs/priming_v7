@@ -79,3 +79,12 @@ body, html {
 .game-started .dinosaur {
   animation: dinoRun 0.3s steps(2) infinite;
 }
+
+.last-word {
+  background-color: #FFA07A; /* Cor de fundo salmão claro */
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  color: white; /* Ajuste a cor do texto conforme necessário */
+}
