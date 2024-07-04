@@ -1,18 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  docData,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where,
-  Timestamp
-} from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, addDoc, updateDoc, deleteDoc, query, where, Timestamp } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { NoteCollection } from './note-collection';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -30,6 +18,8 @@ export class NoteService {
   durationInSeconds = 90;
   horizontalPosition: MatSnackBarHorizontalPosition = 'end';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+
+  private readonly SATOSHIS_PER_NOTE = 1; // Defina o valor de satoshis por nota aqui
 
   constructor(
     private firestore: Firestore,
@@ -66,7 +56,7 @@ export class NoteService {
           return addDoc(this.noteCollectionRef, { ...note }).then(async () => {
             this.openSnackBar('Create Note OK !');
             // Increment satoshi balance when a note is created
-            await this.satoshiService.incrementSatoshi(user.uid, 10); // Increment by 10 satoshis
+            await this.satoshiService.incrementSatoshi(user.uid, this.SATOSHIS_PER_NOTE); // Use the constant here
           });
         } else {
           return of(undefined);

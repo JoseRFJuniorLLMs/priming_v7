@@ -25,6 +25,17 @@
         <td mat-cell *matCellDef="let student">{{ student.email }}</td>
       </ng-container>
 
+      <!-- Satoshis Column -->
+      <ng-container matColumnDef="satoshis">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Satoshis</th>
+        <td mat-cell *matCellDef="let student">
+          <span class="material-symbols-outlined">
+            currency_bitcoin
+          </span>
+          {{ student.satoshis }}
+        </td>
+      </ng-container>
+
       <!-- Online Status Column -->
       <ng-container matColumnDef="online">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>

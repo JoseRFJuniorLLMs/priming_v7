@@ -33,7 +33,7 @@ import { ClearCallsComponent } from '../../clean/clear-calls.component';
   ]
 })
 export class AioTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['name', 'email', 'online', 'action'];
+  displayedColumns: string[] = ['name', 'email', 'satoshis', 'online', 'action'];
   dataSource = new MatTableDataSource<Student>();
   searchCtrl = new FormControl();
   layoutCtrl = new FormControl('boxed');
@@ -84,5 +84,4 @@ export class AioTableComponent implements OnInit, AfterViewInit {
       data: { targetUserId: student._id }
     });
   }
-  
-}//fim
+}
