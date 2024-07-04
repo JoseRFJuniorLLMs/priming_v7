@@ -37,7 +37,6 @@ export class ChatVideoService {
     public authService: AuthService
   ) {}
 
-  // Open a SnackBar with a message
   openSnackBar(textDisplay: string) {
     this._snackBar.open(textDisplay, 'Close', {
       horizontalPosition: this.horizontalPosition,
@@ -46,7 +45,6 @@ export class ChatVideoService {
     });
   }
 
-  // Start local media stream (camera and microphone)
   async startLocalStream() {
     this.soundService.playOn();
     this.localStream = await navigator.mediaDevices.getUserMedia({
@@ -56,45 +54,50 @@ export class ChatVideoService {
     this.remoteStream = new MediaStream();
   }
 
-  // Setup peer connection for WebRTC
   setupPeerConnection() {
-    this.pc = new RTCPeerConnection({
-      iceServers: [
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' }
-      ]
-    });
+    if (!this.localStream) {
+      console.error('Local stream not initialized');
+      return;
+    }
 
-    this.localStream.getTracks().forEach((track) => {
-      this.pc.addTrack(track, this.localStream);
-      this.openSnackBar('localStream.getTracks: ' + track);
-    });
+    if (!this.pc) {
+      this.pc = new RTCPeerConnection({
+        iceServers: [
+          { urls: 'stun:stun1.l.google.com:19302' },
+          { urls: 'stun:stun2.l.google.com:19302' }
+        ]
+      });
 
-    this.pc.ontrack = (event) => {
-      console.log('Track received:', event);
-      this.openSnackBar('Track received: ' + event);
-      if (event.streams && event.streams[0]) {
-        this.remoteStream = event.streams[0];
-      } else {
-        const inboundStream = new MediaStream();
-        inboundStream.addTrack(event.track);
-        this.remoteStream = inboundStream;
-      }
-      console.log('Remote stream:', this.remoteStream);
-      this.openSnackBar('Remote stream: ' + this.remoteStream);
-    };
+      this.localStream.getTracks().forEach((track) => {
+        this.pc.addTrack(track, this.localStream);
+        this.openSnackBar('localStream.getTracks: ' + track);
+      });
 
-    this.pc.onicecandidate = (event) => {
-      if (event.candidate) {
-        console.log('ICE Candidate:', event.candidate);
-        this.openSnackBar('ICE Candidate: ' + event.candidate);
-        const candidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
-        addDoc(candidatesCollection, event.candidate.toJSON());
-      }
-    };
+      this.pc.ontrack = (event) => {
+        console.log('Track received:', event);
+        this.openSnackBar('Track received: ' + event);
+        if (event.streams && event.streams[0]) {
+          this.remoteStream = event.streams[0];
+        } else {
+          const inboundStream = new MediaStream();
+          inboundStream.addTrack(event.track);
+          this.remoteStream = inboundStream;
+        }
+        console.log('Remote stream:', this.remoteStream);
+        this.openSnackBar('Remote stream: ' + this.remoteStream);
+      };
+
+      this.pc.onicecandidate = (event) => {
+        if (event.candidate) {
+          console.log('ICE Candidate:', event.candidate);
+          this.openSnackBar('ICE Candidate: ' + event.candidate);
+          const candidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
+          addDoc(candidatesCollection, event.candidate.toJSON());
+        }
+      };
+    }
   }
 
-  // Start a new call
   async startCall(
     webcamVideo: ElementRef<HTMLVideoElement>,
     remoteVideo: ElementRef<HTMLVideoElement>,
@@ -103,23 +106,22 @@ export class ChatVideoService {
     await this.startLocalStream();
     this.soundService.playOn();
     this.setupPeerConnection();
-  
+
     webcamVideo.nativeElement.srcObject = this.localStream;
     remoteVideo.nativeElement.srcObject = this.remoteStream;
-  
+
     const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
     const existingCallDoc = callsSnapshot.docs[0];
-  
+
     const currentUser = await this.authService.getCurrentUser();
-  
+
     if (existingCallDoc) {
       this.callDocId = existingCallDoc.id;
       await this.answerCall(existingCallDoc);
     } else {
       if (currentUser && currentUser.uid) {
         await this.createOffer(currentUser.uid, targetUserId);
-        
-        // Notificar o usuário alvo sobre a chamada
+
         if (targetUserId) {
           const targetUserDoc = doc(this.firestore, `students/${targetUserId}`);
           await setDoc(targetUserDoc, {
@@ -135,8 +137,7 @@ export class ChatVideoService {
     }
     await this.updateOnlineStatus(true);
   }
-  
-  // Create an offer for a new call
+
   async createOffer(userId: string, targetUserId?: string) {
     if (!this.pc) {
       console.error('RTCPeerConnection is not initialized');
@@ -151,7 +152,22 @@ export class ChatVideoService {
     this.openSnackBar('Offer created: ' + offerDescription);
     await this.pc.setLocalDescription(offerDescription);
 
-    await setDoc(callDoc, { offer: offerDescription, userId, targetUserId });
+    const callData: any = {
+      offer: offerDescription,
+      userId
+    };
+
+    if (targetUserId) {
+      callData.targetUserId = targetUserId;
+    }
+
+    await setDoc(callDoc, callData);
+
+    // Save WebRTC info for the user
+    await this.saveWebRTCInfo(userId, {
+      iceServers: this.pc.getConfiguration().iceServers,
+      offerDescription: offerDescription
+    });
 
     onSnapshot(callDoc, async (snapshot) => {
       const data = snapshot.data();
@@ -176,7 +192,11 @@ export class ChatVideoService {
     });
   }
 
-  // Answer an incoming call
+  async saveWebRTCInfo(userId: string, info: any) {
+    const userDoc = doc(this.firestore, `students/${userId}`);
+    await setDoc(userDoc, { webrtc: info }, { merge: true });
+  }
+
   async answerCall(callDoc: DocumentSnapshot) {
     this.callDocId = callDoc.id;
     const callData = callDoc.data();
@@ -220,7 +240,6 @@ export class ChatVideoService {
     }
   }
 
-  // Finish the current call
   async finishCall() {
     this.soundService.playClose();
     if (!this.callDocId) {
@@ -261,7 +280,6 @@ export class ChatVideoService {
     this.callDocId = '';
   }
 
-  // Update the user's online status in Firestore
   async updateOnlineStatus(status: boolean) {
     const user = await this.authService.getCurrentUser();
     if (user) {
@@ -272,7 +290,6 @@ export class ChatVideoService {
     }
   }
 
-  // Check if a user is online based on the call document ID
   async checkUserOnlineStatus(callDocId: string): Promise<boolean> {
     this.soundService.playOnline();
     if (!callDocId) {
@@ -286,7 +303,6 @@ export class ChatVideoService {
     return onlineStatus;
   }
 
-  // Mute the local microphone
   muteMicrophone() {
     this.soundService.playClose();
     this.localStream.getAudioTracks().forEach((track) => {
@@ -295,7 +311,6 @@ export class ChatVideoService {
     });
   }
 
-  // Turn off the local camera
   turnOffCamera() {
     this.soundService.playClose();
     this.localStream.getVideoTracks().forEach((track) => {
@@ -304,7 +319,6 @@ export class ChatVideoService {
     });
   }
 
-  // Share the screen
   async shareScreen() {
     this.soundService.playDone();
     try {
@@ -331,31 +345,26 @@ export class ChatVideoService {
     }
   }
 
-  // Open chat
   openChat() {
     console.log('Open chat function called');
     // TODO: Implement chat logic (e.g., modal, side panel, etc.)
   }
 
-  // End the current call
   endCall() {
     this.finishCall();
     this.soundService.playClose();
   }
 
-  // Setup WebRTC for user
   async setupWebRTCForUser(userId: string) {
     const userDoc = doc(this.firestore, `students/${userId}`);
     await setDoc(userDoc, { webrtc: { /* Add WebRTC configuration data here */ } }, { merge: true });
   }
 
-  // Tear down WebRTC for user
   async tearDownWebRTCForUser(userId: string) {
     const userDoc = doc(this.firestore, `students/${userId}`);
     await setDoc(userDoc, { webrtc: {} }, { merge: true });
   }
 
-  // Delete call info
   async deleteCallInfo() {
     if (!this.callDocId) {
       console.error('Invalid callDocId');

@@ -15,7 +15,6 @@ export class AuthService {
   private loginErrorSubject = new BehaviorSubject<string | null>(null);
   loginError$ = this.loginErrorSubject.asObservable();
   
-  // BehaviorSubject para armazenar o nome do usuário
   private userNameSubject = new BehaviorSubject<string | null>(null);
   userName$ = this.userNameSubject.asObservable();
 
@@ -69,9 +68,10 @@ export class AuthService {
           await userDoc.set({ online: true }, { merge: true });
         }
 
-        // Inicialize WebRTC para o usuário e salve as informações no Firestore
+        // Inicialize WebRTC para o usuário, configure a conexão e crie uma oferta
+        await this.chatVideoService.startLocalStream();
+        this.chatVideoService.setupPeerConnection();
         await this.chatVideoService.setupWebRTCForUser(user.uid);
-        // Crie uma oferta para iniciar a chamada
         await this.chatVideoService.createOffer(user.uid);
       }
       this.loginErrorSubject.next(null);
@@ -88,7 +88,6 @@ export class AuthService {
       if (user && user.uid) {
         await this.firestore.collection('students').doc(user.uid).update({ online: false });
         await this.chatVideoService.tearDownWebRTCForUser(user.uid);
-        // Remova as informações da chamada
         await this.chatVideoService.deleteCallInfo();
       }
       console.log('Logging out user');
