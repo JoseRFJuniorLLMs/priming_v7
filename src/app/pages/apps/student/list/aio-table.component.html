@@ -12,7 +12,7 @@
   </div>
 
   <div class="table-container">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
       <!-- Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -32,7 +32,7 @@
           <span class="material-symbols-outlined">
             currency_bitcoin
           </span>
-          {{ student.satoshis }}
+          {{ student.satoshiBalance || 0 }}
         </td>
       </ng-container>
 

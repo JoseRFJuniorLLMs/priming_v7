@@ -25,6 +25,7 @@ export class Student {
   tax_ident_number?: string;
   tiktok?: string;
   online?: boolean;
+  satoshiBalance?: number; 
 
   constructor(init?: Partial<Student>) {
     Object.assign(this, init);

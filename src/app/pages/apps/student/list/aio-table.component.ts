@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -43,11 +43,13 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private studentService: StudentService, 
-    private dialog: MatDialog) {}
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.studentService.getStudents().subscribe(students => {
       this.dataSource.data = students;
+      this.sortDataBySatoshis();
     });
 
     this.searchCtrl.valueChanges.subscribe(value => this.applyFilter(value));
@@ -59,6 +61,12 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     }
     if (this.sort) {
       this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch(property) {
+          case 'satoshis': return item.satoshiBalance || 0;
+          default: return (item as any)[property];
+        }
+      };
     }
   }
 
@@ -80,8 +88,36 @@ export class AioTableComponent implements OnInit, AfterViewInit {
       height: '90%',
       maxWidth: '90vw',
       maxHeight: '90vh',
-     /*  panelClass: 'full-screen-dialog', */
       data: { targetUserId: student._id }
     });
+  }
+
+  sortDataBySatoshis() {
+    this.dataSource.data = this.dataSource.data.sort((a, b) => 
+      (b.satoshiBalance || 0) - (a.satoshiBalance || 0)
+    );
+  }
+
+  sortData(sort: Sort) {
+    const data = this.dataSource.data.slice();
+    if (!sort.active || sort.direction === '') {
+      this.dataSource.data = data;
+      return;
+    }
+
+    this.dataSource.data = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'satoshis': return this.compare(a.satoshiBalance || 0, b.satoshiBalance || 0, isAsc);
+        case 'name': return this.compare(a.name || '', b.name || '', isAsc);
+        case 'email': return this.compare(a.email || '', b.email || '', isAsc);
+        case 'online': return this.compare(a.online ? 1 : 0, b.online ? 1 : 0, isAsc);
+        default: return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }
