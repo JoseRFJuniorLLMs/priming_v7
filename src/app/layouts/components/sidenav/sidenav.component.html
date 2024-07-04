@@ -72,8 +72,7 @@
         class="vex-sidenav-user__image flex-none"
         src="../../../../assets/img/avatars/1.jpg" />
       <div class="vex-sidenav-user__content flex-auto">
-        <div class="vex-sidenav-user__title">Motinha</div>
-        <div class="vex-sidenav-user__subtitle">Dev</div>
+        <div class="vex-sidenav-user__title">{{ userName$ | async }}</div>
       </div>
       <mat-icon
         class="vex-sidenav-user__dropdown-icon flex-none"

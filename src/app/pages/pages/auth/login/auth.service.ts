@@ -14,6 +14,10 @@ import { StudentService } from 'src/app/pages/apps/student/student.service';
 export class AuthService {
   private loginErrorSubject = new BehaviorSubject<string | null>(null);
   loginError$ = this.loginErrorSubject.asObservable();
+  
+  // BehaviorSubject para armazenar o nome do usuário
+  private userNameSubject = new BehaviorSubject<string | null>(null);
+  userName$ = this.userNameSubject.asObservable();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -59,6 +63,8 @@ export class AuthService {
         const userDocSnapshot = await userDoc.get().toPromise();
         if (userDocSnapshot && userDocSnapshot.exists) {
           await userDoc.update({ online: true });
+          const userData = userDocSnapshot.data() as Student;
+          this.userNameSubject.next(userData.name ?? null);
         } else {
           await userDoc.set({ online: true }, { merge: true });
         }

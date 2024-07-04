@@ -1,5 +1,5 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ import { SidenavItemComponent } from './sidenav-item/sidenav-item.component';
 import { SidenavUserMenuComponent } from './sidenav-user-menu/sidenav-user-menu.component';
 
 import screenfull from 'screenfull';
+import { AuthService } from 'src/app/pages/pages/auth/login/auth.service';
 
 @Component({
   selector: 'vex-sidenav',
@@ -56,6 +57,7 @@ export class SidenavComponent implements OnInit {
   );
 
   userMenuOpen$: Observable<boolean> = of(false);
+  userName$ = this.authService.userName$;
 
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
@@ -64,12 +66,12 @@ export class SidenavComponent implements OnInit {
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
   }
-
 
   collapseOpenSidenav() {
     this.layoutService.collapseOpenSidenav();

@@ -103,28 +103,39 @@ export class ChatVideoService {
     await this.startLocalStream();
     this.soundService.playOn();
     this.setupPeerConnection();
-
+  
     webcamVideo.nativeElement.srcObject = this.localStream;
     remoteVideo.nativeElement.srcObject = this.remoteStream;
-
+  
     const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
     const existingCallDoc = callsSnapshot.docs[0];
-
+  
     const currentUser = await this.authService.getCurrentUser();
-
+  
     if (existingCallDoc) {
       this.callDocId = existingCallDoc.id;
       await this.answerCall(existingCallDoc);
     } else {
       if (currentUser && currentUser.uid) {
         await this.createOffer(currentUser.uid, targetUserId);
+        
+        // Notificar o usuário alvo sobre a chamada
+        if (targetUserId) {
+          const targetUserDoc = doc(this.firestore, `students/${targetUserId}`);
+          await setDoc(targetUserDoc, {
+            callNotification: {
+              from: currentUser.uid,
+              callDocId: this.callDocId
+            }
+          }, { merge: true });
+        }
       } else {
         console.error('No user is currently logged in');
       }
     }
     await this.updateOnlineStatus(true);
   }
-
+  
   // Create an offer for a new call
   async createOffer(userId: string, targetUserId?: string) {
     if (!this.pc) {
