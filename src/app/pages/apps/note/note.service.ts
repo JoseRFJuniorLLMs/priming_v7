@@ -17,6 +17,7 @@ import { Observable, of } from 'rxjs';
 import { NoteCollection } from './note-collection';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs/operators';
+import { SatoshiService } from './satoshi.service'; // Import SatoshiService
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,8 @@ export class NoteService {
   constructor(
     private firestore: Firestore,
     private _snackBar: MatSnackBar,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private satoshiService: SatoshiService // Inject SatoshiService
   ) {
     this.noteCollection$ = this.getNotes();
   }
@@ -61,8 +63,10 @@ export class NoteService {
       switchMap(user => {
         if (user && user.uid) {
           note.student = { _id: user.uid }; // Associa a nota ao usuário autenticado
-          return addDoc(this.noteCollectionRef, { ...note }).then(() => {
+          return addDoc(this.noteCollectionRef, { ...note }).then(async () => {
             this.openSnackBar('Create Note OK !');
+            // Increment satoshi balance when a note is created
+            await this.satoshiService.incrementSatoshi(user.uid, 10); // Increment by 10 satoshis
           });
         } else {
           return of(undefined);
