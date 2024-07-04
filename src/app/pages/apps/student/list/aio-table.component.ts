@@ -12,6 +12,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { StudentService } from '../student.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatVideoComponent } from '../../chat-video/chat-video.component';
+import { ClearCallsComponent } from '../../clean/clear-calls.component';
 
 @Component({
   selector: 'aio-table',
@@ -27,7 +28,8 @@ import { ChatVideoComponent } from '../../chat-video/chat-video.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    ClearCallsComponent
   ]
 })
 export class AioTableComponent implements OnInit, AfterViewInit {
@@ -39,7 +41,9 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private studentService: StudentService, private dialog: MatDialog) {}
+  constructor(
+    private studentService: StudentService, 
+    private dialog: MatDialog) {}
 
   ngOnInit() {
     this.studentService.getStudents().subscribe(students => {
