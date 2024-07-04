@@ -54,3 +54,10 @@ $game-height: 300px;
 .game-started .dinosaur {
   animation: dinoRun 0.3s steps(2) infinite;
 }
+.score {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #000;
+}

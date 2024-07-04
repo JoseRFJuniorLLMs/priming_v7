@@ -1,11 +1,13 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DinoService } from './dinoservice';
+import { Voice7RecognitionService } from './voice7-recognition.service'; // Importar o serviço
 
 interface Word {
   value: string;
   position: number;
   positionType: 'top' | 'bottom';
+  color: string;
 }
 
 @Component({
@@ -15,7 +17,7 @@ interface Word {
   standalone: true,
   imports: [CommonModule]
 })
-export class DinossauroComponent implements OnInit {
+export class DinossauroComponent implements OnInit, OnDestroy {
   gameStarted = false;
   dinoHeight = 0;
   jumpHeight = 150;
@@ -29,13 +31,20 @@ export class DinossauroComponent implements OnInit {
   gameLoop: any;
   lastFrameTime = 0;
   frameDuration = 100; // Duração de cada frame em milissegundos
+  coinSound = new Audio('../../../../assets/audio/coin.wav');
+  powerupSound = new Audio('../../../../assets/audio/powerup.wav');
+  jumpSound = new Audio('../../../../assets/audio/jump.wav'); // Adicionado o som de pulo
+  wordsCaptured = 0; // Contador de palavras capturadas
 
-  constructor(private dinoService: DinoService) {}
+  constructor(
+    private dinoService: DinoService, 
+    private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
   ngOnInit(): void {}
 
   startGame(): void {
     this.gameStarted = true;
+    this.wordsCaptured = 0; // Reset contador
     this.generateWords();
     this.startGameLoop();
   }
@@ -46,11 +55,21 @@ export class DinossauroComponent implements OnInit {
         const word: Word = {
           value: card.word.toUpperCase(),
           position: window.innerWidth,
-          positionType: Math.random() > 0.5 ? 'top' : 'bottom'
+          positionType: Math.random() > 0.5 ? 'top' : 'bottom',
+          color: this.getRandomColor()
         };
         this.words.push(word);
       });
     }, 2000);
+  }
+
+  getRandomColor(): string {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
   }
 
   startGameLoop(): void {
@@ -103,7 +122,14 @@ export class DinossauroComponent implements OnInit {
         dinoRect.top < wordRect.bottom &&
         dinoRect.bottom > wordRect.top
       ) {
-        // Collision detected, remove the word
+        // Collision detected, play sound and remove the word
+        this.wordsCaptured++; // Incrementar contador
+        if (word.color.toUpperCase() === '#FF0000') { // Verifica se a palavra é vermelha
+          this.powerupSound.play();
+        } else {
+          this.coinSound.play();
+        }
+        this.voiceService.speakSelectedText(word.value); // Falar a palavra capturada
         return false;
       }
       return true;
@@ -139,6 +165,7 @@ export class DinossauroComponent implements OnInit {
   jump(event: KeyboardEvent): void {
     if (!this.gameStarted || this.jumping || this.dinoHeight > 0) return;
     this.jumping = true;
+    this.jumpSound.play(); // Tocar som de pulo
   }
 
   ngOnDestroy(): void {
