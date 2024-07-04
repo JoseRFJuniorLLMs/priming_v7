@@ -34,11 +34,11 @@ import { ShareBottomWimHofComponent } from 'src/app/pages/dashboards/components/
 import { ShareBottomSheetComponent } from 'src/app/pages/dashboards/components/share-bottom-sheet/share-bottom-sheet.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ChatVideoComponent } from 'src/app/pages/apps/chat-video/chat-video.component';
 import { SoundService } from './sound.service';
 import { ShareBottomGameComponent } from 'src/app/pages/dashboards/components/share-bottom-game/share-bottom-game.component';
 import { VoiceFoodRecognitionService } from './voice-food-recognition.service';
 import { ShareBottomBooks3Component } from 'src/app/pages/dashboards/components/share-bottom-books3/share-bottom-books3.component';
+import { AioTableComponent } from 'src/app/pages/apps/student/list/aio-table.component';
 
 @Component({
   selector: 'vex-footer',
@@ -255,7 +255,7 @@ export class FooterComponent implements OnInit, AfterViewInit, OnDestroy {
   openBothConfigsCam() {
     //Cam
     this.soundService.playToc();
-    this._bottomSheet.open(ChatVideoComponent);
+    this._bottomSheet.open(AioTableComponent);
   }
 
   openBothConfigsWimHof() {
