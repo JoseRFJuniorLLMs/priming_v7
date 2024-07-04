@@ -6,7 +6,7 @@ import { Voice7RecognitionService } from './voice7-recognition.service'; // Impo
 interface Word {
   value: string;
   position: number;
-  positionType: 'top' | 'bottom';
+  positionType: 'high' | 'middle' | 'low';
   color: string;
 }
 
@@ -35,6 +35,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   powerupSound = new Audio('../../../../assets/audio/powerup.wav');
   jumpSound = new Audio('../../../../assets/audio/jump.wav'); // Adicionado o som de pulo
   wordsCaptured = 0; // Contador de palavras capturadas
+  dinoPosition = 20; // Posição inicial do dinossauro
 
   constructor(private dinoService: DinoService, private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
@@ -58,15 +59,27 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   generateWords(): void {
     setInterval(() => {
       this.dinoService.getNextWord().subscribe(card => {
+        const positionType = this.getRandomPositionType();
         const word: Word = {
           value: card.word.toUpperCase(),
           position: window.innerWidth,
-          positionType: Math.random() > 0.5 ? 'top' : 'bottom',
+          positionType,
           color: this.getRandomColor()
         };
         this.words.push(word);
       });
     }, 2000);
+  }
+
+  getRandomPositionType(): 'high' | 'middle' | 'low' {
+    const rand = Math.random();
+    if (rand < 0.33) {
+      return 'high';
+    } else if (rand < 0.66) {
+      return 'middle';
+    } else {
+      return 'low';
+    }
   }
 
   getRandomColor(): string {
@@ -108,8 +121,8 @@ export class DinossauroComponent implements OnInit, OnDestroy {
 
   checkCollision(): void {
     const dinoRect = {
-      left: 20,
-      right: 20 + 88,
+      left: this.dinoPosition,
+      right: this.dinoPosition + 88,
       top: 300 - this.dinoHeight - 94,
       bottom: 300 - this.dinoHeight
     };
@@ -118,8 +131,8 @@ export class DinossauroComponent implements OnInit, OnDestroy {
       const wordRect = {
         left: word.position,
         right: word.position + (word.value.length * 20),
-        top: word.positionType === 'top' ? 60 : 240,
-        bottom: word.positionType === 'top' ? 84 : 264 // Assuming 24px font size
+        top: word.positionType === 'high' ? (100 - this.dinoHeight) : (word.positionType === 'middle' ? 160 : 240),
+        bottom: word.positionType === 'high' ? (124 - this.dinoHeight) : (word.positionType === 'middle' ? 184 : 264) // Assuming 24px font size
       };
 
       if (
@@ -172,10 +185,23 @@ export class DinossauroComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keydown.space', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent): void {
     if (event.code === 'Space') {
       this.jump();
+    } else if (event.code === 'ArrowRight') {
+      this.moveDino('forward');
+    } else if (event.code === 'ArrowLeft') {
+      this.moveDino('backward');
+    }
+  }
+
+  moveDino(direction: 'forward' | 'backward'): void {
+    const step = 10;
+    if (direction === 'forward') {
+      this.dinoPosition += step;
+    } else if (direction === 'backward') {
+      this.dinoPosition -= step;
     }
   }
 
@@ -195,7 +221,8 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   getDinoStyle(): any {
     return {
       backgroundPosition: this.dinoFrames[this.currentDinoFrame],
-      bottom: `${this.dinoHeight}px`
+      bottom: `${this.dinoHeight}px`,
+      left: `${this.dinoPosition}px`
     };
   }
 }

@@ -1,14 +1,22 @@
 $sprite-url: '../../../../assets/img/game/offline-sprite-2x.png';
-$background-url: '../../../../assets/img/game/frag.png'; // Caminho para a imagem de fundo
+$background-url: '../../../../assets/img/game/frag.png'; // Caminho para a imagem de fundo enviada
 $dino-width: 88px;
 $dino-height: 94px;
-$game-height: 300px;
+$game-height: 100vh; // Ajustar para 100% da altura da viewport
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // Adicionado para evitar barra de rolagem
+}
 
 .game-container {
   position: relative;
   width: 100%;
   height: $game-height;
-  background: url($background-url) no-repeat center center; // Usando a imagem de fundo
+  background: url($background-url) no-repeat center center fixed; // Usando a imagem de fundo
   background-size: cover; // Ajustando a imagem de fundo para cobrir todo o container
   overflow: hidden;
 
@@ -28,7 +36,7 @@ $game-height: 300px;
     height: $dino-height;
     background: url($sprite-url) no-repeat;
     background-size: 2404px $dino-height;
-    transition: bottom 0.1s linear;
+    transition: bottom 0.1s linear, left 0.1s linear;
   }
 
   .word {
@@ -36,12 +44,16 @@ $game-height: 300px;
     font-size: 24px;
     white-space: nowrap;
 
-    &.top {
-      top: 60px;
+    &.high {
+      top: calc(100vh - 160px); // Posição alta, alcançável apenas pulando
     }
 
-    &.bottom {
-      bottom: 60px;
+    &.middle {
+      top: calc(100vh - 230px); // Posição média, na direção do dinossauro
+    }
+
+    &.low {
+      top: calc(100vh - 300px); // Posição baixa, o dinossauro pode pular por cima
     }
   }
 }
@@ -60,6 +72,6 @@ $game-height: 300px;
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 20px;
+  font-size: 40px; // Aumentar o tamanho da fonte
   color: #000;
 }
