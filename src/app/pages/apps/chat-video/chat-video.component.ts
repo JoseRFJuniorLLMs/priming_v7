@@ -4,7 +4,8 @@ import {
   ElementRef,
   OnInit,
   OnDestroy,
-  ViewChild
+  ViewChild,
+  Inject
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +14,7 @@ import { CdkDrag } from '@angular/cdk/drag-drop';
 import { ChatVideoService } from './chat-video.service';
 import { Firestore } from '@angular/fire/firestore';
 import { OnlineUserDialogComponent } from './online-user-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
 import screenfull from 'screenfull';
 
@@ -39,13 +40,17 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   checkUserOnlineInterval: any;
   collapsed: any;
   layoutService: any;
+  targetUserId: string;
 
   constructor(
     public chatVideoService: ChatVideoService,
     public firestore: Firestore,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    @Inject(MAT_DIALOG_DATA) public data: { targetUserId: string }
+  ) {
+    this.targetUserId = data.targetUserId;
+  }
 
   ngOnInit(): void {
     if (screenfull.isEnabled) {
@@ -96,18 +101,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   }
 
   async startCall() {
-    const currentUser = await this.chatVideoService.authService.getCurrentUser();
-    
-    // Verificar se já existe uma chamada ativa
-    const callDoc = await this.chatVideoService.getCallDoc(currentUser?.uid);
-    if (callDoc) {
-      // Consumir as informações existentes
-      await this.chatVideoService.consumeExistingCall(callDoc, this.webcamVideo, this.remoteVideo);
-    } else {
-      // Iniciar uma nova chamada
-      await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo);
-    }
-
+    await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo, this.targetUserId);
     this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
       this.chatVideoService.callDocId
     );
@@ -146,5 +140,5 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.collapsed
       ? this.layoutService.expandSidenav()
       : this.layoutService.collapseSidenav();
-  } //fim
+  }
 }

@@ -9,8 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Student } from 'src/app/model/student/student';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { StudentService } from '../student.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChatVideoComponent } from '../../chat-video/chat-video.component';
 
 @Component({
   selector: 'aio-table',
@@ -30,7 +31,7 @@ import { StudentService } from '../student.service';
   ]
 })
 export class AioTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['name', 'email', 'online'];
+  displayedColumns: string[] = ['name', 'email', 'online', 'action'];
   dataSource = new MatTableDataSource<Student>();
   searchCtrl = new FormControl();
   layoutCtrl = new FormControl('boxed');
@@ -38,7 +39,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private studentService: StudentService) {}
+  constructor(private studentService: StudentService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.studentService.getStudents().subscribe(students => {
@@ -63,5 +64,13 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   getOnlineStatusClass(online: boolean): string {
     return online ? 'online' : 'offline';
+  }
+
+  callStudent(student: Student) {
+    const dialogRef = this.dialog.open(ChatVideoComponent, {
+      width: '80%',
+      height: '80%',
+      data: { targetUserId: student._id }
+    });
   }
 }

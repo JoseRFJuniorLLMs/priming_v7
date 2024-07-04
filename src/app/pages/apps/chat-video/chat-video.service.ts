@@ -57,10 +57,7 @@ export class ChatVideoService {
   }
 
   // Setup peer connection for WebRTC
-  setupPeerConnection(
-    webcamVideo: ElementRef<HTMLVideoElement>,
-    remoteVideo: ElementRef<HTMLVideoElement>
-  ) {
+  setupPeerConnection() {
     this.pc = new RTCPeerConnection({
       iceServers: [
         { urls: 'stun:stun1.l.google.com:19302' },
@@ -77,14 +74,14 @@ export class ChatVideoService {
       console.log('Track received:', event);
       this.openSnackBar('Track received: ' + event);
       if (event.streams && event.streams[0]) {
-        remoteVideo.nativeElement.srcObject = event.streams[0];
+        this.remoteStream = event.streams[0];
       } else {
         const inboundStream = new MediaStream();
         inboundStream.addTrack(event.track);
-        remoteVideo.nativeElement.srcObject = inboundStream;
+        this.remoteStream = inboundStream;
       }
-      console.log('Remote video element srcObject:', remoteVideo.nativeElement.srcObject);
-      this.openSnackBar('Remote video element srcObject: ' + remoteVideo.nativeElement.srcObject);
+      console.log('Remote stream:', this.remoteStream);
+      this.openSnackBar('Remote stream: ' + this.remoteStream);
     };
 
     this.pc.onicecandidate = (event) => {
@@ -95,18 +92,20 @@ export class ChatVideoService {
         addDoc(candidatesCollection, event.candidate.toJSON());
       }
     };
-
-    webcamVideo.nativeElement.srcObject = this.localStream;
   }
 
   // Start a new call
   async startCall(
     webcamVideo: ElementRef<HTMLVideoElement>,
-    remoteVideo: ElementRef<HTMLVideoElement>
+    remoteVideo: ElementRef<HTMLVideoElement>,
+    targetUserId?: string
   ) {
     await this.startLocalStream();
     this.soundService.playOn();
-    this.setupPeerConnection(webcamVideo, remoteVideo);
+    this.setupPeerConnection();
+
+    webcamVideo.nativeElement.srcObject = this.localStream;
+    remoteVideo.nativeElement.srcObject = this.remoteStream;
 
     const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
     const existingCallDoc = callsSnapshot.docs[0];
@@ -118,7 +117,7 @@ export class ChatVideoService {
       await this.answerCall(existingCallDoc);
     } else {
       if (currentUser && currentUser.uid) {
-        await this.createOffer(currentUser.uid);
+        await this.createOffer(currentUser.uid, targetUserId);
       } else {
         console.error('No user is currently logged in');
       }
@@ -127,7 +126,12 @@ export class ChatVideoService {
   }
 
   // Create an offer for a new call
-  async createOffer(userId: string) {
+  async createOffer(userId: string, targetUserId?: string) {
+    if (!this.pc) {
+      console.error('RTCPeerConnection is not initialized');
+      return;
+    }
+
     const callDoc = doc(collection(this.firestore, 'calls'));
     this.callDocId = callDoc.id;
 
@@ -136,7 +140,7 @@ export class ChatVideoService {
     this.openSnackBar('Offer created: ' + offerDescription);
     await this.pc.setLocalDescription(offerDescription);
 
-    await setDoc(callDoc, { offer: offerDescription, userId });
+    await setDoc(callDoc, { offer: offerDescription, userId, targetUserId });
 
     onSnapshot(callDoc, async (snapshot) => {
       const data = snapshot.data();
@@ -328,105 +332,26 @@ export class ChatVideoService {
     this.soundService.playClose();
   }
 
-  // Configure WebRTC for the logged in user
+  // Setup WebRTC for user
   async setupWebRTCForUser(userId: string) {
-    // Start local media stream (camera and microphone)
-    await this.startLocalStream();
-    
-    // Setup peer connection for WebRTC
-    this.pc = new RTCPeerConnection({
-      iceServers: [
-        { urls: 'stun:stun1.l.google.com:19302' },
-        { urls: 'stun:stun2.l.google.com:19302' }
-      ]
-    });
-
-    this.localStream.getTracks().forEach((track) => {
-      this.pc.addTrack(track, this.localStream);
-    });
-
-    // Store WebRTC information in Firestore
     const userDoc = doc(this.firestore, `students/${userId}`);
-    await setDoc(userDoc, {
-      webrtc: {
-        localStream: this.localStream.id,
-        remoteStream: this.remoteStream.id,
-        pc: this.pc.localDescription
-      }
-    }, { merge: true });
+    await setDoc(userDoc, { webrtc: { /* Add WebRTC configuration data here */ } }, { merge: true });
   }
 
-  // Teardown WebRTC for the logged out user
+  // Tear down WebRTC for user
   async tearDownWebRTCForUser(userId: string) {
-    // Clean up WebRTC resources
-    if (this.pc) {
-      this.pc.close();
-    }
-    if (this.localStream) {
-      this.localStream.getTracks().forEach((track) => track.stop());
-    }
-    if (this.remoteStream) {
-      this.remoteStream.getTracks().forEach((track) => track.stop());
-    }
-
-    // Remove WebRTC information from Firestore
     const userDoc = doc(this.firestore, `students/${userId}`);
-    await setDoc(userDoc, { webrtc: null }, { merge: true });
+    await setDoc(userDoc, { webrtc: {} }, { merge: true });
   }
 
-  // Delete call information from Firestore
+  // Delete call info
   async deleteCallInfo() {
-    if (this.callDocId) {
-      const callDoc = doc(this.firestore, `calls/${this.callDocId}`);
-      await deleteDoc(callDoc);
-      this.callDocId = '';
-    }
-  }
-
-  // Get existing call document for user
-  async getCallDoc(userId: string | undefined) {
-    if (!userId) return null;
-    const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
-    return callsSnapshot.docs.find(doc => doc.data()['userId'] === userId) || null;
-  }
-
-  // Consume existing call information
-  async consumeExistingCall(callDoc: DocumentSnapshot, webcamVideo: ElementRef<HTMLVideoElement>, remoteVideo: ElementRef<HTMLVideoElement>) {
-    this.callDocId = callDoc.id;
-    const callData = callDoc.data();
-    
-    // Configurar peer connection e streams
-    this.setupPeerConnection(webcamVideo, remoteVideo);
-    
-    // Configurar local description
-    const offerDescription = new RTCSessionDescription(callData?.['offer']);
-    await this.pc.setLocalDescription(offerDescription);
-
-    // Configurar remote description se já existir
-    if (callData?.['answer']) {
-      const answerDescription = new RTCSessionDescription(callData['answer']);
-      await this.pc.setRemoteDescription(answerDescription);
+    if (!this.callDocId) {
+      console.error('Invalid callDocId');
+      return;
     }
 
-    // Adicionar candidatos ICE existentes
-    const offerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
-    onSnapshot(offerCandidatesCollection, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-          const candidate = new RTCIceCandidate(change.doc.data());
-          this.pc.addIceCandidate(candidate);
-        }
-      });
-    });
-
-    const answerCandidatesCollection = collection(this.firestore, `calls/${this.callDocId}/answerCandidates`);
-    onSnapshot(answerCandidatesCollection, (snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-          const candidate = new RTCIceCandidate(change.doc.data());
-          this.pc.addIceCandidate(candidate);
-        }
-      });
-    });
+    const callDoc = doc(this.firestore, `calls/${this.callDocId}`);
+    await deleteDoc(callDoc);
   }
 }
