@@ -31,6 +31,16 @@ export class NotificationService implements OnDestroy {
     });
   }
 
+  async sendCallNotification(targetUserId: string, callDocId: string, callerId: string) {
+    const targetUserDoc = this.firestore.collection('students').doc(targetUserId);
+    await targetUserDoc.update({
+      callNotification: {
+        from: callerId,
+        callDocId: callDocId
+      }
+    });
+  }
+
   openIncomingCallDialog(callNotification: any, userId: string) {
     const dialogRef = this.dialog.open(IncomingCallDialogComponent, {
       width: '300px',

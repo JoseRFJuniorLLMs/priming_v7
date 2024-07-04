@@ -1,8 +1,6 @@
 .video-chat-container {
-  width: 80vw; // Ajusta para ocupar toda a largura da janela
-  height: 80vh; // Ajusta para ocupar toda a altura da janela
-  margin: 0;
-  padding: 0;
+  width: 100%; // Ajusta para ocupar toda a largura do diálogo
+  height: 100%; // Ajusta para ocupar toda a altura do diálogo
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,13 +12,14 @@
 .videos {
   display: flex;
   justify-content: space-around;
-  flex-grow: 1;
   align-items: center;
-  padding: 20px;
+  flex-grow: 1;
+  padding: 20px; // Ajusta o espaçamento conforme necessário
 }
 
 video {
-  width: 60%; // Aumenta a largura dos vídeos
+  width: 45%; // Ajusta a largura dos vídeos para que ocupem o espaço corretamente
+  height: auto; // Mantém a proporção dos vídeos
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -57,10 +56,15 @@ mat-form-field {
 
 .toolbar {
   display: flex;
-  justify-content: center;
+  justify-content: center; // Centraliza os botões na barra de ferramentas
+  align-items: center;
   padding: 10px;
   background-color: #333;
   color: #fff;
+  position: absolute;
+  bottom: 0; // Coloca a barra de ferramentas no rodapé
+  width: 100%; // Faz a barra de ferramentas ocupar toda a largura do diálogo
+  box-sizing: border-box;
 }
 
 .toolbar button {
@@ -75,6 +79,7 @@ mat-form-field {
 .toolbar button:hover {
   color: #bbb;
 }
+
 // No seu arquivo .scss
 
 $red: red;
@@ -99,7 +104,6 @@ $green: green;
     }
   }
 }
-
 
 /* online-status.scss */
 

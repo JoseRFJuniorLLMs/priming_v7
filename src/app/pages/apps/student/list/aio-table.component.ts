@@ -72,11 +72,11 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   callStudent(student: Student) {
     const dialogRef = this.dialog.open(ChatVideoComponent, {
-      width: '100%',
-      height: '100%',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      panelClass: 'full-screen-dialog',
+      width: '90%',
+      height: '90%',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+     /*  panelClass: 'full-screen-dialog', */
       data: { targetUserId: student._id }
     });
   }

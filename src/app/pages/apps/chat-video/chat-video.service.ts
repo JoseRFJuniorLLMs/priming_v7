@@ -15,6 +15,7 @@ import {
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { AuthService } from '../../pages/auth/login/auth.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,8 @@ export class ChatVideoService {
     private _snackBar: MatSnackBar,
     private firestore: Firestore,
     private soundService: SoundService,
-    public authService: AuthService
+    public authService: AuthService,
+    private notificationService: NotificationService  // Adicionado aqui
   ) {}
 
   openSnackBar(textDisplay: string) {
@@ -123,13 +125,7 @@ export class ChatVideoService {
         await this.createOffer(currentUser.uid, targetUserId);
 
         if (targetUserId) {
-          const targetUserDoc = doc(this.firestore, `students/${targetUserId}`);
-          await setDoc(targetUserDoc, {
-            callNotification: {
-              from: currentUser.uid,
-              callDocId: this.callDocId
-            }
-          }, { merge: true });
+          this.notificationService.sendCallNotification(targetUserId, this.callDocId, currentUser.uid);  // Notificação de chamada
         }
       } else {
         console.error('No user is currently logged in');
