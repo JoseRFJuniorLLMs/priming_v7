@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Voice6RecognitionService } from './voice6-recognition.service'; // Certifique-se de importar o serviço VoiceRecognitionService corretamente
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
+import { SatoshiService } from '../note/satoshi.service';
+
 interface Card {
   id: number;
   word: string;
@@ -25,11 +27,14 @@ export class CardComponent implements OnInit, OnDestroy {
   remainingPairs = 0;
   private flippedCards: Card[] = [];
   gameCount = 0;
+  private studentId = 'some-student-id'; // Substitua pelo ID real do estudante
 
   constructor(
     private cardService: CardService, 
     public voiceService: Voice6RecognitionService, 
-    public soundService: SoundService) {} 
+    public soundService: SoundService,
+    private satoshiService: SatoshiService // Injeção do SatoshiService
+  ) {} 
 
   ngOnInit(): void {
     this.newGame();
@@ -52,6 +57,14 @@ export class CardComponent implements OnInit, OnDestroy {
         this.moves = 0;
         this.remainingPairs = this.cards.length / 2;
         this.gameCount++;
+
+        // Incrementa o saldo de satoshi do jogador
+        this.satoshiService.incrementSatoshi(this.studentId, 1).then(() => {
+          console.log('Saldo de satoshi incrementado!');
+        }).catch(error => {
+          console.error('Erro ao incrementar saldo de satoshi:', error);
+        });
+
       } else {
         console.error('Nenhuma carta válida encontrada');
       }
@@ -73,14 +86,21 @@ export class CardComponent implements OnInit, OnDestroy {
   private checkMatch() {
     setTimeout(() => {
       const [card1, card2] = this.flippedCards;
-
+  
       if (card1.word === card2.word) {
         card1.isMatched = card2.isMatched = true;
         this.remainingPairs--;
-
+  
         // Falar o nome da palavra
         this.voiceService.speak("That's right, yes baby!" + card1.word);
-
+  
+        // Incrementar saldo de satoshi por acerto
+        this.satoshiService.incrementSatoshi(this.studentId, 1).then(() => {
+          console.log('Saldo de satoshi incrementado!');
+        }).catch(error => {
+          console.error('Erro ao incrementar saldo de satoshi:', error);
+        });
+  
         if (this.remainingPairs === 0) {
           setTimeout(() => {
             this.newGame();
@@ -88,12 +108,14 @@ export class CardComponent implements OnInit, OnDestroy {
         }
       } else {
         card1.isFlipped = card2.isFlipped = false;
-
+  
         // Tocar o som quando erra o par de cartas
         this.soundService.playToasty();
       }
-
+  
       this.flippedCards = [];
     }, 1000);
   }
-}
+  
+
+}// fim
