@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="title">Students Rank</h1>
-  
+
   <div class="search-bar">
     <mat-form-field appearance="outline">
       <mat-label>Search</mat-label>
@@ -30,6 +30,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell *matCellDef="let student">
           <span [ngClass]="getOnlineStatusClass(student.online)">
+            <span class="material-symbols-outlined" *ngIf="student.online" style="color: green;">
+              online_prediction
+            </span>
+            <span class="material-symbols-outlined" *ngIf="!student.online" style="color: red;">
+              offline_bolt
+            </span>
             {{ student.online ? 'Online' : 'Offline' }}
           </span>
         </td>
@@ -39,7 +45,10 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let student">
-          <button mat-button (click)="callStudent(student)" [disabled]="!student.online">
+          <button mat-button (click)="callStudent(student)" [disabled]="!student.online" [ngClass]="getButtonClass(student.online)">
+            <span class="material-symbols-outlined" [ngStyle]="{'color': student.online ? 'green' : 'red'}">
+              call
+            </span>
             Call
           </button>
         </td>

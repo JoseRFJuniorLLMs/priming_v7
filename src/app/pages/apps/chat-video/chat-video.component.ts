@@ -52,11 +52,12 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.targetUserId = data.targetUserId;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if (screenfull.isEnabled) {
       screenfull.request();
       this.toggleCollapse();
     }
+    await this.startCall(); // Iniciar a chamada ao abrir o diálogo
     this.startPeriodicCheck();
   }
 
@@ -68,19 +69,15 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
 
   startPeriodicCheck() {
     this.checkUserOnlineInterval = setInterval(async () => {
-      if (this.chatVideoService.callDocId) {
-        const isOnline = await this.chatVideoService.checkUserOnlineStatus(
-          this.chatVideoService.callDocId
-        );
-        console.log(`User online status: ${isOnline}`); // Log para depuração
-        if (isOnline && !this.otherUserOnline) {
-          this.openOnlineUserDialog();
-        }
-        this.otherUserOnline = isOnline;
-        this.cdr.detectChanges(); // Forçar detecção de mudanças
-      } else {
-        console.error('callDocId is not set');
+      const isOnline = await this.chatVideoService.checkUserOnlineStatus(
+        this.targetUserId
+      );
+      console.log(`User online status: ${isOnline}`); // Log para depuração
+      if (isOnline && !this.otherUserOnline) {
+        this.openOnlineUserDialog();
       }
+      this.otherUserOnline = isOnline;
+      this.cdr.detectChanges(); // Forçar detecção de mudanças
     }, 10000); // Verificação a cada 10 segundos para testes
   }
 
@@ -103,7 +100,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   async startCall() {
     await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo, this.targetUserId);
     this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
-      this.chatVideoService.callDocId
+      this.targetUserId
     );
     this.cdr.detectChanges(); // Forçar detecção de mudanças
   }

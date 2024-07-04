@@ -66,6 +66,10 @@ export class AioTableComponent implements OnInit, AfterViewInit {
     return online ? 'online' : 'offline';
   }
 
+  getButtonClass(online: boolean): string {
+    return online ? 'call-button-online' : 'call-button-offline';
+  }
+
   callStudent(student: Student) {
     const dialogRef = this.dialog.open(ChatVideoComponent, {
       width: '80%',
