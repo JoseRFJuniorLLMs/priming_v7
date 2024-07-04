@@ -6,7 +6,7 @@
   <div *ngFor="let word of words" class="word" [class.high]="word.positionType === 'high'" [class.middle]="word.positionType === 'middle'" [class.low]="word.positionType === 'low'" [style.left.px]="word.position" [style.color]="word.color">
     {{ word.value }}
   </div>
-  <div class="score">
+  <div *ngIf="showScore" class="score">
     Words: {{ wordsCaptured }}
   </div>
 </div>

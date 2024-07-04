@@ -36,6 +36,7 @@ export class DinossauroComponent implements OnInit, OnDestroy {
   jumpSound = new Audio('../../../../assets/audio/jump.wav'); // Adicionado o som de pulo
   wordsCaptured = 0; // Contador de palavras capturadas
   dinoPosition = 20; // Posição inicial do dinossauro
+  showScore = false; // Variável para controlar a exibição do score temporário
 
   constructor(private dinoService: DinoService, private voiceService: Voice7RecognitionService) {} // Injete o serviço
 
@@ -154,6 +155,13 @@ export class DinossauroComponent implements OnInit, OnDestroy {
         }
         
         this.voiceService.speakSelectedText(word.value); // Falar a palavra capturada
+
+        // Mostrar o score temporariamente
+        this.showScore = true;
+        setTimeout(() => {
+          this.showScore = false;
+        }, 1000); // O score desaparece após 1 segundo
+
         return false;
       }
       return true;
