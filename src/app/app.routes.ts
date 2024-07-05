@@ -136,6 +136,17 @@ export const appRoutes: VexRoutes = [
             }
           },
 
+          {
+            path: 'word-search',
+            loadComponent: () =>
+              import('./pages/apps/word-search/word-search.component').then(
+                (m) => m.WordSearchComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+
 
           {
             path: 'card',

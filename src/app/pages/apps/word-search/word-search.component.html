@@ -1,32 +1,35 @@
 <mat-card class="word-search-container">
-    <mat-card-header>
-      <mat-card-title>Word Search Game</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="word-search-grid">
-        <div *ngFor="let row of grid; let i = index" class="grid-row">
-          <div *ngFor="let cell of row; let j = index" 
-               class="grid-cell"
-               [class.selected]="cell.selected"
-               [class.found]="cell.found"
-               (mousedown)="startSelection(i, j)"
-               (mouseover)="continueSelection(i, j)"
-               (mouseup)="endSelection()">
-            {{ cell.letter }}
-          </div>
+  <mat-card-header>
+    <mat-card-title>Word Search Game</mat-card-title>
+    <mat-card-subtitle>Score: {{score}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="word-search-grid">
+      <div *ngFor="let row of grid; let i = index" class="grid-row">
+        <div *ngFor="let cell of row; let j = index" 
+             class="grid-cell"
+             [class.selected]="cell.selected"
+             [class.found]="cell.found"
+             (click)="toggleCellSelection(i, j)">
+          {{ cell.letter }}
         </div>
       </div>
-      <div class="word-list">
-        <mat-chip-list>
-          <mat-chip *ngFor="let word of words" 
-                    [selected]="word.found"
-                    [color]="word.found ? 'accent' : 'primary'">
-            {{ word.text }}
-          </mat-chip>
-        </mat-chip-list>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="newGame()">New Game</button>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+    <div class="word-list">
+      <mat-chip-set>
+        <mat-chip *ngFor="let word of words" 
+                  [ngClass]="{ 'found-word': word.found }">
+          {{ word.text }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="content-wrapper">
+      <button mat-raised-button color="accent" matTooltip="New Game" (click)="newGame()">
+        New Game
+        <i class="fa fa-refresh" aria-hidden="true"></i>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

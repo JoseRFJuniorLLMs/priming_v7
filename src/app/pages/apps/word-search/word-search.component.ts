@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface Cell {
   letter: string;
@@ -18,15 +19,16 @@ interface Word {
 @Component({
   selector: 'app-word-search',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatChipsModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatChipsModule, MatButtonModule, MatTooltipModule],
   templateUrl: './word-search.component.html',
   styleUrls: ['./word-search.component.scss']
 })
 export class WordSearchComponent implements OnInit {
   grid: Cell[][] = [];
   words: Word[] = [];
-  gridSize = 10;
-  selection: { row: number; col: number }[] = [];
+  gridSize = 20;
+  currentSelection: string = '';
+  score: number = 0;
 
   ngOnInit() {
     this.newGame();
@@ -38,24 +40,27 @@ export class WordSearchComponent implements OnInit {
       { text: 'TYPESCRIPT', found: false },
       { text: 'COMPONENT', found: false },
       { text: 'MATERIAL', found: false },
-      { text: 'SEARCH', found: false }
+      { text: 'SEARCH', found: false },
+      { text: 'JAVASCRIPT', found: false },
+      { text: 'FRONTEND', found: false },
+      { text: 'REACTIVE', found: false },
+      { text: 'FRAMEWORK', found: false },
+      { text: 'DEVELOPMENT', found: false }
     ];
     this.generateGrid();
     this.placeWords();
+    this.score = 0;
+    this.currentSelection = '';
   }
 
   generateGrid() {
-    this.grid = [];
-    for (let i = 0; i < this.gridSize; i++) {
-      this.grid[i] = [];
-      for (let j = 0; j < this.gridSize; j++) {
-        this.grid[i][j] = {
-          letter: String.fromCharCode(65 + Math.floor(Math.random() * 26)),
-          selected: false,
-          found: false
-        };
-      }
-    }
+    this.grid = Array(this.gridSize).fill(null).map(() =>
+      Array(this.gridSize).fill(null).map(() => ({
+        letter: '',
+        selected: false,
+        found: false
+      }))
+    );
   }
 
   placeWords() {
@@ -63,6 +68,9 @@ export class WordSearchComponent implements OnInit {
       [0, 1],  // right
       [1, 0],  // down
       [1, 1],  // diagonal down-right
+      [0, -1], // left
+      [-1, 0], // up
+      [-1, -1] // diagonal up-left
     ];
 
     for (const word of this.words) {
@@ -78,65 +86,76 @@ export class WordSearchComponent implements OnInit {
         }
       }
     }
+
+    // Fill empty cells with random letters
+    for (let i = 0; i < this.gridSize; i++) {
+      for (let j = 0; j < this.gridSize; j++) {
+        if (this.grid[i][j].letter === '') {
+          this.grid[i][j].letter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+        }
+      }
+    }
   }
 
   canPlaceWord(word: string, row: number, col: number, direction: number[]): boolean {
-    if (row + word.length * direction[0] > this.gridSize || 
-        col + word.length * direction[1] > this.gridSize) {
-      return false;
-    }
-
+    const [dRow, dCol] = direction;
     for (let i = 0; i < word.length; i++) {
-      const cell = this.grid[row + i * direction[0]][col + i * direction[1]];
-      if (cell.letter !== word[i] && cell.letter !== '') {
+      const newRow = row + i * dRow;
+      const newCol = col + i * dCol;
+      if (newRow < 0 || newRow >= this.gridSize || newCol < 0 || newCol >= this.gridSize) {
+        return false;
+      }
+      if (this.grid[newRow][newCol].letter !== '' && this.grid[newRow][newCol].letter !== word[i]) {
         return false;
       }
     }
-
     return true;
   }
 
   placeWord(word: string, row: number, col: number, direction: number[]) {
+    const [dRow, dCol] = direction;
     for (let i = 0; i < word.length; i++) {
-      this.grid[row + i * direction[0]][col + i * direction[1]].letter = word[i];
+      const newRow = row + i * dRow;
+      const newCol = col + i * dCol;
+      this.grid[newRow][newCol].letter = word[i];
     }
   }
 
-  startSelection(row: number, col: number) {
-    this.selection = [{ row, col }];
-    this.grid[row][col].selected = true;
-  }
-
-  continueSelection(row: number, col: number) {
-    if (this.selection.length > 0) {
-      this.selection.push({ row, col });
-      this.grid[row][col].selected = true;
+  toggleCellSelection(row: number, col: number) {
+    const cell = this.grid[row][col];
+    cell.selected = !cell.selected;
+    
+    if (cell.selected) {
+      this.currentSelection += cell.letter;
+    } else {
+      this.currentSelection = this.currentSelection.replace(cell.letter, '');
     }
+
+    this.checkWord();
   }
 
-  endSelection() {
-    const selectedWord = this.selection.map(pos => this.grid[pos.row][pos.col].letter).join('');
-    const reversedWord = selectedWord.split('').reverse().join('');
-
+  checkWord() {
     const foundWord = this.words.find(word => 
-      word.text === selectedWord || word.text === reversedWord
+      word.text === this.currentSelection && !word.found
     );
 
-    if (foundWord && !foundWord.found) {
+    if (foundWord) {
       foundWord.found = true;
-      this.selection.forEach(pos => {
-        this.grid[pos.row][pos.col].found = true;
-      });
-    }
+      this.score++;
+      this.grid.forEach(row => row.forEach(cell => {
+        if (cell.selected) {
+          cell.found = true;
+          cell.selected = false;
+        }
+      }));
+      this.currentSelection = '';
 
-    this.grid.forEach(row => row.forEach(cell => cell.selected = false));
-    this.selection = [];
-
-    if (this.words.every(word => word.found)) {
-      setTimeout(() => {
-        alert('Congratulations! You found all words. Starting a new game.');
-        this.newGame();
-      }, 500);
+      if (this.words.every(word => word.found)) {
+        setTimeout(() => {
+          alert(`Congratulations! You found all words. Your score: ${this.score}`);
+          this.newGame();
+        }, 500);
+      }
     }
   }
 }

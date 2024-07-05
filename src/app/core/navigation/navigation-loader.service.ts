@@ -89,12 +89,17 @@ export class NavigationLoaderService {
                 label: 'Priming Tetris Game',
                 route: '/apps/teris',
                 icon: 'mat:speaker_notes'
-              }
-              ,
+              },
               {
                 type: 'link',
                 label: 'Priming Dino Game',
                 route: '/apps/dino',
+                icon: 'mat:speaker_notes'
+              },
+              {
+                type: 'link',
+                label: 'Priming Word-Search Game',
+                route: '/apps/word-search',
                 icon: 'mat:speaker_notes'
               }
             ]
