@@ -16,7 +16,7 @@ export class StudentService {
       switchMap(user => {
         if (user && user.uid) {
           return this.firestore.doc<Student>(`students/${user.uid}`).valueChanges().pipe(
-            map(student => student || null) // Ensure undefined is converted to null
+            map(student => student || null)
           );
         } else {
           return of(null);
@@ -35,9 +35,21 @@ export class StudentService {
     );
   }
 
-  addStudentData(student: Student) {
-    console.log('Adding student data:', student);
-    return this.firestore.doc(`students/${student._id}`).set(student);
+  addStudentData(student: Student): Promise<void> {
+    const id = this.firestore.createId();
+    student._id = id;
+    return this.firestore.doc(`students/${id}`).set(student);
+  }
+
+  updateStudentData(student: Student): Promise<void> {
+    if (!student._id) {
+      throw new Error('Student ID is required for update.');
+    }
+    return this.firestore.doc(`students/${student._id}`).update(student);
+  }
+
+  deleteStudentData(id: string): Promise<void> {
+    return this.firestore.doc(`students/${id}`).delete();
   }
 
   getLastLogin(loginHistory?: string[]): string {

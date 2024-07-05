@@ -1,77 +1,123 @@
-import { Component, ElementRef, Inject, Input, OnInit, ViewChild, NgZone, ChangeDetectorRef  } from '@angular/core';
-import { MatRippleModule } from '@angular/material/core';
-import { RouterLinkActive, RouterOutlet } from '@angular/router';
-import { fadeInUp400ms } from '@vex/animations/fade-in-up.animation';
-import { stagger40ms } from '@vex/animations/stagger.animation';
-import { HttpClient } from '@angular/common/http';
-
-import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, OnInit, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { VexBreadcrumbsComponent } from '@vex/components/vex-breadcrumbs/vex-breadcrumbs.component';
-import { VexScrollbarComponent } from '@vex/components/vex-scrollbar/vex-scrollbar.component';
-import { VexSecondaryToolbarComponent } from '@vex/components/vex-secondary-toolbar/vex-secondary-toolbar.component';
-import { MatDialog } from '@angular/material/dialog';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
-
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Firestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { StudentService } from '../student.service';
+import { Student } from 'src/app/model/student/student';
+import { EditStudentDialogComponent } from './edit-student-dialog.component';
+import { DeleteStudentDialogComponent } from './delete-student-dialog.component';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 @Component({
-  selector: 'vex-student',
-  standalone: true,
+  selector: 'app-student',
   templateUrl: './student.component.html',
-  styleUrl: './student.component.scss',
-  animations: [stagger40ms, fadeInUp400ms],
+  styleUrls: ['./student.component.scss'],
+  standalone: true,
   imports: [
-    CdkDrag,
-    MatIconModule,
-    MatButtonModule,
-    NgFor,
-    MatRippleModule,
-    RouterLinkActive,
-    NgClass,
-    RouterOutlet,
-    MatSidenavModule,
-    MatMenuModule,
-    NgIf,
-    VexScrollbarComponent,
-    AsyncPipe,
-    MatDividerModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
     MatInputModule,
-    CdkDropList,
-    VexBreadcrumbsComponent,
-    VexSecondaryToolbarComponent
-  ],
+    MatIconModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatListModule,
+    MatDialogModule,
+    MatBadgeModule
+  ]
 })
-
-
 export class StudentComponent implements OnInit {
+  student$!: Observable<Student | null>;
+  students$!: Observable<Student[]>;
+  selectedStudent: Student | null = null;
 
-  //==========Construtor=============//
   constructor(
-    private http: HttpClient,
     public dialog: MatDialog,
-    private elementRef: ElementRef,
     @Inject(Firestore) private firestore: Firestore,
-    private cdRef: ChangeDetectorRef,
-    private zone: NgZone,
     private studentService: StudentService
-
-  ) {
-  
-  }
-
+  ) {}
 
   ngOnInit(): void {
-
+    this.student$ = this.studentService.getStudentData();
+    this.students$ = this.studentService.getStudents();
   }
 
+  addStudent(student: Student) {
+    this.studentService.addStudentData(student).then(() => {
+      console.log('Student added successfully');
+    }).catch(error => {
+      console.error('Error adding student:', error);
+    });
+  }
 
+  updateStudent(student: Student) {
+    this.studentService.updateStudentData(student).then(() => {
+      console.log('Student updated successfully');
+    }).catch(error => {
+      console.error('Error updating student:', error);
+    });
+  }
+
+  deleteStudent(id: string) {
+    if (id) {
+      this.studentService.deleteStudentData(id).then(() => {
+        console.log('Student deleted successfully');
+      }).catch(error => {
+        console.error('Error deleting student:', error);
+      });
+    } else {
+      console.error('Error: Student ID is undefined');
+    }
+  }
+
+  openEditDialog(student: Student) {
+    const dialogRef = this.dialog.open(EditStudentDialogComponent, {
+      width: '80vw',
+      height: '80vw',
+      data: { ...student }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.updateStudent(result);
+      }
+    });
+  }
+
+  openDeleteDialog(id: string) {
+    const dialogRef = this.dialog.open(DeleteStudentDialogComponent, {
+      width: '300px',
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteStudent(id);
+      }
+    });
+  }
+
+  selectStudent(student: Student) {
+    this.selectedStudent = student;
+  }
+
+  clearSelection() {
+    this.selectedStudent = null;
+  }
 }

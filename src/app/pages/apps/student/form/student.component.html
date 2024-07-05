@@ -1,15 +1,37 @@
-<vex-secondary-toolbar current="Game">
-  <vex-breadcrumbs
-    [crumbs]="['Student', 'Student']"
-    class="flex-auto"></vex-breadcrumbs>
-
-  <button class="ml-2" color="primary" mat-icon-button type="button">
-    <mat-icon svgIcon="mat:more_vert"></mat-icon>
-  </button>
-</vex-secondary-toolbar>
-
-<div class="example-box" cdkDrag>
-
-  
+<div class="student-container">
+  <mat-card class="student-card" *ngIf="student$ | async as student">
+    <mat-card-header>
+      <div mat-card-avatar class="student-avatar"></div>
+      <mat-card-title>{{ student.name }}</mat-card-title>
+      <mat-card-subtitle>{{ student.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="student.image_url" alt="Student photo">
+    <mat-card-content>
+      <p><strong>City:</strong> {{ student.city }}</p>
+      <p><strong>Country:</strong> {{ student.country }}</p>
+      <p><strong>Courses:</strong> {{ student.courses?.join(', ') }}</p>
+      <p><strong>Books:</strong> {{ student.books }}</p>
+      <p><strong>End:</strong> {{ student.end }}</p>
+      <p><strong>Facebook:</strong> {{ student.facebook }}</p>
+      <p><strong>Gender:</strong> {{ student.gender }}</p>
+      <p><strong>Instagram:</strong> {{ student.instagram }}</p>
+      <p><strong>LinkedIn:</strong> {{ student.linkedin }}</p>
+      <p><strong>Login:</strong> {{ student.login }}</p>
+      <p><strong>Password:</strong> {{ student.password }}</p>
+      <p><strong>Personal Ident Number:</strong> {{ student.personal_ident_number }}</p>
+      <p><strong>Phone:</strong> {{ student.phone }}</p>
+      <p><strong>Spoken Language:</strong> {{ student.spoken_language }}</p>
+      <p><strong>Status:</strong> {{ student.status }}</p>
+      <p><strong>Tax Ident Number:</strong> {{ student.tax_ident_number }}</p>
+      <p><strong>TikTok:</strong> {{ student.tiktok }}</p>
+      <p><strong>Satoshi Balance:</strong> {{ student.satoshiBalance }}</p>
+      <p><strong>Last Login:</strong> {{ student.lastLogin }}</p>
+      <p><strong>Date Created:</strong> {{ student.date_create }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-icon-button color="primary" (click)="openEditDialog(student)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>
-

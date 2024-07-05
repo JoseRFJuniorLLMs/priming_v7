@@ -1,0 +1,43 @@
+.word-search-container {
+    max-width: 600px;
+    margin: 20px auto;
+  
+    .word-search-grid {
+      display: flex;
+      flex-direction: column;
+      border: 2px solid #ccc;
+      margin-bottom: 20px;
+  
+      .grid-row {
+        display: flex;
+      }
+  
+      .grid-cell {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #eee;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+  
+        &.selected {
+          background-color: #e0e0e0;
+        }
+  
+        &.found {
+          background-color: #a5d6a7;
+        }
+      }
+    }
+  
+    .word-list {
+      margin-bottom: 20px;
+  
+      mat-chip {
+        margin: 4px;
+      }
+    }
+  }

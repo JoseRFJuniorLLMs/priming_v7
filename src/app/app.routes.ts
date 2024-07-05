@@ -1,6 +1,7 @@
 import { VexRoutes } from '@vex/interfaces/vex-route.interface';
 import { LayoutComponent } from './layouts/layout/layout.component';
 import { AuthGuard } from './pages/pages/auth/login/auth.guard';
+import { StudentComponent } from './pages/apps/student/form/student.component';
 
 export const appRoutes: VexRoutes = [
   {
@@ -56,6 +57,16 @@ export const appRoutes: VexRoutes = [
             loadComponent: () =>
               import('./pages/apps/puzzle-block/puzzle-block.component').then(
                 (m) => m.PuzzleBlockComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'app-student',
+            loadComponent: () =>
+              import('./pages/apps/student/form/student.component').then(
+                (m) => m.StudentComponent
               ),
             data: {
               toolbarShadowEnabled: false

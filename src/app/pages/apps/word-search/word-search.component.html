@@ -1,0 +1,32 @@
+<mat-card class="word-search-container">
+    <mat-card-header>
+      <mat-card-title>Word Search Game</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="word-search-grid">
+        <div *ngFor="let row of grid; let i = index" class="grid-row">
+          <div *ngFor="let cell of row; let j = index" 
+               class="grid-cell"
+               [class.selected]="cell.selected"
+               [class.found]="cell.found"
+               (mousedown)="startSelection(i, j)"
+               (mouseover)="continueSelection(i, j)"
+               (mouseup)="endSelection()">
+            {{ cell.letter }}
+          </div>
+        </div>
+      </div>
+      <div class="word-list">
+        <mat-chip-list>
+          <mat-chip *ngFor="let word of words" 
+                    [selected]="word.found"
+                    [color]="word.found ? 'accent' : 'primary'">
+            {{ word.text }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="newGame()">New Game</button>
+    </mat-card-actions>
+  </mat-card>
