@@ -176,19 +176,23 @@ export class DialogComponent implements OnInit, OnDestroy {
   highlightWord(charIndex: number, sentence: string): void {
     const words = sentence.split(' ');
     let currentCharIndex = 0;
-    let highlightedSentence = '';
-
-    words.forEach((word, index) => {
-      if (currentCharIndex <= charIndex && charIndex < currentCharIndex + word.length) {
-        highlightedSentence += `<span class="highlighted-word">${word}</span> `;
-      } else {
-        highlightedSentence += `${word} `;
+    for (let wordIndex = 0; wordIndex < words.length; wordIndex++) {
+      const word = words[wordIndex];
+      currentCharIndex += word.length + 1;
+      if (currentCharIndex > charIndex) {
+        const wordElement = document.querySelector(`#sentence-${this.currentSentenceIndex}-word-${wordIndex}`);
+        this.highlightWordElement(wordElement);
+        break;
       }
-      currentCharIndex += word.length + 1; // Inclui o espaço após a palavra
-    });
-
-    this.spokenText = highlightedSentence.trim();
+    }
     this.cdr.markForCheck(); // Garante que a mudança seja detectada
+  }
+
+  highlightWordElement(element: Element | null): void {
+    if (element) {
+      document.querySelectorAll('.highlighted-word').forEach(el => el.classList.remove('highlighted-word'));
+      element.classList.add('highlighted-word');
+    }
   }
 
   highlightWords(sentence: string, sentenceIndex: number): string {
@@ -223,4 +227,4 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.spokenText = sentence; // Define o texto falado como a legenda
     this.cdr.markForCheck(); // Aciona a detecção de mudanças
   }
-}//fim
+}
