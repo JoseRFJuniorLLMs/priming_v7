@@ -2,9 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CardService } from './card.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { Voice6RecognitionService } from './voice6-recognition.service'; // Certifique-se de importar o serviço VoiceRecognitionService corretamente
+import { Voice6RecognitionService } from './voice6-recognition.service';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { SatoshiService } from '../note/satoshi.service';
+import { Subscription } from 'rxjs';
 
 interface Card {
   id: number;
@@ -28,20 +29,35 @@ export class CardComponent implements OnInit, OnDestroy {
   private flippedCards: Card[] = [];
   gameCount = 0;
   private studentId = 'some-student-id'; // Substitua pelo ID real do estudante
+  totalSatoshis = 0;
+  showSatoshiAlert = false;
+  private satoshiSubscription: Subscription | null = null;
 
   constructor(
     private cardService: CardService, 
     public voiceService: Voice6RecognitionService, 
     public soundService: SoundService,
-    private satoshiService: SatoshiService // Injeção do SatoshiService
+    private satoshiService: SatoshiService
   ) {} 
 
   ngOnInit(): void {
     this.newGame();
+    this.updateSatoshiBalance();
   }
 
   ngOnDestroy(): void {
-    // Limpar recursos, se necessário
+    if (this.satoshiSubscription) {
+      this.satoshiSubscription.unsubscribe();
+    }
+  }
+
+  updateSatoshiBalance() {
+    this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
+      balance => {
+        this.totalSatoshis = balance;
+      },
+      error => console.error('Error fetching satoshi balance:', error)
+    );
   }
 
   newGame() {
@@ -57,14 +73,6 @@ export class CardComponent implements OnInit, OnDestroy {
         this.moves = 0;
         this.remainingPairs = this.cards.length / 2;
         this.gameCount++;
-
-        // Incrementa o saldo de satoshi do jogador
-        this.satoshiService.incrementSatoshi(this.studentId, 1).then(() => {
-          console.log('Saldo de satoshi incrementado!');
-        }).catch(error => {
-          console.error('Erro ao incrementar saldo de satoshi:', error);
-        });
-
       } else {
         console.error('Nenhuma carta válida encontrada');
       }
@@ -91,15 +99,9 @@ export class CardComponent implements OnInit, OnDestroy {
         card1.isMatched = card2.isMatched = true;
         this.remainingPairs--;
   
-        // Falar o nome da palavra
         this.voiceService.speak("That's right, yes baby!" + card1.word);
   
-        // Incrementar saldo de satoshi por acerto
-        this.satoshiService.incrementSatoshi(this.studentId, 1).then(() => {
-          console.log('Saldo de satoshi incrementado!');
-        }).catch(error => {
-          console.error('Erro ao incrementar saldo de satoshi:', error);
-        });
+        this.incrementSatoshi();
   
         if (this.remainingPairs === 0) {
           setTimeout(() => {
@@ -108,14 +110,21 @@ export class CardComponent implements OnInit, OnDestroy {
         }
       } else {
         card1.isFlipped = card2.isFlipped = false;
-  
-        // Tocar o som quando erra o par de cartas
         this.soundService.playToasty();
       }
   
       this.flippedCards = [];
     }, 1000);
   }
-  
 
-}// fim
+  private incrementSatoshi() {
+    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
+      newBalance => {
+        this.totalSatoshis = newBalance;
+        this.showSatoshiAlert = true;
+        setTimeout(() => this.showSatoshiAlert = false, 2000);
+      },
+      error => console.error('Erro ao incrementar saldo de satoshi:', error)
+    );
+  }
+}

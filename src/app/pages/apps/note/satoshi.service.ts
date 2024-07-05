@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+interface StudentData {
+  satoshiBalance?: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +19,27 @@ export class SatoshiService {
   ) {}
 
   getSatoshiBalance(studentId: string): Observable<number> {
-    const studentDocRef = this.firestore.collection('students').doc(studentId);
-    return studentDocRef.valueChanges().pipe(
-      map(doc => doc ? (doc as any).satoshiBalance ?? 0 : 0)
+    return this.firestore.doc<StudentData>(`students/${studentId}`).valueChanges().pipe(
+      map(doc => doc?.satoshiBalance || 0)
     );
   }
 
-  async incrementSatoshi(studentId: string, amount: number): Promise<void> {
-    const studentDocRef = this.firestore.collection('students').doc(studentId);
-    return this.firestore.firestore.runTransaction(async transaction => {
-      const studentDoc = await transaction.get(studentDocRef.ref);
+  incrementSatoshi(studentId: string, amount: number): Observable<number> {
+    const docRef = this.firestore.doc<StudentData>(`students/${studentId}`);
+    
+    return from(this.firestore.firestore.runTransaction(async transaction => {
+      const studentDoc = await transaction.get(docRef.ref);
+      let newBalance: number;
       if (studentDoc.exists) {
-        const currentBalance = (studentDoc.data() as any).satoshiBalance ?? 0;
-        const newBalance = currentBalance + amount;
-        transaction.update(studentDocRef.ref, { satoshiBalance: newBalance });
+        const data = studentDoc.data() as StudentData;
+        const currentBalance = data?.satoshiBalance || 0;
+        newBalance = currentBalance + amount;
+        transaction.update(docRef.ref, { satoshiBalance: newBalance }); // Atualiza apenas o campo satoshiBalance
       } else {
-        transaction.set(studentDocRef.ref, { satoshiBalance: amount });
+        newBalance = amount;
+        transaction.set(docRef.ref, { satoshiBalance: newBalance });
       }
-    });
+      return newBalance;
+    }));
   }
-}
+}//fim
