@@ -148,3 +148,23 @@ button {
   text-align: center;
   border-radius: 10px;
 }
+
+.custom-badge {
+  position: relative;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+
+  .mat-badge-content {
+    font-size: 20px; /* Ajuste o tamanho da fonte do badge */
+    width: 80px; /* Ajuste a largura do badge */
+    height: 80px; /* Ajuste a altura do badge */
+    line-height: 40px; /* Centralize o texto verticalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red; /* Cor de fundo do badge */
+    color: white; /* Cor do texto do badge */
+    border-radius: 50%; /* Faz o badge ser circular */
+  }
+}
