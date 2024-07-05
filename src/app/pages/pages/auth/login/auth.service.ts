@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { Student } from 'src/app/model/student/student';
 import { ChatVideoService } from 'src/app/pages/apps/chat-video/chat-video.service';
 import { StudentService } from 'src/app/pages/apps/student/student.service';
+import firebase from 'firebase/compat/app';  // Added this import
 
 @Injectable({
   providedIn: 'root'
@@ -60,15 +61,25 @@ export class AuthService {
       if (user && user.uid) {
         const userDoc = this.firestore.collection('students').doc(user.uid);
         const userDocSnapshot = await userDoc.get().toPromise();
+        const currentTimestamp = new Date().toISOString();
+        
         if (userDocSnapshot && userDocSnapshot.exists) {
-          await userDoc.update({ online: true });
+          await userDoc.update({ 
+            online: true,
+            lastLogin: currentTimestamp,
+            loginHistory: firebase.firestore.FieldValue.arrayUnion(currentTimestamp)  // Corrected this line
+          });
           const userData = userDocSnapshot.data() as Student;
           this.userNameSubject.next(userData.name ?? null);
         } else {
-          await userDoc.set({ online: true }, { merge: true });
+          await userDoc.set({ 
+            online: true, 
+            lastLogin: currentTimestamp,
+            loginHistory: [currentTimestamp]
+          }, { merge: true });
         }
 
-        // Inicialize WebRTC para o usuário, configure a conexão e crie uma oferta
+        // Initialize WebRTC for the user, set up the connection and create an offer
         await this.chatVideoService.startLocalStream();
         this.chatVideoService.setupPeerConnection();
         await this.chatVideoService.setupWebRTCForUser(user.uid);

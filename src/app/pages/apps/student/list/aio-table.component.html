@@ -25,6 +25,16 @@
         <td mat-cell *matCellDef="let student">{{ student.email }}</td>
       </ng-container>
 
+      <!-- Login History Column -->
+      <ng-container matColumnDef="loginHistory">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Login History</th>
+        <td mat-cell *matCellDef="let student">
+          <ul>
+            <li *ngFor="let login of student.loginHistory">{{ login }}</li>
+          </ul>
+        </td>
+      </ng-container>
+
       <!-- Satoshis Column -->
       <ng-container matColumnDef="satoshis">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Satoshis</th>

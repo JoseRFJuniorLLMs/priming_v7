@@ -1,3 +1,5 @@
+import { DateTime } from "luxon";
+
 export class Student {
   _id?: string;
   name?: string;
@@ -25,10 +27,11 @@ export class Student {
   tax_ident_number?: string;
   tiktok?: string;
   online?: boolean;
-  satoshiBalance?: number; 
+  satoshiBalance?: number;
+  lastLogin?: string; // ISO string
+  loginHistory?: string[]; // Array of ISO strings
 
   constructor(init?: Partial<Student>) {
     Object.assign(this, init);
   }
 }
-

@@ -77,12 +77,22 @@ button {
 }
 
 .close-button {
-  position: absolute;
-  right: 0px;
-  top: 0px;
+  position: fixed;
+  right: 20px; /* Increased from 0px to give some space from the right edge */
+  top: 20px; /* Increased from 0px to give some space from the top edge */
   z-index: 1050;
-  width: 30px;
-  height: 30px;
+  width: 40px; /* Slightly increased size */
+  height: 40px; /* Slightly increased size */
+  background-color: rgba(255, 255, 255, 0.8); /* Added a semi-transparent background */
+  border-radius: 50%; /* Make it circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added a subtle shadow */
+}
+
+.close-button mat-icon {
+  font-size: 24px; /* Adjusted icon size */
 }
 
 .card {
