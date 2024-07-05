@@ -33,7 +33,7 @@ import { ClearCallsComponent } from '../../clean/clear-calls.component';
   ]
 })
 export class AioTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['name', 'email', 'satoshis', 'online', 'action'];
+  displayedColumns: string[] = ['name', 'email', 'lastLogin', 'satoshis', 'online', 'action'];
   dataSource = new MatTableDataSource<Student>();
   searchCtrl = new FormControl();
   layoutCtrl = new FormControl('boxed');
@@ -112,6 +112,7 @@ export class AioTableComponent implements OnInit, AfterViewInit {
         case 'name': return this.compare(a.name || '', b.name || '', isAsc);
         case 'email': return this.compare(a.email || '', b.email || '', isAsc);
         case 'online': return this.compare(a.online ? 1 : 0, b.online ? 1 : 0, isAsc);
+        case 'lastLogin': return this.compare(this.studentService.getLastLogin(a.loginHistory), this.studentService.getLastLogin(b.loginHistory), isAsc);
         default: return 0;
       }
     });
@@ -119,5 +120,9 @@ export class AioTableComponent implements OnInit, AfterViewInit {
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  getLastLogin(loginHistory?: string[]): string {
+    return this.studentService.getLastLogin(loginHistory);
   }
 }

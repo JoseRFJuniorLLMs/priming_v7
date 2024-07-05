@@ -39,4 +39,8 @@ export class StudentService {
     console.log('Adding student data:', student);
     return this.firestore.doc(`students/${student._id}`).set(student);
   }
+
+  getLastLogin(loginHistory?: string[]): string {
+    return loginHistory && loginHistory.length > 0 ? loginHistory[loginHistory.length - 1] : 'N/A';
+  }
 }
