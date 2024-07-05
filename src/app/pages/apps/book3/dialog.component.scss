@@ -89,23 +89,6 @@ button {
   position: relative;
 }
 
-/* Nova classe para a legenda */
-.legenda {
-  position: fixed;
-  bottom: 20px; /* Ajuste para adicionar espaçamento */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 20px; /* Aumentando o padding para mais espaço */
-  font-size: 24px; /* Aumentando o tamanho da fonte */
-  z-index: 1050;
-  width: 80%; /* Ajustando a largura para não ocupar toda a tela */
-  text-align: center;
-  border-radius: 10px; /* Adicionando bordas arredondadas */
-  margin-bottom: 20px; /* Adicionando espaçamento extra */
-}
-
 /* Classes para os estados dos botões */
 .clicked {
   background-color: red !important;
@@ -134,6 +117,7 @@ button {
   font-weight: bold;
 }
 
+/* Satoshi alert fixo */
 .satoshi-alert {
   position: fixed;
   top: 20px;
@@ -147,10 +131,20 @@ button {
   font-size: 18px;
   font-weight: bold;
   z-index: 2000; /* Ensure it's above other elements */
-  animation: fadeInOut 2s ease-in-out;
 }
 
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+
+.subtitle {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  font-size: 24px;
+  z-index: 1050; // Garanta que isso seja suficientemente alto
+  width: 80%;
+  text-align: center;
+  border-radius: 10px;
 }

@@ -12,7 +12,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatChipsModule } from '@angular/material/chips';
 
-
 import { SatoshiService } from '../note/satoshi.service';
 import { NoteService } from '../note/note.service';
 import { NoteCollection } from '../note/note-collection';
@@ -123,9 +122,9 @@ export class DialogComponent implements OnInit, OnDestroy {
       this.playClicked[index] = true;
       this.playSentence(this.sentences[index], index);
     }
+    this.showSubtitle(this.sentences[index]); // Atualiza a legenda com a nova frase
   }
   
-
   playSentence(sentence: string, index: number): void {
     this.stopSentence(); // Garante que qualquer síntese de fala em andamento seja interrompida antes de iniciar uma nova
   
@@ -147,14 +146,17 @@ export class DialogComponent implements OnInit, OnDestroy {
       this.currentSentenceIndex = index;
       this.playClicked[index] = false; // Reseta o estado do botão de reprodução após finalizar a fala
       this.incrementSatoshiAndCreateNote(this.sentences[index]); // Incrementa satoshi e cria uma nota
+
+      // Show subtitle with the spoken text
+      this.showSubtitle(sentence);
     };
   
     speechSynthesis.speak(utterance);
   }
 
-stopSentence(): void {
-  speechSynthesis.cancel();
-}
+  stopSentence(): void {
+    speechSynthesis.cancel();
+  }
 
   toggleSpeakSentence(index: number): void {
     this.speakClicked[index] = !this.speakClicked[index];
@@ -186,6 +188,7 @@ stopSentence(): void {
     });
 
     this.spokenText = highlightedSentence.trim();
+    this.cdr.markForCheck(); // Garante que a mudança seja detectada
   }
 
   highlightWords(sentence: string, sentenceIndex: number): string {
@@ -215,6 +218,9 @@ stopSentence(): void {
       console.error('Erro ao criar nota e incrementar saldo de satoshi:', error);
     });
   }
-  
 
+  showSubtitle(sentence: string): void {
+    this.spokenText = sentence; // Define o texto falado como a legenda
+    this.cdr.markForCheck(); // Aciona a detecção de mudanças
+  }
 }//fim
