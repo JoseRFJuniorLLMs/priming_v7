@@ -5,7 +5,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { WordService } from './word.service';
-
+import { Voice8RecognitionService } from './voice8-recognition.service';
 
 interface Cell {
   letter: string;
@@ -21,7 +21,9 @@ interface Word {
 @Component({
   selector: 'app-word-search',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatChipsModule, MatButtonModule, MatTooltipModule],
+  imports: [CommonModule, MatCardModule, 
+    MatChipsModule, MatButtonModule, MatTooltipModule, MatChipsModule 
+  ],
   templateUrl: './word-search.component.html',
   styleUrls: ['./word-search.component.scss']
 })
@@ -31,8 +33,9 @@ export class WordSearchComponent implements OnInit {
   gridSize = 20;
   currentSelection: string = '';
   score: number = 0;
+  subtitle: string | null = null;
 
-  constructor(private wordService: WordService) {}  // Inject the service
+  constructor(private wordService: WordService, private voiceService: Voice8RecognitionService) {}
 
   ngOnInit() {
     this.newGame();
@@ -82,7 +85,6 @@ export class WordSearchComponent implements OnInit {
       }
     }
 
-    // Fill empty cells with random letters
     for (let i = 0; i < this.gridSize; i++) {
       for (let j = 0; j < this.gridSize; j++) {
         if (this.grid[i][j].letter === '') {
@@ -143,6 +145,7 @@ export class WordSearchComponent implements OnInit {
           cell.selected = false;
         }
       }));
+      this.displaySubtitle(foundWord.text);
       this.currentSelection = '';
 
       if (this.words.every(word => word.found)) {
@@ -160,5 +163,11 @@ export class WordSearchComponent implements OnInit {
         });
       }
     }
+  }
+
+  displaySubtitle(text: string) {
+    this.subtitle = `${text} - Total Satoshi: ${this.score}`;
+    this.voiceService.speak(text);
+    setTimeout(() => this.subtitle = null, 2000);
   }
 }

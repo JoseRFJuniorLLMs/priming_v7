@@ -1,7 +1,7 @@
 <mat-card class="word-search-container">
   <mat-card-header>
     <mat-card-title>Word Search Game</mat-card-title>
-    <mat-card-subtitle>Score: {{score}}</mat-card-subtitle>
+    <mat-card-subtitle>Satoshi: {{ score }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div class="word-search-grid">
@@ -25,11 +25,6 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <div class="content-wrapper">
-      <button mat-raised-button color="accent" matTooltip="New Game" (click)="newGame()">
-        New Game
-        <i class="fa fa-refresh" aria-hidden="true"></i>
-      </button>
-    </div>
   </mat-card-actions>
+  <div *ngIf="subtitle" class="satoshi-alert">{{ subtitle }}</div>
 </mat-card>
