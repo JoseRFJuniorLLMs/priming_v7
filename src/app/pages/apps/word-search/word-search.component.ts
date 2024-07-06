@@ -4,6 +4,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { WordService } from './word.service';
+
 
 interface Cell {
   letter: string;
@@ -30,27 +32,20 @@ export class WordSearchComponent implements OnInit {
   currentSelection: string = '';
   score: number = 0;
 
+  constructor(private wordService: WordService) {}  // Inject the service
+
   ngOnInit() {
     this.newGame();
   }
 
   newGame() {
-    this.words = [
-      { text: 'ANGULAR', found: false },
-      { text: 'TYPESCRIPT', found: false },
-      { text: 'COMPONENT', found: false },
-      { text: 'MATERIAL', found: false },
-      { text: 'SEARCH', found: false },
-      { text: 'JAVASCRIPT', found: false },
-      { text: 'FRONTEND', found: false },
-      { text: 'REACTIVE', found: false },
-      { text: 'FRAMEWORK', found: false },
-      { text: 'DEVELOPMENT', found: false }
-    ];
-    this.generateGrid();
-    this.placeWords();
-    this.score = 0;
-    this.currentSelection = '';
+    this.wordService.loadWords().subscribe(words => {
+      this.words = words;
+      this.generateGrid();
+      this.placeWords();
+      this.score = 0;
+      this.currentSelection = '';
+    });
   }
 
   generateGrid() {
@@ -151,10 +146,18 @@ export class WordSearchComponent implements OnInit {
       this.currentSelection = '';
 
       if (this.words.every(word => word.found)) {
-        setTimeout(() => {
-          alert(`Congratulations! You found all words. Your score: ${this.score}`);
-          this.newGame();
-        }, 500);
+        this.wordService.loadWords().subscribe(words => {
+          if (words.length > 0) {
+            this.words.push(...words);
+            this.generateGrid();
+            this.placeWords();
+          } else {
+            setTimeout(() => {
+              alert(`Congratulations! You found all words. Your score: ${this.score}`);
+              this.newGame();
+            }, 500);
+          }
+        });
       }
     }
   }
