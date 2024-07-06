@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 import { Student } from 'src/app/model/student/student';
 import { ChatVideoService } from 'src/app/pages/apps/chat-video/chat-video.service';
 import { StudentService } from 'src/app/pages/apps/student/student.service';
-import firebase from 'firebase/compat/app';  // Added this import
+import firebase from 'firebase/compat/app';
+import { NotificationService } from 'src/app/pages/apps/chat-video/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class AuthService {
     private firestore: AngularFirestore,
     private router: Router,
     private chatVideoService: ChatVideoService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private notificationService: NotificationService
   ) {}
 
   async register(email: string, password: string, studentData: Omit<Student, '_id' | 'email'>) {
@@ -40,7 +42,7 @@ export class AuthService {
         _id: user.uid,
         email: user.email,
         ...studentData,
-        online: true // Setting online status to true at registration
+        online: true
       };
 
       console.log('Adding student data to Firestore:', student);
@@ -67,7 +69,7 @@ export class AuthService {
           await userDoc.update({ 
             online: true,
             lastLogin: currentTimestamp,
-            loginHistory: firebase.firestore.FieldValue.arrayUnion(currentTimestamp)  // Corrected this line
+            loginHistory: firebase.firestore.FieldValue.arrayUnion(currentTimestamp)
           });
           const userData = userDocSnapshot.data() as Student;
           this.userNameSubject.next(userData.name ?? null);
@@ -78,6 +80,8 @@ export class AuthService {
             loginHistory: [currentTimestamp]
           }, { merge: true });
         }
+
+        this.notificationService.listenForCallNotifications(user.uid);
 
         // Initialize WebRTC for the user, set up the connection and create an offer
         await this.chatVideoService.startLocalStream();

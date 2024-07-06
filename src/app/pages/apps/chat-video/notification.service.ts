@@ -20,13 +20,17 @@ export class NotificationService implements OnDestroy {
   ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        const userDoc = this.firestore.collection('students').doc(user.uid).valueChanges();
-        const subscription = userDoc.subscribe((data: any) => {
-          if (data?.callNotification) {
-            this.openIncomingCallDialog(data.callNotification, user.uid);
-          }
-        });
-        this.subscriptions.push(subscription);
+        this.listenForCallNotifications(user.uid);
+      }
+    });
+  }
+
+  listenForCallNotifications(userId: string) {
+    const userDoc = this.firestore.collection('students').doc(userId);
+    return userDoc.snapshotChanges().subscribe(snapshot => {
+      const data = snapshot.payload.data() as any;
+      if (data?.callNotification) {
+        this.openIncomingCallDialog(data.callNotification, userId);
       }
     });
   }
