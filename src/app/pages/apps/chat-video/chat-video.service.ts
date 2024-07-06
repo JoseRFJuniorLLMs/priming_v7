@@ -1,10 +1,10 @@
 import { Injectable, ElementRef, Inject } from '@angular/core';
-import { Firestore, collection, getDocs, setDoc, onSnapshot, doc, addDoc, writeBatch, DocumentSnapshot, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { getFirestore, runTransaction } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, setDoc, onSnapshot, doc, addDoc, writeBatch, DocumentSnapshot, getDoc, deleteDoc, updateDoc, runTransaction } from '@angular/fire/firestore';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/pages/apps/chat-video/notification.service';
 import { AuthService } from '../../pages/auth/login/auth.service';
+
 
 export enum CallState {
   IDLE,
@@ -358,7 +358,7 @@ export class ChatVideoService {
         const callRef = doc(this.firestore, 'calls', callId);
         const callDoc = await transaction.get(callRef);
         if (!callDoc.exists()) {
-          throw "Call does not exist!";
+          throw new Error("Call does not exist!");
         }
         transaction.update(callRef, { status: status });
       });
