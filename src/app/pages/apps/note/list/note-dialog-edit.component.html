@@ -1,0 +1,64 @@
+<!-- note-dialog.component.html -->
+<h1 mat-dialog-title>Note Details</h1>
+<div mat-dialog-content>
+  <form #noteForm="ngForm">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="data.title" name="title">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="data.description" name="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Tags</mat-label>
+      <input matInput [(ngModel)]="data.tags" name="tags">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Answer</mat-label>
+      <input matInput [(ngModel)]="data.answer" name="answer">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Level</mat-label>
+      <input matInput [(ngModel)]="data.level" name="level">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Permanent</mat-label>
+      <mat-checkbox [(ngModel)]="data.permanent" name="permanent">Permanent</mat-checkbox>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Image URL</mat-label>
+      <input matInput [(ngModel)]="data.image" name="image">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Last Revision Date</mat-label>
+      <input matInput [(ngModel)]="data.last_revision_date" name="last_revision_date">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Next Revision Date</mat-label>
+      <input matInput [(ngModel)]="data.next_revision_date" name="next_revision_date">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Creation Date</mat-label>
+      <input matInput [value]="data.created_at | date: 'short'" name="created_at" disabled>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Student ID</mat-label>
+      <input matInput [value]="data.student?._id" name="student_id" disabled>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="save()">Save</button>
+</div>

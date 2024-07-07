@@ -14,6 +14,7 @@ import { FlashcardComponent } from './flashcard.component';
 import { NoteDialogComponent } from './note-dialog.component';
 import { VoiceCardRecognitionService } from './voice-card-recognition.service';
 import { RsvpreaderComponent } from '../../../dashboards/components/dialog-rsvpreader/rsvpreader.component';
+import { NoteDialogEditComponent } from './note-dialog-edit.component';
 
 @Component({
   selector: 'note-list',
@@ -66,6 +67,20 @@ export class NoteListComponent implements OnInit, OnDestroy {
   }
 
   editNote(note: NoteCollection): void {
+    const dialogRef = this.dialog.open(NoteDialogEditComponent, {
+      width: '80vw',  // 80% da largura da viewport
+      height: '80vh', // 80% da altura da viewport
+      data: note
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataListService.updateNote(note._id, result);
+      }
+    });
+  }
+
+  viewNote(note: NoteCollection): void {
     const dialogRef = this.dialog.open(NoteDialogComponent, {
       width: '80vw',  // 80% da largura da viewport
       height: '80vh', // 80% da altura da viewport
