@@ -2,20 +2,27 @@ import { Injectable } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NavigationItem } from './navigation-item.interface';
+import { DataListService } from 'src/app/pages/apps/list/data-list.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationLoaderService {
-  private readonly _items: BehaviorSubject<NavigationItem[]> =
-    new BehaviorSubject<NavigationItem[]>([]);
+  private readonly _items: BehaviorSubject<NavigationItem[]> = new BehaviorSubject<NavigationItem[]>([]);
 
   get items$(): Observable<NavigationItem[]> {
     return this._items.asObservable();
   }
 
-  constructor(private readonly layoutService: VexLayoutService) {
+  constructor(
+    private readonly layoutService: VexLayoutService,
+    private readonly dataListService: DataListService // Injetando o DataListService
+  ) {
     this.loadNavigation();
+    // Inscreve-se para atualizações do total de notas do dia
+    this.dataListService.getTotalNotesOfTheDay().subscribe(totalNotes => {
+      this.updateSharedNotesBadge(totalNotes);
+    });
   }
 
   loadNavigation(): void {
@@ -113,7 +120,12 @@ export class NavigationLoaderService {
                 type: 'link',
                 label: 'List Notes',
                 route: '/apps/list',
-                icon: 'mat:gamepad'
+                icon: 'mat:gamepad',
+                badge: {
+                  value: '', // Valor inicial vazio
+                  bgClass: 'bg-purple-600',
+                  textClass: 'text-white'
+                }
               },
               {
                 type: 'link',
@@ -125,7 +137,12 @@ export class NavigationLoaderService {
                 type: 'link',
                 label: 'Shared Notes',
                 route: '/apps/notes',
-                icon: 'mat:speaker_notes'
+                icon: 'mat:speaker_notes',
+                badge: {
+                  value: '', // Valor inicial vazio
+                  bgClass: 'bg-purple-600',
+                  textClass: 'text-white'
+                }
               }
             ]
           },
@@ -171,12 +188,6 @@ export class NavigationLoaderService {
             label: 'Series',
             route: '/apps/editor',
             icon: 'mat:movie'
-          },
-          {
-            type: 'link',
-            label: 'Puzzle Block',
-            route: '/apps/puzzle-block',
-            icon: 'mat:extension'
           }
         ]
       },
@@ -184,12 +195,6 @@ export class NavigationLoaderService {
         type: 'subheading',
         label: 'Pages',
         children: [
-          {
-            type: 'link',
-            label: 'Pricing',
-            route: '/pages/pricing',
-            icon: 'mat:attach_money'
-          },
           {
             type: 'link',
             label: 'FAQ',
@@ -201,18 +206,6 @@ export class NavigationLoaderService {
             label: 'Invoice',
             route: '/pages/invoice',
             icon: 'mat:receipt'
-          },
-          {
-            type: 'link',
-            label: 'Error 404',
-            route: '/pages/error-404',
-            icon: 'mat:error'
-          },
-          {
-            type: 'link',
-            label: 'Error 500',
-            route: '/pages/error-500',
-            icon: 'mat:error'
           }
         ]
       },
@@ -238,13 +231,32 @@ export class NavigationLoaderService {
         label: 'Forgot Password',
         route: '/forgot-password',
         icon: 'mat:lock_open'
-      },
-      {
-        type: 'link',
-        label: 'Coming Soon',
-        route: '/coming-soon',
-        icon: 'mat:hourglass_empty'
       }
     ]);
+  }
+
+  // Método para atualizar o badge de "Shared Notes"
+  updateSharedNotesBadge(totalNotes: number): void {
+    const updatedItems = this._items.getValue().map(item => {
+      if (item.type === 'dropdown' && item.label === 'Notes') {
+        item.children = item.children.map(child => {
+          if (child.type === 'link' && child.label === 'Shared Notes' && child.badge) {
+            return {
+              ...child,
+              badge: {
+                ...child.badge,
+                value: totalNotes.toString(),
+                bgClass: 'bg-purple-600',
+                textClass: 'text-white'
+              }
+            };
+          }
+          return child;
+        });
+      }
+      return item;
+    });
+
+    this._items.next(updatedItems);
   }
 }

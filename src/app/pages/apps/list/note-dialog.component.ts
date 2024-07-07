@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
 import { NoteCollection } from '../note/note-collection';
 
 @Component({
@@ -20,7 +21,8 @@ import { NoteCollection } from '../note/note-collection';
     MatInputModule,
     MatButtonModule,
     MatDialogModule ,
-    MatTooltipModule
+    MatTooltipModule,
+    MatBadgeModule
   ]
 })
 export class NoteDialogComponent {

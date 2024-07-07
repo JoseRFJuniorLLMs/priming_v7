@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map } from 'rxjs/operators'; // Adicione esta importação
 import { DataListService } from './data-list.service';
 import { NoteCollection } from '../note/note-collection';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge'; 
 import { FlashcardComponent } from './flashcard.component';
 import { NoteDialogComponent } from './note-dialog.component';
 import { VoiceCardRecognitionService } from './voice-card-recognition.service';
@@ -25,13 +26,15 @@ import { RsvpreaderComponent } from '../../dashboards/components/dialog-rsvpread
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatBadgeModule 
   ]
 })
 export class NoteListComponent implements OnInit, OnDestroy {
-  
+
   notes$!: Observable<NoteCollection[]>;
   filteredNotes$!: Observable<NoteCollection[]>;
+  totalNotes$: Observable<number>; 
   searchTerm: string = '';
   private flashcardDialogRef: any;
   private srvpDialogRef: any;
@@ -40,7 +43,9 @@ export class NoteListComponent implements OnInit, OnDestroy {
     private dataListService: DataListService, 
     public dialog: MatDialog,
     private voiceRecognitionService: VoiceCardRecognitionService
-  ) {}
+  ) {
+    this.totalNotes$ = this.dataListService.getTotalNotesOfTheDay(); 
+  }
 
   ngOnInit(): void {
     this.notes$ = this.dataListService.getNotes();
@@ -114,5 +119,4 @@ export class NoteListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  
-}//fim
+}

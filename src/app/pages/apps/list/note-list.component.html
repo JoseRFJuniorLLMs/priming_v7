@@ -5,24 +5,32 @@
     <button matTooltip="View FlashCard" (click)="openFlashcard()" type="button">
       <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(254, 1, 1);">
         extension
-        </span>
+      </span>
     </button>
     <button disabled matTooltip="View Done" (click)="openFlashcard()" type="button">
       <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(249, 228, 3);">
         grade
-        </span>
+      </span>
     </button>
     <button matTooltip="RSVP, the technique of : Rapid Serial Visual Presentation, is a method used to present visual information, such as words or images, in a quick sequence, one after the other, at the same visual fixation point. This technique is often used in psychological research on visual processing and attention, as well as in practical applications to improve speed." (click)="openSRVP()" type="button">
       <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(249, 228, 3);">
         offline_bolt
-        </span>
+      </span>
     </button>
     <button disabled matTooltip="View AudioCard" (click)="openFlashcard()" type="button">
       <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(74, 59, 239);">
         record_voice_over
-        </span>
+      </span>
     </button>
 
+    <!-- Badge for total notes -->
+    <span matBadge="{{ (totalNotes$ | async) ?? 0 }}" matBadgeOverlap="false" matBadgeColor="primary" class="total-notes-badge">
+      <button matTooltip="Total Notes" type="button">
+        <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(0, 0, 0);">
+          notes
+        </span>
+      </button>
+    </span>
   </div>
   <div *ngIf="filteredNotes$ | async as notes; else loading">
     <div *ngIf="notes.length > 0; else noNotes">
@@ -31,10 +39,8 @@
           <h3><strong>Title:</strong>{{ note.title }}</h3>
           <p><strong>Description:</strong>{{ note.description }}</p>
           <p><strong>Answer:</strong> {{ note.answer }}</p>
-          <p><strong>Revision:</strong> {{ note.last_revision_date }}</p>
-<!--           <p><strong>Tags:</strong> {{ note.tags }}</p>
-          <p><strong>Creation Date:</strong> {{ note.created_at }}</p>
-          <p><strong>Permanent:</strong> {{ note.permanent }}</p> -->
+          <p><strong>Last Revision:</strong> {{ note.last_revision_date }}</p>
+          <p><strong>Next Revision:</strong> {{ note.next_revision_date }}</p>
           <button matTooltip="Edit" disabled (click)="editNote(note)">
             <i class="fas fa-edit" style="font-size: 25px;color: rgb(67, 218, 150);"></i> Edit
           </button>
