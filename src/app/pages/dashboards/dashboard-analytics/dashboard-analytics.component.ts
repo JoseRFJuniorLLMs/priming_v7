@@ -83,7 +83,7 @@ import { NoteComponent } from '../../apps/note/note.component';
 import { ChatVideoComponent } from '../../apps/chat-video/chat-video.component';
 import { ClaseComponent } from '../../apps/clase/clase.component';
 import { Book3Component } from '../../apps/book3/book3.component';
-import { NoteListComponent } from '../../apps/list/note-list.component';
+import { NoteListComponent } from '../../apps/note/list/note-list.component';
 import { CardComponent } from '../../apps/memory/card.component';
 
 

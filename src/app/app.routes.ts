@@ -192,7 +192,7 @@ export const appRoutes: VexRoutes = [
           {
             path: 'list',
             loadComponent: () =>
-              import('./pages/apps/list/note-list.component').then(
+              import('./pages/apps/note/list/note-list.component').then(
                 (m) => m.NoteListComponent
               ),
             data: {

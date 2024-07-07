@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NavigationItem } from './navigation-item.interface';
-import { DataListService } from 'src/app/pages/apps/list/data-list.service';
+import { DataListService } from 'src/app/pages/apps/note/list/data-list.service';
 
 @Injectable({
   providedIn: 'root'
