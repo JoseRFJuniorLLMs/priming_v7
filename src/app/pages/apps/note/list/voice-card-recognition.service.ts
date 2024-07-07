@@ -2,7 +2,7 @@ import { Injectable, NgZone, ElementRef, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import WaveSurfer from 'wavesurfer.js';
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
-import { SoundService } from '../../../layouts/components/footer/sound.service';
+import { SoundService } from '../../../../layouts/components/footer/sound.service';
 
 @Injectable({
   providedIn: 'root'

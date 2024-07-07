@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
-import { NoteCollection } from '../note/note-collection';
+import { NoteCollection } from '../../note/note-collection';
 
 @Component({
   selector: 'app-note-dialog',

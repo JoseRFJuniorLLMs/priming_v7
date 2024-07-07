@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, updateDoc, deleteDoc, query, where, getDocs, writeBatch } from '@angular/fire/firestore';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { NoteCollection } from '../note/note-collection';
-import { format } from 'date-fns';
+import { NoteCollection } from '../../note/note-collection';
+import { format, subDays } from 'date-fns';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs/operators';
 
@@ -137,13 +137,14 @@ export class DataListService {
 
   updateOverdueNotes(): Promise<void> {
     const today = format(new Date(), 'yyyy-MM-dd');
+    const fifteenDaysAgo = format(subDays(new Date(), 15), 'yyyy-MM-dd');
     console.log('Atualizando notas atrasadas para a data de hoje:', today); // Log para verificar a execução
     return this.afAuth.authState.pipe(
       switchMap(async user => {
         if (user && user.uid) {
           const overdueNotesQuery = query(
             this.noteCollectionRef,
-            where('next_revision_date', '<', today),
+            where('next_revision_date', '<=', fifteenDaysAgo),
             where('student._id', '==', user.uid),
             where('permanent', '==', false)
           );

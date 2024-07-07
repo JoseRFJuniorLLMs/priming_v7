@@ -1,6 +1,6 @@
 import { Component, Inject, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { NoteCollection } from '../note/note-collection';
+import { NoteCollection } from '../../note/note-collection';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';

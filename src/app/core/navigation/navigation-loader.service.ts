@@ -142,12 +142,7 @@ export class NavigationLoaderService {
                 type: 'link',
                 label: 'Configure Notes',
                 route: '/apps/notes',
-                icon: 'mat:speaker_notes',
-                badge: {
-                  value: this.totalNotesSubject.getValue().toString(),
-                  bgClass: 'bg-purple-600',
-                  textClass: 'text-white'
-                }
+                icon: 'mat:speaker_notes'
               }
             ]
           },
@@ -247,7 +242,7 @@ export class NavigationLoaderService {
         item.children = item.children.map(child => {
           if (child.type === 'dropdown' && child.label === 'Notes') {
             child.children = child.children.map(noteChild => {
-              if (noteChild.type === 'link' && (noteChild.label === 'Shared Notes' || noteChild.label === 'List Notes')) {
+              if (noteChild.type === 'link' && (noteChild.label === 'List Notes')) {
                 return {
                   ...noteChild,
                   badge: {

@@ -1,12 +1,18 @@
 <!-- note-dialog.component.html -->
 <h1 mat-dialog-title>Note Details</h1>
 <div mat-dialog-content>
-  <p><strong>Title:</strong> {{data.title}}</p>
-  <p><strong>Description:</strong> {{data.description}}</p>
-  <p><strong>Tags:</strong> {{data.tags}}</p>
-  <p><strong>Creation Date:</strong> {{data.created_at}}</p>
-  <p><strong>Permanent:</strong> {{data.permanent}}</p>
+  <p><strong>Title:</strong> {{data.title || '-'}}</p>
+  <p><strong>Description:</strong> {{data.description || '-'}}</p>
+  <p><strong>Tags:</strong> {{data.tags || '-'}}</p>
+  <p><strong>Creation Date:</strong> {{data.created_at ? (data.created_at | date: 'short') : '-'}}</p>
+  <p><strong>Permanent:</strong> {{data.permanent ? 'Yes' : 'No'}}</p>
+  <p><strong>Answer:</strong> {{data.answer || '-'}}</p>
+  <p><strong>Last Revision Date:</strong> {{data.last_revision_date ? (data.last_revision_date | date: 'short') : '-'}}</p>
+  <p><strong>Next Revision Date:</strong> {{data.next_revision_date ? (data.next_revision_date | date: 'short') : '-'}}</p>
+  <p><strong>Level:</strong> {{data.level || '-'}}</p>
+  <p><strong>Image:</strong> <img [src]="data.image" alt="Note image" *ngIf="data.image"> {{!data.image ? '-' : ''}}</p>
+  <p><strong>Student ID:</strong> {{data.student?._id || '-'}}</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="dialogRef.close()">Close</button>
+  <button mat-button (click)="onNoClick()">Close</button>
 </div>

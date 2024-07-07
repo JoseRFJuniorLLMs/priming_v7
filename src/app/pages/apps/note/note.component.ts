@@ -9,7 +9,7 @@ import { CdkDragDrop, moveItemInArray, DragDropModule } from '@angular/cdk/drag-
 import { VoiceRecognitionService } from '../../../pages/apps/voice-comand/voice-recognition.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
-import { FlashcardComponent } from '../list/flashcard.component';
+import { FlashcardComponent } from '../note/list/flashcard.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
