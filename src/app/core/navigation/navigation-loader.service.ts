@@ -9,6 +9,7 @@ import { DataListService } from 'src/app/pages/apps/list/data-list.service';
 })
 export class NavigationLoaderService {
   private readonly _items: BehaviorSubject<NavigationItem[]> = new BehaviorSubject<NavigationItem[]>([]);
+  private totalNotesSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   get items$(): Observable<NavigationItem[]> {
     return this._items.asObservable();
@@ -16,12 +17,16 @@ export class NavigationLoaderService {
 
   constructor(
     private readonly layoutService: VexLayoutService,
-    private readonly dataListService: DataListService // Injetando o DataListService
+    private readonly dataListService: DataListService
   ) {
     this.loadNavigation();
-    // Inscreve-se para atualizações do total de notas do dia
+    this.initializeTotalNotes();
+  }
+
+  private initializeTotalNotes(): void {
     this.dataListService.getTotalNotesOfTheDay().subscribe(totalNotes => {
-      this.updateSharedNotesBadge(totalNotes);
+      this.totalNotesSubject.next(totalNotes);
+      this.updateNotesBadges(totalNotes);
     });
   }
 
@@ -122,7 +127,7 @@ export class NavigationLoaderService {
                 route: '/apps/list',
                 icon: 'mat:gamepad',
                 badge: {
-                  value: '', // Valor inicial vazio
+                  value: this.totalNotesSubject.getValue().toString(),
                   bgClass: 'bg-purple-600',
                   textClass: 'text-white'
                 }
@@ -139,7 +144,7 @@ export class NavigationLoaderService {
                 route: '/apps/notes',
                 icon: 'mat:speaker_notes',
                 badge: {
-                  value: '', // Valor inicial vazio
+                  value: this.totalNotesSubject.getValue().toString(),
                   bgClass: 'bg-purple-600',
                   textClass: 'text-white'
                 }
@@ -236,20 +241,24 @@ export class NavigationLoaderService {
   }
 
   // Método para atualizar o badge de "Shared Notes"
-  updateSharedNotesBadge(totalNotes: number): void {
+  updateNotesBadges(totalNotes: number): void {
     const updatedItems = this._items.getValue().map(item => {
-      if (item.type === 'dropdown' && item.label === 'Notes') {
+      if (item.type === 'subheading' && item.label === 'Apps') {
         item.children = item.children.map(child => {
-          if (child.type === 'link' && child.label === 'Shared Notes' && child.badge) {
-            return {
-              ...child,
-              badge: {
-                ...child.badge,
-                value: totalNotes.toString(),
-                bgClass: 'bg-purple-600',
-                textClass: 'text-white'
+          if (child.type === 'dropdown' && child.label === 'Notes') {
+            child.children = child.children.map(noteChild => {
+              if (noteChild.type === 'link' && (noteChild.label === 'Shared Notes' || noteChild.label === 'List Notes')) {
+                return {
+                  ...noteChild,
+                  badge: {
+                    value: totalNotes.toString(),
+                    bgClass: 'bg-purple-600',
+                    textClass: 'text-white'
+                  }
+                };
               }
-            };
+              return noteChild;
+            });
           }
           return child;
         });
