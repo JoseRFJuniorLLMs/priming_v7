@@ -53,6 +53,7 @@ export class NoteService {
       switchMap(user => {
         if (user && user.uid) {
           note.student = { _id: user.uid }; // Associa a nota ao usuário autenticado
+          note.permanent = false; // Define o campo permanent como false
           return addDoc(this.noteCollectionRef, { ...note }).then(async () => {
             this.openSnackBar('Create Note OK !');
             // Increment satoshi balance when a note is created
@@ -64,7 +65,7 @@ export class NoteService {
       })
     ).toPromise();
   }
-
+  
   updateNote(id: string, note: Partial<NoteCollection>): Promise<void> {
     return this.afAuth.authState.pipe(
       switchMap(user => {

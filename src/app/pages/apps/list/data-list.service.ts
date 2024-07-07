@@ -27,7 +27,11 @@ export class DataListService {
     return this.afAuth.authState.pipe(
       switchMap(user => {
         if (user && user.uid) {
-          const userNotesQuery = query(this.noteCollectionRef, where('student._id', '==', user.uid));
+          const userNotesQuery = query(
+            this.noteCollectionRef,
+            where('student._id', '==', user.uid),
+            where('permanent', '==', false)
+          );
           return collectionData(userNotesQuery, { idField: '_id' }) as Observable<NoteCollection[]>;
         } else {
           return of<NoteCollection[]>([]);
@@ -44,7 +48,8 @@ export class DataListService {
           const notesOfDayQuery = query(
             this.noteCollectionRef,
             where('next_revision_date', '==', today),
-            where('student._id', '==', user.uid)
+            where('student._id', '==', user.uid),
+            where('permanent', '==', false)
           );
           return collectionData(notesOfDayQuery, { idField: '_id' }) as Observable<NoteCollection[]>;
         } else {
@@ -93,7 +98,8 @@ export class DataListService {
           const notesOfDayQuery = query(
             this.noteCollectionRef,
             where('next_revision_date', '==', today),
-            where('student._id', '==', user.uid)
+            where('student._id', '==', user.uid),
+            where('permanent', '==', false)
           );
           return getDocs(notesOfDayQuery).then(querySnapshot => {
             return querySnapshot.size;
@@ -104,7 +110,7 @@ export class DataListService {
       })
     );
   }
-  
+
   updateTotalNotesOfTheDay(): void {
     const today = format(new Date(), 'yyyy-MM-dd');
     console.log('Atualizando total de notas do dia para:', today); // Log para verificar a execução
@@ -114,7 +120,8 @@ export class DataListService {
           const notesOfDayQuery = query(
             this.noteCollectionRef,
             where('next_revision_date', '==', today),
-            where('student._id', '==', user.uid)
+            where('student._id', '==', user.uid),
+            where('permanent', '==', false)
           );
           return getDocs(notesOfDayQuery).then(querySnapshot => {
             console.log('Notas do dia:', querySnapshot.size); // Log para verificar o resultado da consulta
@@ -137,7 +144,8 @@ export class DataListService {
           const overdueNotesQuery = query(
             this.noteCollectionRef,
             where('next_revision_date', '<', today),
-            where('student._id', '==', user.uid)
+            where('student._id', '==', user.uid),
+            where('permanent', '==', false)
           );
           const querySnapshot = await getDocs(overdueNotesQuery);
           const batch = writeBatch(this.firestore);
@@ -154,5 +162,23 @@ export class DataListService {
         }
       })
     ).toPromise();
+  }
+
+  // Novo método para buscar notas permanentes
+  getPermanentNotes(): Observable<NoteCollection[]> {
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user && user.uid) {
+          const permanentNotesQuery = query(
+            this.noteCollectionRef,
+            where('student._id', '==', user.uid),
+            where('permanent', '==', true)
+          );
+          return collectionData(permanentNotesQuery, { idField: '_id' }) as Observable<NoteCollection[]>;
+        } else {
+          return of<NoteCollection[]>([]);
+        }
+      })
+    );
   }
 }

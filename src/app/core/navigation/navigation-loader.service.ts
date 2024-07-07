@@ -140,7 +140,7 @@ export class NavigationLoaderService {
               },
               {
                 type: 'link',
-                label: 'Shared Notes',
+                label: 'Configure Notes',
                 route: '/apps/notes',
                 icon: 'mat:speaker_notes',
                 badge: {
