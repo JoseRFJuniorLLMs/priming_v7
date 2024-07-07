@@ -10,7 +10,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { NoteCollection } from '../../note/note-collection';
 
 @Component({
-  selector: 'app-note-dialog',
+  selector: 'note-dialog-view',
   templateUrl: './note-dialog.component.html',
   styleUrls: ['./note-dialog.component.scss'],
   standalone: true,

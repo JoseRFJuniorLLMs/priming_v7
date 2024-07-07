@@ -41,7 +41,7 @@
           <p><strong>Answer:</strong> {{ note.answer }}</p>
           <p><strong>Last Revision:</strong> {{ note.last_revision_date }}</p>
           <p><strong>Next Revision:</strong> {{ note.next_revision_date }}</p>
-          <button matTooltip="Edit" disabled (click)="editNote(note)">
+          <button matTooltip="Edit" (click)="editNote(note)">
             <i class="fas fa-edit" style="font-size: 25px;color: rgb(67, 218, 150);"></i> Edit
           </button>
           <button matTooltip="View" (click)="editNote(note)">
