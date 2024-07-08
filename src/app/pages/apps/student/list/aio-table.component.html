@@ -1,14 +1,21 @@
 <div class="container">
-  <h1 class="title">Students Rank</h1>
-
-  <div class="search-bar">
-    <mat-form-field appearance="outline">
-      <mat-label>Search</mat-label>
-      <input matInput [formControl]="searchCtrl" placeholder="Search...">
-      <button mat-icon-button matSuffix>
-        <mat-icon svgIcon="mat:search"></mat-icon>
-      </button>
-    </mat-form-field>
+  <h2 @fadeInUp class="display-2 mt-16 mb-8 text-center">Search Students</h2>
+  <div
+    @fadeInUp
+    class="border rounded-full bg-foreground py-2 ltr:pl-6 rtl:pr-6 ltr:pr-3 rtl:pl-3 text-secondary max-w-xl mx-auto shadow-xl flex items-center">
+    <mat-icon class="flex-none" svgIcon="mat:search"></mat-icon>
+    <input
+      class="border-0 ltr:ml-4 rtl:mr-4 placeholder:text-secondary subheading-2 outline-none font-medium w-0 bg-foreground flex-auto"
+      placeholder="Search for name..."
+      type="text"
+      [formControl]="searchCtrl" />
+    <button
+      class="rounded-full flex-none"
+      color="primary"
+      mat-raised-button
+      type="button">
+      Search
+    </button>
   </div>
 
   <div class="table-container">

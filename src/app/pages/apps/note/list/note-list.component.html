@@ -1,7 +1,28 @@
 <div class="note-list">
+  <div class="container">
+    <h2 @fadeInUp class="display-2 mt-16 mb-8">Search Your Notes Zettel</h2>
+    <div
+      @fadeInUp
+      class="border rounded-full bg-foreground py-2 ltr:pl-6 rtl:pr-6 ltr:pr-3 rtl:pl-3 text-secondary max-w-xl mx-auto shadow-xl flex items-center">
+      <mat-icon class="flex-none" svgIcon="mat:search"></mat-icon>
+      <input
+        class="border-0 ltr:ml-4 rtl:mr-4 placeholder:text-secondary subheading-2 outline-none font-medium w-0 bg-foreground flex-auto"
+        placeholder="Search for title..."
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="searchNotes()" />
+      <button
+        class="rounded-full flex-none"
+        color="primary"
+        mat-raised-button
+        type="button"
+        (click)="searchNotes()">
+        Search
+      </button>
+    </div>
+  </div>
+  
   <div class="search-bar">
-    <input type="text" [(ngModel)]="searchTerm" placeholder="Search by title" (input)="searchNotes()" />
-    
     <button matTooltip="View FlashCard" (click)="openFlashcard()" type="button">
       <span class="material-symbols-outlined" style="font-size: 50px; color: rgb(254, 1, 1);">
         extension
@@ -32,6 +53,7 @@
       </button>
     </span>
   </div>
+
   <div *ngIf="filteredNotes$ | async as notes; else loading">
     <div *ngIf="notes.length > 0; else noNotes">
       <div *ngFor="let note of notes">
