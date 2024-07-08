@@ -17,10 +17,12 @@ import {
   VexConfigName,
   VexThemeProvider
 } from '@vex/config/vex-config.interface';
-import { Observable, map } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import screenfull from 'screenfull';
+import { MatChipsModule } from '@angular/material/chips';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { SatoshiService } from '../note/satoshi.service'; // Importing SatoshiService
 
 @Component({
   selector: 'app-game4',
@@ -32,7 +34,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
     MatButtonModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatBadgeModule
+    MatBadgeModule, MatChipsModule
   ]
 })
 export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
@@ -46,11 +48,16 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
   private revealIndex: number = 2; 
 
   private wordPairs: { fragment: string, completeWord: string }[] = [];
+  private satoshiSubscription: Subscription | null = null;
 
   configs: VexConfig[] = this.configService.configs;
   config$: Observable<VexConfig> = this.configService.config$;
 
   collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
+
+  totalSatoshis = 0;
+  showSatoshiAlert = false;
+  private studentId = 'some-student-id'; // replace with actual student ID
 
   constructor(
     private renderer: Renderer2,
@@ -61,7 +68,8 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
     private soundService: SoundService,
     private zone: NgZone,
     private _snackBar: MatSnackBar,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private satoshiService: SatoshiService // Injecting SatoshiService
   ) {
     this.loadWords();
   }
@@ -72,20 +80,20 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
   ColorSchemeName = VexColorScheme;
   
   ngOnInit(): void {
-    
     this.changeBackgroundImage();
 
-     this.voiceRecognitionService.command$.subscribe(command => {
+    this.voiceRecognitionService.command$.subscribe(command => {
       this.zone.run(() => this.checkAnswer(command));
     });
 
     this.voiceRecognitionService.recordingEnded$.subscribe(url => {
       this.createWaveSurferPlay(url);
     });
+
+    this.updateSatoshiBalance(); // Update Satoshi balance on component init
   }
 
   ngAfterViewInit(): void {
-
     this.changeBackgroundImage();
 
     this.voiceRecognitionService.setupWaveSurfer(this.micElement);
@@ -111,7 +119,6 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
     this.message = 'Listening...';
     this.changeDetectorRef.detectChanges(); // Forçar a detecção de mudanças
   }
-  
 
   ngOnDestroy(): void {
     if (this.voiceRecognitionService.wavesurfer) {
@@ -122,6 +129,9 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
     const mockEvent = { checked: true } as MatSlideToggleChange;
     this.footerVisibleChange(mockEvent);
     this.soundService.playErro();
+    if (this.satoshiSubscription) {
+      this.satoshiSubscription.unsubscribe(); // Cancelar a assinatura ao destruir o componente
+    }
   }
 
   loadWords(): void {
@@ -168,6 +178,7 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
       this.openSnackBar('Correct!', 'Close');
       this.selectRandomWord();  
       this.soundService.playDone();
+      this.incrementSatoshi(); // Increment Satoshi on correct answer
     } else {
       this.message = 'Try again!';
       this.openSnackBar('Try again!', 'Close');
@@ -251,5 +262,25 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
     ];
     const randomImage = images[Math.floor(Math.random() * images.length)];
     this.renderer.setStyle(document.querySelector('.game-container'), 'background-image', randomImage);
+  }
+
+  updateSatoshiBalance() {
+    this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
+      balance => {
+        this.totalSatoshis = balance;
+      },
+      error => console.error('Error fetching satoshi balance:', error)
+    );
+  }
+
+  private incrementSatoshi() {
+    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
+      newBalance => {
+        this.totalSatoshis = newBalance;
+        this.showSatoshiAlert = true;
+        setTimeout(() => this.showSatoshiAlert = false, 2000);
+      },
+      error => console.error('Error incrementing satoshi balance:', error)
+    );
   }
 }

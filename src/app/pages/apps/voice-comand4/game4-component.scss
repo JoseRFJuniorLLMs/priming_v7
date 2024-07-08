@@ -46,3 +46,28 @@
   z-index: 1;
   position: relative;
 }
+
+
+.satoshi-alert {
+  position: fixed;
+  top: 20px;
+  left: 80%;
+  transform: translateX(-50%);
+  background-color: #ffeb3b;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.satoshi {
+  position: static;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+

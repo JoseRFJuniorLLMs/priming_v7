@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild, NgZone, ChangeDetectorRef, AfterViewInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importando CommonModule
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -24,6 +24,7 @@ import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { Voice5RecognitionService } from './voice5-recognition.service';
 import { vocabulary } from './vocabulary';
 import { VEX_THEMES } from '@vex/config/config.token';
+import { SatoshiService } from '../note/satoshi.service'; // Importando o SatoshiService
 
 @Component({
   selector: 'app-game5',
@@ -53,11 +54,15 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('mic') micElement!: ElementRef<HTMLDivElement>;
   @ViewChild('tableContainer') tableContainer!: ElementRef<HTMLDivElement>; // Add reference to the container
 
+  student$!: Observable<any[]>;
+  private satoshiSubscription: Subscription | null = null; // Adicionado para acompanhar as assinaturas
+
   constructor(
     @Inject(VEX_THEMES) public readonly themes: any[],
     public voiceRecognitionService: Voice5RecognitionService,
     public soundService: SoundService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private satoshiService: SatoshiService // Injetando o SatoshiService
   ) {}
 
   vocabulary = this.shuffleArray(vocabulary); // Embaralhar o vocabulário ao inicializar
@@ -69,6 +74,10 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
   errorIndices: Set<number> = new Set<number>();
   correctEnglish: boolean[] = [];
   correctPronunciation: boolean[] = [];
+
+  private studentId = 'some-student-id'; 
+  totalSatoshis = 0; // Adicionar o total de Satoshis
+  showSatoshiAlert = false;
 
   ngOnInit(): void {
     this.correctEnglish = new Array(this.vocabulary.length).fill(false);
@@ -83,6 +92,7 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
         this.soundService.playDone();
         this.markRowAsCorrect(this.currentIndex);
         this.score++; // Atualizar a pontuação em caso de acerto
+        this.incrementSatoshi(); // Incrementa o saldo de Satoshis
         this.next();
       } else {
         this.soundService.playErro();
@@ -96,6 +106,28 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
       const currentWord = this.vocabulary[this.currentIndex].english;
       this.voiceRecognitionService.speak(currentWord);
     }
+
+    this.updateSatoshiBalance(); // Atualiza o saldo de satoshi ao iniciar o componente
+  }
+
+  updateSatoshiBalance() {
+    this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
+      balance => {
+        this.totalSatoshis = balance;
+      },
+      error => console.error('Error fetching satoshi balance:', error)
+    );
+  }
+
+  private incrementSatoshi() {
+    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
+      newBalance => {
+        this.totalSatoshis = newBalance;
+        this.showSatoshiAlert = true;
+        setTimeout(() => this.showSatoshiAlert = false, 2000);
+      },
+      error => console.error('Erro ao incrementar saldo de satoshi:', error)
+    );
   }
 
   shuffleArray(array: any[]): any[] {

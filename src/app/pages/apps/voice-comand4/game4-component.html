@@ -2,13 +2,18 @@
   <h1>Complete the Fragment</h1>
   <p>Say the word that completes the fragment:</p>
   <!-- <img matTooltip="Fragment" alt="frag" src="assets/img/game/frag.png"/> -->
-  <button value="{{ commandCounter }}" color="primary" matBadge="{{ commandCounter }}"
-    matBadgeSize="large" matTooltip="{{ commandCounter }}" matBadgePosition="after" matBadgeColor="warn"
-    class="command-counter">
-    <i class="fa fa-btc" aria-hidden="true" style="font-size: 60px; color: rgb(248, 187, 2);"></i>
-    Satoshi
-    <i class="fa fa-battery-quarter" style="font-size: 40px; color: green;"></i>
-  </button>
+  <div class="satoshi-alert" *ngIf="showSatoshiAlert">
+    Satoshi: {{ totalSatoshis }}
+  </div>
+  
+  <span class="satoshi">
+   
+    <mat-chip class="custom-badge">
+      <i class="fa fa-btc" matTooltip="Satoshi" aria-hidden="true" style="font-size: 30px; color: rgb(248, 187, 2);">
+      </i>
+      Satoshi: {{ totalSatoshis }}
+    </mat-chip>
+  </span>
 
   <div class="fragment">{{ fragment }} <i class="fa fa-eye" (click)="seeMusic()" aria-hidden="true" matTooltip="{{ completeWord }} : Game Description
     The objective of the game Complete the Fragment, is for the player to hear a fragmented word and say the complete word. The game uses voice recognition to check whether the player said the correct word"></i></div>
