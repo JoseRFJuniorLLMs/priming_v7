@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild, NgZone, ChangeDetectorRef, AfterViewInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Importando CommonModule
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -21,6 +21,9 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { VoiceRecognitionService } from './voice-recognition.service';
 import WaveSurfer from 'wavesurfer.js';
 import screenfull from 'screenfull';
+import { FlashcardComponent } from '../note/list/flashcard.component';
+import { NoteCollection } from '../note/note-collection';
+import { SatoshiService } from '../note/satoshi.service'; // Importando o SatoshiService
 
 @Component({
   selector: 'game-component',
@@ -42,12 +45,14 @@ import screenfull from 'screenfull';
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSliderModule,
-    FormsModule
+    FormsModule,
+    FlashcardComponent
   ]
 })
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   student$!: Observable<any[]>;
+  private satoshiSubscription: Subscription | null = null; // Adicionado para acompanhar as assinaturas
 
   @ViewChild('mic') micElement!: ElementRef<HTMLDivElement>;
   @ViewChild('micSelect') micSelectElement!: ElementRef<HTMLSelectElement>;
@@ -71,10 +76,6 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   collapsed: any;
   layoutService: any;
 
-  isDialogOpen: boolean = false; 
-  dialogRef: any = null;
-  showFlashCard: boolean = false;
-
   whos = ['i', 'you', 'we', 'they', 'he', 'she', 'it', 'people', 'someone', 'everyone'];
   whys = ['can', 'want', 'like', 'need', 'loves', 'hates', 'prefers', 'enjoy', 'has to', 'should'];
   actions = ['go', 'see', 'eat', 'play', 'work', 'drive', 'stay', 'listen', 'study', 'visit'];
@@ -83,6 +84,13 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   allCombinations: { who: string, why: string, action: string, where: string }[] = [];
   currentCombinations: { who: string, why: string, action: string, where: string }[] = [];
 
+  private flashcardDialogRef: any;
+  filteredNotes$!: Observable<NoteCollection[]>;
+
+  private studentId = 'some-student-id'; 
+  totalSatoshis = 0;
+  showSatoshiAlert = false;
+
   constructor(
     public dialog: MatDialog,
     private elementRef: ElementRef,
@@ -90,7 +98,8 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private zone: NgZone,
     private soundService: SoundService,
-    private voiceRecognitionService: VoiceRecognitionService
+    private voiceRecognitionService: VoiceRecognitionService,
+    private satoshiService: SatoshiService // Injetando o SatoshiService
   ) {
     const student = collection(this.firestore, 'Student');
     this.student$ = collectionData(student) as Observable<any[]>;
@@ -115,11 +124,33 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.startVoiceRecognition();
+    this.updateSatoshiBalance(); // Atualiza o saldo de satoshi ao iniciar o componente
   }
 
   ngAfterViewInit(): void {
     this.voiceRecognitionService.setupWaveSurfer(this.micElement);
     this.startRecording();
+  }
+
+  ngOnDestroy(): void {
+    if (this.voiceRecognitionService.wavesurfer) {
+      this.voiceRecognitionService.wavesurfer.destroy();
+    }
+    this.voiceRecognitionService.stopListening();
+    this.voiceRecognitionService.stopRecording();
+    this.soundService.playErro();
+    if (this.satoshiSubscription) {
+      this.satoshiSubscription.unsubscribe(); // Cancelar a assinatura ao destruir o componente
+    }
+  }
+
+  updateSatoshiBalance() {
+    this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
+      balance => {
+        this.totalSatoshis = balance;
+      },
+      error => console.error('Error fetching satoshi balance:', error)
+    );
   }
 
   generateCombinations(): void {
@@ -150,7 +181,6 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     this.commandCounter = event.value;
     this.cdRef.detectChanges();
   }
-
 
   startVoiceRecognition(): void {
     this.voiceRecognitionService.startListening();
@@ -183,6 +213,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.speak = `${parsedCommand.who} ${parsedCommand.why} ${parsedCommand.action} ${parsedCommand.where}`;
       this.soundService.playDone();
+      this.incrementSatoshi(); // Incrementa satoshi ao reconhecer um comando válido
     } else {
       this.message = `${cleanedCommand}`;
       this.soundService.playErro();
@@ -267,14 +298,17 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
-  ngOnDestroy(): void {
-    if (this.voiceRecognitionService.wavesurfer) {
-      this.voiceRecognitionService.wavesurfer.destroy();
-    }
-    this.voiceRecognitionService.stopListening();
-    this.voiceRecognitionService.stopRecording();
-    this.soundService.playErro();
+  private incrementSatoshi() {
+    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
+      newBalance => {
+        this.totalSatoshis = newBalance;
+        this.showSatoshiAlert = true;
+        setTimeout(() => this.showSatoshiAlert = false, 2000);
+      },
+      error => console.error('Erro ao incrementar saldo de satoshi:', error)
+    );
   }
+
+  
 
 }
