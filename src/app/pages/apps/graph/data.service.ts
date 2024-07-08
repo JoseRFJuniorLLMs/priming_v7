@@ -2,18 +2,7 @@ import { Injectable } from '@angular/core';
 import words from '../../../../assets/json/word.json';
 import { NoteCollection } from '../note/note-collection';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  docData,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  where
-} from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, query, where } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs/operators';
@@ -69,6 +58,14 @@ export class DataService {
       this.colorMapping[prime] = color;
       this.colorMapping[target] = color;
     });
+  }
+
+  getPrimeToTargetMapping(): { [key: string]: string } {
+    return this.primeToTarget;
+  }
+
+  getColorMapping(): { [key: string]: string } {
+    return this.colorMapping;
   }
 
   private getRandomColor() {

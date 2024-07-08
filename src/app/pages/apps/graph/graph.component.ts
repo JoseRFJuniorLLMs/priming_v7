@@ -2,11 +2,11 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, ChangeDetector
 import { DataSet } from 'vis-data';
 import { Network, Edge, Node } from 'vis-network';
 import { DataService } from './data.service';
+import { NlpService } from './nlp.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import screenfull from 'screenfull';
-
 import { MatDialog } from '@angular/material/dialog';
 import { NodeDialogComponent } from './node-dialog.component';
 
@@ -22,6 +22,11 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   private network!: Network;
   isMinimized = false;
+  sentences: string[] = [];
+  nodes: DataSet<Node> = new DataSet<Node>();
+  edges: DataSet<Edge> = new DataSet<Edge>();
+  primeToTarget: { [key: string]: string } = {};
+  colorMapping: { [key: string]: string } = {};
 
   edgesOptions = {
     smooth: {
@@ -58,70 +63,122 @@ export class GraphComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private dataService: DataService,
+    private nlpService: NlpService,
     private layoutService: VexLayoutService,
-    private cdr: ChangeDetectorRef  // Adicionado para corrigir o erro
+    private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    this.dataService.getSentences().subscribe((loadedNodes: any[]) => {
-      const nodes = new DataSet<Node>([ ...loadedNodes ]);
+  async ngOnInit() {
+    // Carregar mapeamentos de palavras prime-target
+    this.primeToTarget = this.nlpService.getPrimeToTargetMapping();
+    this.colorMapping = this.nlpService.getColorMapping();
 
-      const edges = new DataSet<Edge>();
+    // Obter frases e nós
+    const loadedNodes = await this.dataService.getSentences().toPromise();
+    if (loadedNodes) {
+      this.nodes = new DataSet<Node>(loadedNodes);
+      this.sentences = loadedNodes.map(node => node.label);
+    }
 
-      const wordMap = this.dataService.getCommonWordsMap(nodes.get());
+    // Processar similaridades e criar rede
+    await this.processSentences();
+    this.createNetwork();
+  }
 
-      wordMap.forEach((ids) => {
-        const node = nodes.get(ids[0]);
-        if (node) {
-          const color = (node as any).color.background;
-          if (ids.length > 1) {
-            for (let i = 0; i < ids.length; i++) {
-              for (let j = i + 1; j < ids.length; j++) {
-                edges.add({ from: ids[i], to: ids[j], arrows: 'to', color: { color: color } });
-              }
-            }
+  async processSentences() {
+    // Calcular similaridades entre as frases
+    const similarities = await this.nlpService.calculateSimilarities(this.sentences);
+    const similarityThreshold = 0.5; // Ajuste este valor conforme necessário
+
+    for (let i = 0; i < this.sentences.length; i++) {
+      for (let j = i + 1; j < this.sentences.length; j++) {
+        const primeTargetRelation = this.checkPrimeTargetRelation(this.sentences[i], this.sentences[j]);
+        const semanticSimilarity = similarities[i][j];
+
+        if (primeTargetRelation || semanticSimilarity > similarityThreshold) {
+          let color = 'lightgray';
+          let width = 1;
+          let label = '';
+
+          if (primeTargetRelation) {
+            color = this.colorMapping[primeTargetRelation.prime] || 'lightgray';
+            width = 2;
+            label = `${primeTargetRelation.prime} -> ${primeTargetRelation.target}`;
+          } else {
+            width = semanticSimilarity * 5; // Ajuste a largura da aresta baseada na similaridade
           }
+
+          this.edges.add({
+            from: i + 1,
+            to: j + 1,
+            arrows: 'to',
+            color: { color: color },
+            width: width,
+            label: label
+          });
         }
+      }
+    }
+  }
+
+  checkPrimeTargetRelation(sentence1: string, sentence2: string): { prime: string, target: string } | null {
+    const words1 = sentence1.toLowerCase().split(/\W+/);
+    const words2 = sentence2.toLowerCase().split(/\W+/);
+
+    for (const word of words1) {
+      if (this.primeToTarget[word] && words2.includes(this.primeToTarget[word])) {
+        return { prime: word, target: this.primeToTarget[word] };
+      }
+    }
+
+    for (const word of words2) {
+      if (this.primeToTarget[word] && words1.includes(this.primeToTarget[word])) {
+        return { prime: word, target: this.primeToTarget[word] };
+      }
+    }
+
+    return null;
+  }
+
+  createNetwork() {
+    const data = { nodes: this.nodes, edges: this.edges };
+    const options = this.getOptions();
+
+    this.network = new Network(this.networkContainer.nativeElement, data, options);
+
+    this.network.once('stabilizationIterationsDone', () => {
+      this.network.setOptions({ physics: false });
+    });
+
+    this.setupNetworkEvents();
+  }
+
+  setupNetworkEvents() {
+    this.network.on('hoverNode', (params) => {
+      const node = this.nodes.get(params.node) as any;
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.innerHTML = `<strong>${node.label}</strong>`;
+      tooltip.style.position = 'absolute';
+      tooltip.style.left = `${params.event.center.x}px`;
+      tooltip.style.top = `${params.event.center.y}px`;
+      tooltip.style.backgroundColor = 'white';
+      tooltip.style.border = '1px solid black';
+      tooltip.style.padding = '5px';
+      tooltip.style.zIndex = '10';
+      document.body.appendChild(tooltip);
+
+      this.network.on('blurNode', () => {
+        document.body.removeChild(tooltip);
       });
+    });
 
-      const data = { nodes, edges };
-      const options = this.getOptions();
-
-      this.network = new Network(this.networkContainer.nativeElement, data, options);
-
-      this.network.once('stabilizationIterationsDone', () => {
-        this.network.setOptions({ physics: false });
-      });
-
-      // Adicionando tooltips aos nós
-      this.network.on('hoverNode', (params) => {
-        const node = nodes.get(params.node) as any;
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-        tooltip.innerHTML = `<strong>${node.title}</strong><br>${node.description}<br><em>${node.tags}</em>`;
-        tooltip.style.position = 'absolute';
-        tooltip.style.left = `${params.event.center.x}px`;
-        tooltip.style.top = `${params.event.center.y}px`;
-        tooltip.style.backgroundColor = 'white';
-        tooltip.style.border = '1px solid black';
-        tooltip.style.padding = '5px';
-        tooltip.style.zIndex = '10';
-        document.body.appendChild(tooltip);
-
-        this.network.on('blurNode', () => {
-          document.body.removeChild(tooltip);
-        });
-      });
-
-      // Adicionando evento de clique no nó
-      this.network.on('click', (params) => {
-        if (params.nodes.length > 0) {
-          const nodeId = params.nodes[0];
-          const node = nodes.get(nodeId);
-          console.log('Node data being passed to dialog:', node);  // Verificar dados no console
-          this.openNodeDialog(node);
-        }
-      });
+    this.network.on('click', (params) => {
+      if (params.nodes.length > 0) {
+        const nodeId = params.nodes[0];
+        const node = this.nodes.get(nodeId);
+        this.openNodeDialog(node);
+      }
     });
   }
 
@@ -129,7 +186,7 @@ export class GraphComponent implements OnInit, AfterViewInit {
     if (screenfull.isEnabled) {
       screenfull.request();
       this.layoutService.collapseSidenav();
-      this.cdr.detectChanges();  // Corrigir ExpressionChangedAfterItHasBeenCheckedError
+      this.cdr.detectChanges();
     }
   }
 
@@ -177,8 +234,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   updateOptions() {
-    const options = this.getOptions();
-    this.network.setOptions(options);
+    if (this.network) {
+      const options = this.getOptions();
+      this.network.setOptions(options);
+    }
   }
 
   generateOptions() {
@@ -190,11 +249,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
   }
 
   openNodeDialog(nodeData: any) {
-    console.log('Node data being passed to dialog:', nodeData);
     this.dialog.open(NodeDialogComponent, {
-      data: {
-        node: nodeData
-      }
+      data: { node: nodeData }
     });
   }
 }

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="network-container" #network></div>
+  <div class="network-container" #network style="width: 100%; height: 600px; border: 1px solid lightgray;"></div>
   <div class="settings-panel" [class.minimized]="isMinimized">
     <button class="toggle-button" (click)="toggleSettings()">⚙️</button>
     <div class="settings-content" *ngIf="!isMinimized">
@@ -128,5 +128,3 @@
     </div>
   </div>
 </div>
-
-
