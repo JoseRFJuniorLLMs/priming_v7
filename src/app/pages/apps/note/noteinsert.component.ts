@@ -98,7 +98,7 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
       console.error('At least one tag is required');
       return;
     }
-
+  
     const user = await this.afAuth.currentUser;
     if (!user) {
       console.error('User not authenticated');
@@ -118,11 +118,13 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
       .then(() => {
         console.log('Note created successfully');
         this.resetForm();
+        window.close(); // Fechar a página após a criação da nota
       })
       .catch((error) => {
         console.error('Error creating note:', error);
       });
   }
+  
   
   resetForm(): void {
     this.newNote = this.createEmptyNote();

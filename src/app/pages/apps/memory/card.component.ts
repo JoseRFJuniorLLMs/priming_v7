@@ -28,7 +28,7 @@ export class CardComponent implements OnInit, OnDestroy {
   remainingPairs = 0;
   private flippedCards: Card[] = [];
   gameCount = 0;
-  private studentId = 'some-student-id'; // Substitua pelo ID real do estudante
+  private studentId = 'some-student-id'; 
   totalSatoshis = 0;
   showSatoshiAlert = false;
   private satoshiSubscription: Subscription | null = null;

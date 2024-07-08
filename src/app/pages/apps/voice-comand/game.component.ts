@@ -21,7 +21,7 @@ import { stagger40ms } from '@vex/animations/stagger.animation';
 import { VoiceRecognitionService } from './voice-recognition.service';
 import WaveSurfer from 'wavesurfer.js';
 import screenfull from 'screenfull';
-import { FlashcardComponent } from '../../dashboards/components/dialog-flashcard/flashcard.component';
+
 @Component({
   selector: 'game-component',
   templateUrl: './game-component.html',
@@ -42,8 +42,7 @@ import { FlashcardComponent } from '../../dashboards/components/dialog-flashcard
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSliderModule,
-    FormsModule,
-    FlashcardComponent
+    FormsModule
   ]
 })
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -267,32 +266,6 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
       setVoice();
     }
   }
-
-   /* ==================Open Dialog FlashCard==================== */
-   openDialogFlashCard(): void {
-    this.isDialogOpen = true;
-    // Verifica se já existe um diálogo aberto
-    if (this.dialogRef) {
-      // Fecha o diálogo atual antes de abrir um novo
-      this.dialogRef.close();
-    }
-    // Abre o novo diálogo e armazena sua referência
-    this.dialogRef = this.dialog.open(FlashcardComponent, {
-      width: '900px',
-      height: '800px'
-      //data: { texto: textDisplay }
-    });
-    // Quando o diálogo for fechado, limpa a referência
-    this.dialogRef.afterClosed().subscribe(() => {
-      this.dialogRef = null;
-      this.isDialogOpen = false; // Resetar quando o diálogo é fechado
-    });
-  } //fim
-
-  /* ==================Toggle Flash Card==================== */
-  toggleFlashCard() {
-    this.showFlashCard = !this.showFlashCard;
-  } //fim
 
 
   ngOnDestroy(): void {
