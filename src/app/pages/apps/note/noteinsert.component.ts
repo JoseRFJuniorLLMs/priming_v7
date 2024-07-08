@@ -42,15 +42,7 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<NoteCollection>();
   searchTerm: string = '';
 
-  newNote: NoteCollection = new NoteCollection({
-    _id: '',
-    created_at: new Date().toISOString(),
-    description: '',
-    student: undefined,
-    tags: '',
-    title: '',
-    permanent: false
-  });
+  newNote: NoteCollection = this.createEmptyNote();
 
   @ViewChild('descriptionInput') descriptionInput!: ElementRef;
 
@@ -68,6 +60,23 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
     this.descriptionInput.nativeElement.focus();
     this.pasteFromClipboard();
     this.soundService.playToc();
+  }
+
+  createEmptyNote(): NoteCollection {
+    return new NoteCollection({
+      _id: '',
+      created_at: new Date().toISOString(),
+      description: '',
+      student: undefined,
+      tags: '',
+      title: '',
+      permanent: false,
+      answer: '',
+      last_revision_date: '',
+      next_revision_date: '',
+      level: '',
+      image: ''
+    });
   }
 
   async pasteFromClipboard(): Promise<void> {
@@ -100,18 +109,8 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
     this.newNote.created_at = new Date().toISOString();
   
     const noteToSave: Partial<NoteCollection> = {
-      _id: this.newNote._id,
-      created_at: this.newNote.created_at,
-      description: this.newNote.description,
-      title: this.newNote.title,
-      tags: this.newNote.tags,
-      permanent: this.newNote.permanent,
-      answer: this.newNote.answer || '',
-      last_revision_date: this.newNote.last_revision_date || '',
-      next_revision_date: this.newNote.next_revision_date || '',
-      level: this.newNote.level || '',
-      image: this.newNote.image || '',
-      student: { _id: user.uid } // Adiciona o ID do usuário à nota
+      ...this.newNote,
+      student: { _id: user.uid }
     };
   
     this.noteService
@@ -126,22 +125,9 @@ export class NoteinsertComponent implements OnInit, AfterViewInit {
   }
   
   resetForm(): void {
-    this.newNote = new NoteCollection({
-      _id: '',
-      created_at: new Date().toISOString(),
-      description: '',
-      student: undefined,
-      tags: '',
-      title: '',
-      permanent: false,
-      answer: '',
-      last_revision_date: '',
-      next_revision_date: '',
-      level: '',
-      image: ''
-    });
+    this.newNote = this.createEmptyNote();
   }
-     
+
   convertToDate(dateString: string | undefined): Date | undefined {
     return dateString ? new Date(dateString) : undefined;
   }

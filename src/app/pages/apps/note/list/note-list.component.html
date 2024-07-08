@@ -39,12 +39,16 @@
           <h3><strong>Title:</strong>{{ note.title }}</h3>
           <p><strong>Description:</strong>{{ note.description }}</p>
           <p><strong>Answer:</strong> {{ note.answer }}</p>
+          <p><strong>Tags:</strong> {{ note.tags }}</p>
+          <p><strong>Level:</strong> {{ note.level }}</p>
+          <p><strong>Permanent:</strong> {{ note.permanent ? 'Yes' : 'No' }}</p>
           <p><strong>Last Revision:</strong> {{ note.last_revision_date }}</p>
           <p><strong>Next Revision:</strong> {{ note.next_revision_date }}</p>
+          <p><strong>Image:</strong> <img *ngIf="note.image" [src]="note.image" alt="Note Image" /></p>
           <button matTooltip="Edit" (click)="editNote(note)">
             <i class="fas fa-edit" style="font-size: 25px;color: rgb(67, 218, 150);"></i> Edit
           </button>
-          <button matTooltip="View" (click)="editNote(note)">
+          <button matTooltip="View" (click)="viewNote(note)">
             <i class="fas fa-eye" style="font-size: 25px;color: rgb(67, 218, 150);"></i> View
           </button>
           <button matTooltip="Delete" (click)="deleteNote(note._id)">
