@@ -10,10 +10,16 @@ import WaveSurfer from 'wavesurfer.js';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogComponent } from './dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
 import nlp from 'compromise';
 import { PdfService } from '../clase/pdf.service';
 import { DialogZettelComponent } from '../clase/dialog.component';
+
+
+  // Método para aplicar destaque nas partes do discurso
+  interface Word {
+    text: string;
+    type: string;
+  }
 
 @Component({
   selector: 'book3',
@@ -96,8 +102,9 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   hashtags: string[] = [];
 
   nlpResults: any;
-
   isDialogOpen: boolean = false; 
+  isPartsOfSpeechActive: boolean = false;
+  words: { text: string, type: string }[] = [];
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -373,9 +380,13 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     if (this.isReading) {
       this.stopReading();
     } else {
+      if (this.isPartsOfSpeechActive) {
+        this.clearPartsOfSpeech();
+      }
       this.startReading();
     }
   }
+  
 
   startReading() {
     if (!this.isReading && this.sentences.length > 0) {
@@ -670,23 +681,6 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-/*   copySelectedText(): void {
-    const selection = window.getSelection();
-    if (selection) {
-      const selectedText = selection.toString();
-      if (selectedText.length > 0) {
-        navigator.clipboard.writeText(selectedText).then(() => {
-        
-          this.pdfLoaderService.openSnackBar('Text copied to clipboard!');
-          this.voiceRecognitionService.speakSelectedText('Zettelkasten notes, now you can save the note to study:' + selectedText);
-       
-              
-        }).catch(err => {
-        });
-      } 
-    }
-  } */
-
   confirmCopyText(): void {
     if (this.isDialogOpen) {
       return; // Evita abrir múltiplos diálogos
@@ -755,7 +749,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       const colorStops = colors.length - 1;
       const wordsPerStop = Math.floor(gradientWords / colorStops);
   
-      let gradientText = words.map((word: any, index: number) => {
+      let gradientText = words.map((word: string, index: number) => {
         const stopIndex = Math.floor((index % gradientWords) / wordsPerStop);
         const t = ((index % gradientWords) % wordsPerStop) / wordsPerStop;
         const startColor = colors[stopIndex];
@@ -779,6 +773,61 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       this.isBeeLineActive = false;  
     }
   }
+
   
-        
+  //------------------------  gramatica linkedin  
+  private partsOfSpeech = {
+    Noun: { color: '#4169E1', symbol: 'n.' },
+    Verb: { color: '#FF4500', symbol: 'v.' },
+    Adjective: { color: '#32CD32', symbol: 'adj.' },
+    Adverb: { color: '#9932CC', symbol: 'adv.' }
+  };
+  
+  applyPartsOfSpeech() {
+    if (this.isPartsOfSpeechActive) {
+      this.clearPartsOfSpeech();
+    } else {
+      const textContainer = this.textContainer.nativeElement;
+      const text = textContainer.innerText;
+      const doc = nlp(text);
+  
+      this.words = text.split(/\s+/).map((word: string): Word => {
+        const tags = doc.match(word).terms(0).out('tags') || [];
+        let type = 'Other';
+  
+        if (tags.includes('Noun')) type = 'Noun';
+        else if (tags.includes('Verb')) type = 'Verb';
+        else if (tags.includes('Adjective')) type = 'Adjective';
+        else if (tags.includes('Adverb')) type = 'Adverb';
+  
+        return { text: word, type };
+      });
+  
+      // Atualiza o conteúdo do container de texto com os destaques
+      textContainer.innerHTML = this.words.map(word => {
+        const color = this.partsOfSpeech[word.type as keyof typeof this.partsOfSpeech]?.color || 'inherit';
+        const symbol = this.partsOfSpeech[word.type as keyof typeof this.partsOfSpeech]?.symbol || '';
+        return `<span class="word-container">
+                  <span class="grammar-symbol" style="color: ${color}">${symbol}</span>
+                  <span style="color: ${color}">${word.text}</span>
+                </span>`;
+      }).join(' ');
+  
+      this.isPartsOfSpeechActive = true;
+    }
+  }
+  
+  clearPartsOfSpeech() {
+    if (this.currentText) {
+      this.processText();
+      this.isPartsOfSpeechActive = false;
+    }
+  }
+    
+  
+  
 }//fim
+
+
+
+

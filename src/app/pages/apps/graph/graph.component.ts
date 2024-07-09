@@ -9,6 +9,7 @@ import { VexLayoutService } from '@vex/services/vex-layout.service';
 import screenfull from 'screenfull';
 import { MatDialog } from '@angular/material/dialog';
 import { NodeDialogComponent } from './node-dialog.component';
+import { FileDialogComponent } from '../book2/file-dialog.component';
 
 @Component({
   selector: 'graph-component',
@@ -69,6 +70,10 @@ export class GraphComponent implements OnInit, AfterViewInit {
   ) {}
 
   async ngOnInit() {
+    const dialogRef = this.dialog.open(FileDialogComponent, {
+      disableClose: true // Impede que o diálogo seja fechado até que os dados estejam carregados
+    });
+
     // Carregar mapeamentos de palavras prime-target
     this.primeToTarget = this.nlpService.getPrimeToTargetMapping();
     this.colorMapping = this.nlpService.getColorMapping();
@@ -83,6 +88,8 @@ export class GraphComponent implements OnInit, AfterViewInit {
     // Processar similaridades e criar rede
     await this.processSentences();
     this.createNetwork();
+
+    dialogRef.close(); // Fecha o diálogo após o carregamento dos dados
   }
 
   async processSentences() {
@@ -250,7 +257,9 @@ export class GraphComponent implements OnInit, AfterViewInit {
 
   openNodeDialog(nodeData: any) {
     this.dialog.open(NodeDialogComponent, {
-      data: { node: nodeData }
+      data: { node: nodeData },
+      panelClass: 'custom-dialog-container' 
     });
   }
+  
 }

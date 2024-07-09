@@ -33,6 +33,14 @@
         </span>
       </button>
 
+      <button (click)="applyPartsOfSpeech()" matTooltip="Highlight Parts of Speech">
+        <span class="material-symbols-outlined" [style.color]="isPartsOfSpeechActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
+          {{ isPartsOfSpeechActive ? 'visibility_off' : 'visibility' }}
+        </span>
+      </button>
+      
+      
+
       <button (click)="toggleDarkMode()" matTooltip="Toggle Dark Mode">
         <span class="material-symbols-outlined" [style.color]="isDarkMode ? 'rgb(255, 215, 0)' : 'rgb(0, 0, 0)'" [style.fontSize]="'50px'">
           {{ isDarkMode ? 'brightness_low' : 'dark_mode' }}
@@ -52,8 +60,7 @@
         <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">text_decrease</span>
       </button>
 
-  
-        <label for="fontSelect" matTooltip="Select Font">
+      <label for="fontSelect" matTooltip="Select Font">
 <!--           <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
             spellcheck
           </span> -->
@@ -87,6 +94,7 @@
           <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
             upload_file
           </span>
+          <i class="modus-icons" aria-hidden="true">file_type_text</i>
         </button>
         <input type="file" #uploadFile (change)="loadFile($event)" accept=".txt" style="display: none;"/>
         

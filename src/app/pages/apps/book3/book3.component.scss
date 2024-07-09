@@ -92,6 +92,29 @@
       display: inline-block;
       transition: color 0.5s ease;
     }
+
+    .verb {
+      color: #FF4500; // Orange-Red
+      font-weight: bold;
+    }
+
+    .adjective {
+      color: #32CD32; // Lime Green
+      font-style: italic;
+    }
+
+    .noun {
+      color: #4169E1; // Royal Blue
+      text-decoration: underline;
+    }
+
+    .adverb {
+      color: #9932CC; // Dark Orchid
+      font-weight: bold;
+      font-style: italic;
+    }
+  }
+
   }
 
   table {
@@ -277,4 +300,4 @@
       }
     }
   }
-}
+
