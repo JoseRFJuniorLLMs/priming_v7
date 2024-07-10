@@ -15,7 +15,17 @@ interface PuzzlePiece {
   styleUrls: ['./quebra-cabeca.component.scss']
 })
 export class QuebraCabecaComponent implements OnInit {
-  imageUrl = '../../../../assets/img/game/q0.png';
+  imageUrls = [
+    '../../../../assets/img/game/q0.png',
+    '../../../../assets/img/game/q1.png',
+    '../../../../assets/img/game/q2.png',
+    '../../../../assets/img/game/q3.png'
+   /*  '../../../../assets/img/game/q4.png',
+    '../../../../assets/img/game/q5.png',
+    '../../../../assets/img/game/q6.png',
+    '../../../../assets/img/game/q7.png' */
+  ];
+  imageUrl: string | undefined;
   pieces: PuzzlePiece[] = [];
   isComplete = false;
   gridSize = 4; // 4x4 grid
@@ -25,9 +35,15 @@ export class QuebraCabecaComponent implements OnInit {
   }
 
   initializePuzzle() {
+    this.selectRandomImage();
     this.createPuzzlePieces();
     this.shufflePieces();
     this.isComplete = false;
+  }
+
+  selectRandomImage() {
+    const randomIndex = Math.floor(Math.random() * this.imageUrls.length);
+    this.imageUrl = this.imageUrls[randomIndex];
   }
 
   createPuzzlePieces() {
