@@ -252,6 +252,16 @@ export const appRoutes: VexRoutes = [
             }
           },
           {
+            path: 'chat-video',
+            loadComponent: () =>
+              import('./pages/apps/chat-video/chat-video.component').then(
+                (m) => m.ChatVideoComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
             path: 'graph',
             loadComponent: () =>
               import('./pages/apps/graph/graph.component').then(

@@ -47,7 +47,8 @@ export class NotificationService implements OnDestroy {
 
   openIncomingCallDialog(callNotification: any, userId: string) {
     const dialogRef = this.dialog.open(IncomingCallDialogComponent, {
-      width: '300px',
+      height: '600px',
+      width: '600px',
       data: { callNotification }
     });
 

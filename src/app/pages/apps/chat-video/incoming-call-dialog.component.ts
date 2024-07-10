@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-incoming-call-dialog',
@@ -17,11 +18,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class IncomingCallDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<IncomingCallDialogComponent>
+    private dialogRef: MatDialogRef<IncomingCallDialogComponent>,
+    private router: Router,
   ) {}
 
   acceptCall() {
     this.dialogRef.close('accept');
+    this.router.navigate(['/chat-video']);
   }
 
   rejectCall() {

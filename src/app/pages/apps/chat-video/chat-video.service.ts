@@ -17,6 +17,10 @@ export enum CallState {
   providedIn: 'root'
 })
 export class ChatVideoService {
+  
+  setCurrentUserId(loggedUserId: string) {
+    throw new Error('Method not implemented.');
+  }
 
   localStream!: MediaStream;
   remoteStream!: MediaStream;
@@ -73,12 +77,13 @@ export class ChatVideoService {
 
       this.localStream.getTracks().forEach((track) => {
         this.pc?.addTrack(track, this.localStream);
-        this.openSnackBar('localStream.getTracks: ' + track);
+        console.log('localStream.getTracks :', track);
+       // this.openSnackBar('localStream.getTracks: ' + track);
       });
 
       this.pc.ontrack = (event) => {
         console.log('Track received:', event);
-        this.openSnackBar('Track received: ' + event);
+        //this.openSnackBar('Track received: ' + event);
         if (event.streams && event.streams[0]) {
           this.remoteStream = event.streams[0];
         } else {
@@ -87,13 +92,13 @@ export class ChatVideoService {
           this.remoteStream = inboundStream;
         }
         console.log('Remote stream:', this.remoteStream);
-        this.openSnackBar('Remote stream: ' + this.remoteStream);
+        //this.openSnackBar('Remote stream: ' + this.remoteStream);
       };
 
       this.pc.onicecandidate = (event) => {
         if (event.candidate) {
           console.log('ICE Candidate:', event.candidate);
-          this.openSnackBar('ICE Candidate: ' + event.candidate);
+          //this.openSnackBar('ICE Candidate: ' + event.candidate);
           const candidatesCollection = collection(this.firestore, `calls/${this.callDocId}/offerCandidates`);
           addDoc(candidatesCollection, event.candidate.toJSON());
         }
@@ -104,7 +109,7 @@ export class ChatVideoService {
   async startCall(
     webcamVideo: ElementRef<HTMLVideoElement>,
     remoteVideo: ElementRef<HTMLVideoElement>,
-    currentUserId: string, // Adicione o currentUserId como parâmetro
+    currentUserId: string, 
     targetUserId?: string
   ) {
     try {
@@ -118,22 +123,25 @@ export class ChatVideoService {
       const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
       const existingCallDoc = callsSnapshot.docs[0];
 
-      console.log('Current User ID:', currentUserId);
+      console.log('Current User ID:>>>>', currentUserId);
 
       if (!currentUserId) {
         console.error('No user is currently logged in or user ID is not available');
-        this.openSnackBar('No user is currently logged in or user ID is not available');
+        //this.openSnackBar('No user is currently logged in or user ID is not available');
         return;
       }
 
       if (existingCallDoc) {
         this.callDocId = existingCallDoc.id;
         await this.answerCall(existingCallDoc);
+        console.log('answerCall:>>>>', targetUserId, currentUserId);
       } else {
         await this.createOffer(currentUserId, targetUserId);
+        console.log('createOffer:>>>>', targetUserId, currentUserId);
 
         if (targetUserId) {
           this.notificationService.sendCallNotification(targetUserId, this.callDocId, currentUserId);
+          console.log('sendCallNotification:>>>>', targetUserId, currentUserId);
         }
       }
 
@@ -178,14 +186,14 @@ export class ChatVideoService {
 
       if (callsSnapshot.empty) {
         console.log('No call documents found to delete.');
-        this.openSnackBar('No call documents found to delete.');
+        //this.openSnackBar('No call documents found to delete.');
       } else {
         callsSnapshot.forEach((doc) => {
           batch.delete(doc.ref);
         });
 
         await batch.commit();
-        this.openSnackBar('The call has ended and all call documents have been deleted.');
+        //this.openSnackBar('The call has ended and all call documents have been deleted.');
       }
 
       if (this.pc) {
@@ -263,7 +271,7 @@ export class ChatVideoService {
       });
     } catch (error) {
       console.error('Error during createOffer:', error);
-      this.openSnackBar('Error during createOffer: ' + error);
+      //this.openSnackBar('Error during createOffer: ' + error);
     }
   }
 
@@ -273,7 +281,7 @@ export class ChatVideoService {
       await setDoc(userDoc, { webrtc: info }, { merge: true });
     } catch (error) {
       console.error('Error during saveWebRTCInfo:', error);
-      this.openSnackBar('Error during saveWebRTCInfo: ' + error);
+      //this.openSnackBar('Error during saveWebRTCInfo: ' + error);
     }
   }
 
@@ -285,13 +293,13 @@ export class ChatVideoService {
       if (callData && callData['offer']) {
         const offerDescription = new RTCSessionDescription(callData['offer']);
         console.log('Offer received:', offerDescription);
-        this.openSnackBar('Offer received: ' + offerDescription);
+        //this.openSnackBar('Offer received: ' + offerDescription);
         if (this.pc) {
           await this.pc.setRemoteDescription(offerDescription);
 
           const answerDescription = await this.pc.createAnswer();
           console.log('Answer created:', answerDescription);
-          this.openSnackBar('Answer created: ' + answerDescription);
+          //this.openSnackBar('Answer created: ' + answerDescription);
           await this.pc.setLocalDescription(answerDescription);
 
           await setDoc(callDoc.ref, { answer: answerDescription });
@@ -302,7 +310,7 @@ export class ChatVideoService {
               if (change.type === 'added') {
                 const candidate = new RTCIceCandidate(change.doc.data());
                 console.log('Offer ICE Candidate:', candidate);
-                this.openSnackBar('Offer ICE Candidate: ' + candidate);
+                //this.openSnackBar('Offer ICE Candidate: ' + candidate);
                 this.pc?.addIceCandidate(candidate);
               }
             });
@@ -314,7 +322,7 @@ export class ChatVideoService {
               if (change.type === 'added') {
                 const candidate = new RTCIceCandidate(change.doc.data());
                 console.log('Answer ICE Candidate:', candidate);
-                this.openSnackBar('Answer ICE Candidate: ' + candidate);
+                //this.openSnackBar('Answer ICE Candidate: ' + candidate);
                 this.pc?.addIceCandidate(candidate);
               }
             });
@@ -323,7 +331,7 @@ export class ChatVideoService {
       }
     } catch (error) {
       console.error('Error during answerCall:', error);
-      this.openSnackBar('Error during answerCall: ' + error);
+      //this.openSnackBar('Error during answerCall: ' + error);
     }
   }
 
@@ -356,26 +364,26 @@ export class ChatVideoService {
       return onlineStatus;
     } catch (error) {
       console.error('Error during checkUserOnlineStatus:', error);
-      this.openSnackBar('Error during checkUserOnlineStatus: ' + error);
+      //this.openSnackBar('Error during checkUserOnlineStatus: ' + error);
       return false;
     }
   }
 
-  async updateCallStatus(callId: string, status: string) {
+  private async updateCallState(state: CallState) {
+    this.callState = state;
     try {
-      await runTransaction(this.firestore, async (transaction: any) => {
-        const callRef = doc(this.firestore, 'calls', callId);
-        const callDoc = await transaction.get(callRef);
-        if (!callDoc.exists()) {
-          throw new Error("Call does not exist!");
-        }
-        transaction.update(callRef, { status: status });
-      });
+      const currentUser = await this.authService.getCurrentUser();
+      if (currentUser) {
+        const userDoc = doc(this.firestore, `students/${currentUser.uid}`);
+        await updateDoc(userDoc, {
+          callState: state
+        });
+      }
     } catch (error) {
-      console.error('Error during updateCallStatus:', error);
-      this.openSnackBar('Error during updateCallStatus: ' + error);
+      console.error('Error updating call state:', error);
     }
   }
+
 
   muteMicrophone() {
     try {
@@ -386,7 +394,7 @@ export class ChatVideoService {
       });
     } catch (error) {
       console.error('Error during muteMicrophone:', error);
-      this.openSnackBar('Error durante muteMicrophone: ' + error);
+      //this.openSnackBar('Error durante muteMicrophone: ' + error);
     }
   }
 
@@ -399,7 +407,7 @@ export class ChatVideoService {
       });
     } catch (error) {
       console.error('Error durante turnOffCamera:', error);
-      this.openSnackBar('Error durante turnOffCamera: ' + error);
+      //this.openSnackBar('Error durante turnOffCamera: ' + error);
     }
   }
 
@@ -426,7 +434,7 @@ export class ChatVideoService {
       };
     } catch (error) {
       console.error('Error during shareScreen:', error);
-      this.openSnackBar('Error durante shareScreen: ' + error);
+      //this.openSnackBar('Error durante shareScreen: ' + error);
     }
   }
 
@@ -440,7 +448,7 @@ export class ChatVideoService {
       this.soundService.playClose();
     } catch (error) {
       console.error('Error durante endCall:', error);
-      this.openSnackBar('Error durante endCall: ' + error);
+      //this.openSnackBar('Error durante endCall: ' + error);
     }
   }
 
@@ -450,7 +458,7 @@ export class ChatVideoService {
       await setDoc(userDoc, { webrtc: { /* Add WebRTC configuration data here */ } }, { merge: true });
     } catch (error) {
       console.error('Error durante setupWebRTCForUser:', error);
-      this.openSnackBar('Error durante setupWebRTCForUser: ' + error);
+      //this.openSnackBar('Error durante setupWebRTCForUser: ' + error);
     }
   }
 
@@ -460,7 +468,7 @@ export class ChatVideoService {
       await setDoc(userDoc, { webrtc: {} }, { merge: true });
     } catch (error) {
       console.error('Error durante tearDownWebRTCForUser:', error);
-      this.openSnackBar('Error durante tearDownWebRTCForUser: ' + error);
+      //this.openSnackBar('Error durante tearDownWebRTCForUser: ' + error);
     }
   }
 
@@ -475,18 +483,9 @@ export class ChatVideoService {
       await deleteDoc(callDoc);
     } catch (error) {
       console.error('Error durante deleteCallInfo:', error);
-      this.openSnackBar('Error durante deleteCallInfo: ' + error);
+      //this.openSnackBar('Error durante deleteCallInfo: ' + error);
     }
   }
 
-  private async updateCallState(state: CallState) {
-    this.callState = state;
-    const currentUser = await this.authService.getCurrentUser();
-    if (currentUser) {
-      const userDoc = doc(this.firestore, `students/${currentUser.uid}`);
-      await updateDoc(userDoc, {
-        callState: state
-      });
-    }
-  }
+
 }

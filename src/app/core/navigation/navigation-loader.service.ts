@@ -191,6 +191,12 @@ export class NavigationLoaderService {
           },
           {
             type: 'link',
+            label: 'chat-video',
+            route: '/apps/chat-video',
+            icon: 'mat:assignment'
+          },
+          {
+            type: 'link',
             label: 'Series',
             route: '/apps/editor',
             icon: 'mat:movie'

@@ -65,6 +65,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     if (loggedUser) {
       this.loggedUserName = loggedUser.email ?? 'Email';
       this.loggedUserId = loggedUser.uid ?? 'ID não disponível';
+      this.chatVideoService.setCurrentUserId(this.loggedUserId);
     }
   
     if (screenfull.isEnabled) {
@@ -75,6 +76,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.startPeriodicCheck();
   }
 
+  
   ngOnDestroy(): void {
     if (this.checkUserOnlineInterval) {
       clearInterval(this.checkUserOnlineInterval);
