@@ -15,7 +15,7 @@ interface PuzzlePiece {
   styleUrls: ['./quebra-cabeca.component.scss']
 })
 export class QuebraCabecaComponent implements OnInit {
-  imageUrl = '../../../../assets/img/game/frag.png';
+  imageUrl = '../../../../assets/img/game/q0.png';
   pieces: PuzzlePiece[] = [];
   isComplete = false;
   gridSize = 4; // 4x4 grid
