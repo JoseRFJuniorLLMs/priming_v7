@@ -1,7 +1,21 @@
 <div class="video-chat-container">
   <div class="videos">
-    <video #webcamVideo autoplay muted></video>
-    <video #remoteVideo autoplay></video>
+    <div class="local-video">
+      <video #webcamVideo autoplay muted></video>
+      <div class="local-user-info">
+        <p><strong>Local User:</strong></p>
+        <p><strong>Email:</strong> {{ loggedUserName }}</p>
+        <p><strong>ID:</strong> {{ loggedUserId }}</p>
+      </div>
+    </div>
+    <div class="remote-video">
+      <video #remoteVideo autoplay></video>
+      <div class="remote-user-info">
+        <p><strong>Remote User:</strong></p>
+        <p><strong>Email:</strong> {{ targetUserName }}</p>
+        <p><strong>ID:</strong> {{ targetUserId }}</p>
+      </div>
+    </div>
   </div>
   <div class="toolbar">
     <button mat-button color="primary" matTooltip="Mute" (click)="muteMicrophone()">

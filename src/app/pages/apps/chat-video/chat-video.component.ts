@@ -18,6 +18,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
 import screenfull from 'screenfull';
 import { NotificationService } from './notification.service';
+import { AuthService } from '../../pages/auth/login/auth.service';
 
 @Component({
   selector: 'chat-video',
@@ -42,6 +43,9 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   collapsed: any;
   layoutService: any;
   targetUserId: string;
+  loggedUserName: string = '';
+  loggedUserId: string = '';
+  targetUserName: string;
 
   constructor(
     public chatVideoService: ChatVideoService,
@@ -49,17 +53,25 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
-    @Inject(MAT_DIALOG_DATA) public data: { targetUserId: string }
+    private authService: AuthService, // Adicionando o AuthService
+    @Inject(MAT_DIALOG_DATA) public data: { targetUserId: string, targetUserName: string }
   ) {
     this.targetUserId = data.targetUserId;
+    this.targetUserName = data.targetUserName;
   }
 
   async ngOnInit() {
+    const loggedUser = await this.authService.getCurrentUser();
+    if (loggedUser) {
+      this.loggedUserName = loggedUser.email ?? 'Email';
+      this.loggedUserId = loggedUser.uid ?? 'ID não disponível';
+    }
+  
     if (screenfull.isEnabled) {
       screenfull.request();
       this.toggleCollapse();
     }
-    await this.startCall(); // Iniciar a chamada ao abrir o diálogo
+    await this.startCall();
     this.startPeriodicCheck();
   }
 
@@ -100,7 +112,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   }
 
   async startCall() {
-    await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo, this.targetUserId);
+    await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo, this.loggedUserId, this.targetUserId);
     this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
       this.targetUserId
     );

@@ -1,10 +1,9 @@
-import { Injectable, ElementRef, Inject } from '@angular/core';
+import { Injectable, ElementRef } from '@angular/core';
 import { Firestore, collection, getDocs, setDoc, onSnapshot, doc, addDoc, writeBatch, DocumentSnapshot, getDoc, deleteDoc, updateDoc, runTransaction } from '@angular/fire/firestore';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { NotificationService } from 'src/app/pages/apps/chat-video/notification.service';
 import { AuthService } from '../../pages/auth/login/auth.service';
-
 
 export enum CallState {
   IDLE,
@@ -13,10 +12,12 @@ export enum CallState {
   ENDED
 }
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ChatVideoService {
+
   localStream!: MediaStream;
   remoteStream!: MediaStream;
   pc: RTCPeerConnection | null = null;
@@ -32,9 +33,12 @@ export class ChatVideoService {
     private _snackBar: MatSnackBar,
     private firestore: Firestore,
     private soundService: SoundService,
-    @Inject(AuthService) public authService: AuthService,
-    @Inject(NotificationService) private notificationService: NotificationService
-  ) {}
+    private authService: AuthService, // Use 'private' aqui
+    private notificationService: NotificationService
+  ) {
+    console.log('ChatVideoService constructor - AuthService:', authService);
+    console.log('ChatVideoService constructor - Methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(authService)));
+  }
 
   openSnackBar(textDisplay: string) {
     this._snackBar.open(textDisplay, 'Close', {
@@ -100,6 +104,7 @@ export class ChatVideoService {
   async startCall(
     webcamVideo: ElementRef<HTMLVideoElement>,
     remoteVideo: ElementRef<HTMLVideoElement>,
+    currentUserId: string, // Adicione o currentUserId como parâmetro
     targetUserId?: string
   ) {
     try {
@@ -113,22 +118,25 @@ export class ChatVideoService {
       const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
       const existingCallDoc = callsSnapshot.docs[0];
 
-      const currentUser = await this.authService.getCurrentUser();
+      console.log('Current User ID:', currentUserId);
+
+      if (!currentUserId) {
+        console.error('No user is currently logged in or user ID is not available');
+        this.openSnackBar('No user is currently logged in or user ID is not available');
+        return;
+      }
 
       if (existingCallDoc) {
         this.callDocId = existingCallDoc.id;
         await this.answerCall(existingCallDoc);
       } else {
-        if (currentUser && currentUser.uid) {
-          await this.createOffer(currentUser.uid, targetUserId);
+        await this.createOffer(currentUserId, targetUserId);
 
-          if (targetUserId) {
-            this.notificationService.sendCallNotification(targetUserId, this.callDocId, currentUser.uid);
-          }
-        } else {
-          console.error('No user is currently logged in');
+        if (targetUserId) {
+          this.notificationService.sendCallNotification(targetUserId, this.callDocId, currentUserId);
         }
       }
+
       await this.updateCallState(CallState.CALLING);
       await this.updateOnlineStatus(true);
     } catch (error) {
@@ -136,6 +144,22 @@ export class ChatVideoService {
       this.openSnackBar('Error during startCall: ' + error);
     }
   }
+
+  async updateOnlineStatus(status: boolean) {
+    try {
+      const currentUserId = await this.authService.getUID();
+      if (currentUserId) {
+        const userDoc = doc(this.firestore, `students/${currentUserId}`);
+        await setDoc(userDoc, { online: status }, { merge: true });
+      } else {
+        console.error('No user is currently logged in');
+      }
+    } catch (error) {
+      console.error('Error during updateOnlineStatus:', error);
+      this.openSnackBar('Error during updateOnlineStatus: ' + error);
+    }
+  }
+
 
   async finishCall() {
     try {
@@ -318,21 +342,6 @@ export class ChatVideoService {
     this.updateCallState(CallState.IDLE);
   }
 
-  async updateOnlineStatus(status: boolean) {
-    try {
-      const user = await this.authService.getCurrentUser();
-      if (user) {
-        const userDoc = doc(this.firestore, `students/${user.uid}`);
-        await setDoc(userDoc, { online: status }, { merge: true });
-      } else {
-        console.error('No user is currently logged in');
-      }
-    } catch (error) {
-      console.error('Error during updateOnlineStatus:', error);
-      this.openSnackBar('Error during updateOnlineStatus: ' + error);
-    }
-  }
-
   async checkUserOnlineStatus(callDocId: string): Promise<boolean> {
     try {
       this.soundService.playOnline();
@@ -377,7 +386,7 @@ export class ChatVideoService {
       });
     } catch (error) {
       console.error('Error during muteMicrophone:', error);
-      this.openSnackBar('Error during muteMicrophone: ' + error);
+      this.openSnackBar('Error durante muteMicrophone: ' + error);
     }
   }
 
@@ -417,7 +426,7 @@ export class ChatVideoService {
       };
     } catch (error) {
       console.error('Error during shareScreen:', error);
-      this.openSnackBar('Error during shareScreen: ' + error);
+      this.openSnackBar('Error durante shareScreen: ' + error);
     }
   }
 
@@ -430,7 +439,7 @@ export class ChatVideoService {
       this.finishCall();
       this.soundService.playClose();
     } catch (error) {
-      console.error('Error during endCall:', error);
+      console.error('Error durante endCall:', error);
       this.openSnackBar('Error durante endCall: ' + error);
     }
   }
@@ -480,6 +489,4 @@ export class ChatVideoService {
       });
     }
   }
-
-
-}//fim
+}

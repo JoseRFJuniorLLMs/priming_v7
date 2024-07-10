@@ -117,7 +117,16 @@ export class AuthService {
     return this.afAuth.authState.pipe(map(user => !!user));
   }
 
-  async getCurrentUser() {
+  async getCurrentUser(): Promise<firebase.User | null> {
     return this.afAuth.currentUser;
   }
-}
+  
+  async getUID(): Promise<string | null> {
+    const user = await this.afAuth.currentUser;
+    return user ? user.uid : null;
+  }
+
+
+}//fim
+
+
