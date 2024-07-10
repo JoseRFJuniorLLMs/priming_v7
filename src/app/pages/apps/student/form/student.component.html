@@ -5,7 +5,7 @@
       <mat-card-title>{{ student.name }}</mat-card-title>
       <mat-card-subtitle>{{ student.email }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="student.image_url" alt="Student photo">
+   <!--  <img mat-card-image [src]="student.image_url" alt="Student photo"> -->
     <mat-card-content>
       <p><strong>City:</strong> {{ student.city }}</p>
       <p><strong>Country:</strong> {{ student.country }}</p>
@@ -29,8 +29,8 @@
       <p><strong>Date Created:</strong> {{ student.date_create }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-icon-button color="primary" (click)="openEditDialog(student)">
-        <mat-icon>edit</mat-icon>
+      <button mat-fab color="primary" (click)="openEditDialog(student)" matTooltip="Edit">
+        <span class="material-symbols-outlined" style="font-size: 30px;">edit</span>
       </button>
     </mat-card-actions>
   </mat-card>

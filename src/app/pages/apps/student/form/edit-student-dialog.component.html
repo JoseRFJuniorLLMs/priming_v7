@@ -1,123 +1,125 @@
-<h1 mat-dialog-title>Edit Student</h1>
+<h1 mat-dialog-title>
+  Edit Student
+  <button mat-icon-button (click)="onCancel()" class="close-button" matTooltip="Close">
+    <span class="material-symbols-outlined">close</span>
+  </button>
+</h1>
 <div mat-dialog-content>
   <form>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="data.name" name="name" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="data.email" name="email" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Bitcoin</mat-label>
-      <input matInput [(ngModel)]="data.bitcoin" name="bitcoin">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Books</mat-label>
-      <input matInput [(ngModel)]="data.books" name="books">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>City</mat-label>
-      <input matInput [(ngModel)]="data.city" name="city">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Country</mat-label>
-      <input matInput [(ngModel)]="data.country" name="country">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Courses</mat-label>
-      <input matInput [(ngModel)]="data.courses" name="courses">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Date Created</mat-label>
-      <input matInput [(ngModel)]="data.date_create" name="date_create">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>End</mat-label>
-      <input matInput [(ngModel)]="data.end" name="end">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Facebook</mat-label>
-      <input matInput [(ngModel)]="data.facebook" name="facebook">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Gender</mat-label>
-      <input matInput [(ngModel)]="data.gender" name="gender">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Image URL</mat-label>
-      <input matInput [(ngModel)]="data.image_url" name="image_url">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Instagram</mat-label>
-      <input matInput [(ngModel)]="data.instagram" name="instagram">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Lessons Done</mat-label>
-      <input matInput [(ngModel)]="data.lessons_done" name="lessons_done">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>LinkedIn</mat-label>
-      <input matInput [(ngModel)]="data.linkedin" name="linkedin">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>List Word Text</mat-label>
-      <input matInput [(ngModel)]="data.list_word_text" name="list_word_text">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Login</mat-label>
-      <input matInput [(ngModel)]="data.login" name="login">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="data.password" name="password">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Personal Ident Number</mat-label>
-      <input matInput [(ngModel)]="data.personal_ident_number" name="personal_ident_number">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Phone</mat-label>
-      <input matInput [(ngModel)]="data.phone" name="phone">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Spoken Language</mat-label>
-      <input matInput [(ngModel)]="data.spoken_language" name="spoken_language">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Status</mat-label>
-      <input matInput [(ngModel)]="data.status" name="status">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Tax Ident Number</mat-label>
-      <input matInput [(ngModel)]="data.tax_ident_number" name="tax_ident_number">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>TikTok</mat-label>
-      <input matInput [(ngModel)]="data.tiktok" name="tiktok">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Satoshi Balance</mat-label>
-      <input matInput [(ngModel)]="data.satoshiBalance" name="satoshiBalance">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Last Login</mat-label>
-      <input matInput [(ngModel)]="data.lastLogin" name="lastLogin">
-    </mat-form-field>
-    <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Login History</mat-label>
-      <input matInput [(ngModel)]="data.loginHistory" name="loginHistory">
-    </mat-form-field>
+    <div class="form-group">
+      <mat-form-field class="half-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" name="name" placeholder="Enter your name..." required>
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="data.email" name="email" placeholder="Enter your email..." required>
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Bitcoin</mat-label>
+        <input matInput [(ngModel)]="data.bitcoin" name="bitcoin" placeholder="Enter your bitcoin...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Books</mat-label>
+        <input matInput [(ngModel)]="data.books" name="books" placeholder="Enter your books...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>City</mat-label>
+        <input matInput [(ngModel)]="data.city" name="city" placeholder="Enter your city...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Country</mat-label>
+        <input matInput [(ngModel)]="data.country" name="country" placeholder="Enter your country...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Courses</mat-label>
+        <input matInput [(ngModel)]="data.courses" name="courses" placeholder="Enter your courses...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Date Created</mat-label>
+        <input matInput [(ngModel)]="data.date_create" name="date_create" placeholder="Enter date created...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>End</mat-label>
+        <input matInput [(ngModel)]="data.end" name="end" placeholder="Enter end date...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Facebook</mat-label>
+        <input matInput [(ngModel)]="data.facebook" name="facebook" placeholder="Enter your Facebook...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Gender</mat-label>
+        <input matInput [(ngModel)]="data.gender" name="gender" placeholder="Enter your gender...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Image URL</mat-label>
+        <input matInput [(ngModel)]="data.image_url" name="image_url" placeholder="Enter image URL...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Instagram</mat-label>
+        <input matInput [(ngModel)]="data.instagram" name="instagram" placeholder="Enter your Instagram...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Lessons Done</mat-label>
+        <input matInput [(ngModel)]="data.lessons_done" name="lessons_done" placeholder="Enter lessons done...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>LinkedIn</mat-label>
+        <input matInput [(ngModel)]="data.linkedin" name="linkedin" placeholder="Enter your LinkedIn...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>List Word Text</mat-label>
+        <input matInput [(ngModel)]="data.list_word_text" name="list_word_text" placeholder="Enter list word text...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Login</mat-label>
+        <input matInput [(ngModel)]="data.login" name="login" placeholder="Enter your login...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="data.password" name="password" placeholder="Enter your password...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Personal Ident Number</mat-label>
+        <input matInput [(ngModel)]="data.personal_ident_number" name="personal_ident_number" placeholder="Enter your personal ident number...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Phone</mat-label>
+        <input matInput [(ngModel)]="data.phone" name="phone" placeholder="Enter your phone...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Spoken Language</mat-label>
+        <input matInput [(ngModel)]="data.spoken_language" name="spoken_language" placeholder="Enter your spoken language...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Status</mat-label>
+        <input matInput [(ngModel)]="data.status" name="status" placeholder="Enter your status...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Tax Ident Number</mat-label>
+        <input matInput [(ngModel)]="data.tax_ident_number" name="tax_ident_number" placeholder="Enter your tax ident number...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>TikTok</mat-label>
+        <input matInput [(ngModel)]="data.tiktok" name="tiktok" placeholder="Enter your TikTok...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Satoshi Balance</mat-label>
+        <input matInput [(ngModel)]="data.satoshiBalance" name="satoshiBalance" placeholder="Enter your Satoshi balance...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Last Login</mat-label>
+        <input matInput [(ngModel)]="data.lastLogin" name="lastLogin" placeholder="Enter your last login...">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <mat-label>Login History</mat-label>
+        <input matInput [(ngModel)]="data.loginHistory" name="loginHistory" placeholder="Enter your login history...">
+      </mat-form-field>
+    </div>
   </form>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancel()">
-    <mat-icon>cancel</mat-icon>
-    Cancel
-  </button>
-  <button mat-raised-button color="primary" (click)="onSave()">
-    <mat-icon>save</mat-icon>
-    Save
+<div class="action-buttons">
+  <button (click)="onSave()" matTooltip="Save">
+    <span class="material-symbols-outlined" style="font-size: 30px;">save</span>
   </button>
 </div>

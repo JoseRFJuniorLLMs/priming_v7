@@ -1,65 +1,31 @@
 .student-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  background-color: #f5f5f5; // Cor de fundo clara para o container
-  min-height: 100vh; // Ocupa a altura total da tela
+  justify-content: center;
+  padding: 2rem;
 }
 
 .student-card {
   width: 100%;
   max-width: 600px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra leve para destacar o card
-  border-radius: 8px; // Bordas arredondadas para suavizar o visual
-  background-color: #fff; // Fundo branco para o card
 }
 
 .student-avatar {
-  background-image: url('https://via.placeholder.com/40');
+  background-image: url('/path/to/default-avatar.png'); /* Adicione uma URL de imagem padrão */
   background-size: cover;
-  border-radius: 50%; // Deixa a imagem do avatar circular
-  width: 40px;
-  height: 40px;
 }
 
-.student-list {
-  width: 100%;
-  max-width: 600px;
-  background-color: #fff; // Fundo branco para a lista de estudantes
-  border-radius: 8px; // Bordas arredondadas
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra leve
-  padding: 16px; // Espaçamento interno
-  margin-top: 16px;
+mat-card-title,
+mat-card-subtitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.student-form {
-  width: 100%;
-  max-width: 600px;
-  margin-top: 16px;
-  background-color: #fff; // Fundo branco para o formulário
-  border-radius: 8px; // Bordas arredondadas
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Sombra leve
-  padding: 16px; // Espaçamento interno
+mat-card-content p {
+  margin: 0.5rem 0;
 }
 
-mat-list-item {
-  margin-bottom: 8px;
-  border-bottom: 1px solid #e0e0e0; // Linha de separação entre itens
-  padding-bottom: 8px; // Espaçamento inferior
-}
-
-h2 {
-  color: #3f51b5; // Cor do texto para os títulos
-  margin-bottom: 16px; // Espaçamento inferior
-}
-
-button {
-  margin-right: 8px; // Espaçamento entre botões
-}
-
-.mat-form-field {
-  width: 100%; // Campos de formulário ocupam a largura total
-  margin-bottom: 16px; // Espaçamento inferior entre campos
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
 }

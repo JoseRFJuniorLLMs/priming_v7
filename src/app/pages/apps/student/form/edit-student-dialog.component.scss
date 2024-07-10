@@ -1,8 +1,54 @@
-.full-width {
+.full-width, .half-width {
   width: 100%;
+  margin-bottom: 1rem;
+}
+
+.half-width {
+  width: calc(50% - 0.5rem);
 }
 
 .mat-dialog-container {
   max-width: 80vw;
   width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    flex-direction: column;
+  }
+
+  .half-width {
+    width: 100%;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-style: normal;
+  border: none;
+  cursor: pointer;
+}
+
+.close-button .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.action-buttons button {
+  border: none;
+  cursor: pointer;
 }
