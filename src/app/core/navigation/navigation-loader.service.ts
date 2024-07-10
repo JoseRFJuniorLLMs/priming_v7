@@ -113,6 +113,12 @@ export class NavigationLoaderService {
                 label: 'Priming Word-Search Game',
                 route: '/apps/word-search',
                 icon: 'mat:speaker_notes'
+              },
+              {
+                type: 'link',
+                label: 'Priming Puzzle',
+                route: '/apps/quebra-cabeca',
+                icon: 'mat:speaker_notes'
               }
             ]
           },

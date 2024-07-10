@@ -1,0 +1,15 @@
+<div class="game-container">
+  <div class="puzzle-container" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let piece of pieces; let i = index" 
+         class="puzzle-piece" 
+         [ngStyle]="{'background-image': 'url(' + imageUrl + ')', 'background-position': piece.position}" 
+         cdkDrag>
+    </div>
+  </div>
+
+  <div *ngIf="isComplete" class="victory-message">
+    End
+  </div>  
+
+  <button (click)="resetPuzzle()" class="reset-button">New Game</button>
+</div>

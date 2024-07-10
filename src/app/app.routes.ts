@@ -126,6 +126,18 @@ export const appRoutes: VexRoutes = [
           },
 
           {
+            path: 'quebra-cabeca',
+            loadComponent: () =>
+              import('./pages/apps/quebra/quebra-cabeca.component').then(
+                (m) => m.QuebraCabecaComponent
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+
+
+          {
             path: 'dino',
             loadComponent: () =>
               import('./pages/apps/dino/dinossauro.component').then(
