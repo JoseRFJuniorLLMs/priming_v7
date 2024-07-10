@@ -137,6 +137,54 @@ export class ChatVideoService {
     }
   }
 
+  async finishCall() {
+    try {
+      this.soundService.playClose();
+      if (!this.callDocId) {
+        console.error('Invalid callDocId');
+        this.openSnackBar('No call documents found to delete.');
+        return;
+      }
+
+      await this.updateOnlineStatus(false);
+      await this.updateCallState(CallState.ENDED);
+
+      const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
+      const batch = writeBatch(this.firestore);
+
+      if (callsSnapshot.empty) {
+        console.log('No call documents found to delete.');
+        this.openSnackBar('No call documents found to delete.');
+      } else {
+        callsSnapshot.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+
+        await batch.commit();
+        this.openSnackBar('The call has ended and all call documents have been deleted.');
+      }
+
+      if (this.pc) {
+        this.pc.close();
+      }
+
+      if (this.localStream) {
+        this.localStream.getTracks().forEach((track) => track.stop());
+      }
+
+      if (this.remoteStream) {
+        this.remoteStream.getTracks().forEach((track) => track.stop());
+      }
+
+      this.callDocId = '';
+    } catch (error) {
+      console.error('Error during finishCall:', error);
+      this.openSnackBar('Error during finishCall: ' + error);
+    } finally {
+      await this.cleanupResources();
+    }
+  }
+
   async createOffer(userId: string, targetUserId?: string) {
     try {
       if (!this.pc) {
@@ -252,54 +300,6 @@ export class ChatVideoService {
     } catch (error) {
       console.error('Error during answerCall:', error);
       this.openSnackBar('Error during answerCall: ' + error);
-    }
-  }
-
-  async finishCall() {
-    try {
-      this.soundService.playClose();
-      if (!this.callDocId) {
-        console.error('Invalid callDocId');
-        this.openSnackBar('No call documents found to delete.');
-        return;
-      }
-
-      await this.updateOnlineStatus(false);
-      await this.updateCallState(CallState.ENDED);
-
-      const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
-      const batch = writeBatch(this.firestore);
-
-      if (callsSnapshot.empty) {
-        console.log('No call documents found to delete.');
-        this.openSnackBar('No call documents found to delete.');
-      } else {
-        callsSnapshot.forEach((doc) => {
-          batch.delete(doc.ref);
-        });
-
-        await batch.commit();
-        this.openSnackBar('The call has ended and all call documents have been deleted.');
-      }
-
-      if (this.pc) {
-        this.pc.close();
-      }
-
-      if (this.localStream) {
-        this.localStream.getTracks().forEach((track) => track.stop());
-      }
-
-      if (this.remoteStream) {
-        this.remoteStream.getTracks().forEach((track) => track.stop());
-      }
-
-      this.callDocId = '';
-    } catch (error) {
-      console.error('Error during finishCall:', error);
-      this.openSnackBar('Error during finishCall: ' + error);
-    } finally {
-      await this.cleanupResources();
     }
   }
 
@@ -472,12 +472,14 @@ export class ChatVideoService {
 
   private async updateCallState(state: CallState) {
     this.callState = state;
-    const user = await this.authService.getCurrentUser();
-    if (user) {
-      const userDoc = doc(this.firestore, `students/${user.uid}`);
+    const currentUser = await this.authService.getCurrentUser();
+    if (currentUser) {
+      const userDoc = doc(this.firestore, `students/${currentUser.uid}`);
       await updateDoc(userDoc, {
         callState: state
       });
     }
   }
-}
+
+
+}//fim

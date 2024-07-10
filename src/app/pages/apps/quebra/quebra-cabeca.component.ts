@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { VoiceCabRecognitionService } from './voice-cab-recognition.service';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { AuthService } from '../../pages/auth/login/auth.service';
+import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 
 interface PuzzlePiece {
   position: string;
@@ -20,17 +24,22 @@ export class QuebraCabecaComponent implements OnInit {
     '../../../../assets/img/game/q1.png',
     '../../../../assets/img/game/q2.png',
     '../../../../assets/img/game/q3.png'
-   /*  '../../../../assets/img/game/q4.png',
-    '../../../../assets/img/game/q5.png',
-    '../../../../assets/img/game/q6.png',
-    '../../../../assets/img/game/q7.png' */
   ];
   imageUrl: string | undefined;
   pieces: PuzzlePiece[] = [];
   isComplete = false;
   gridSize = 4; // 4x4 grid
+  completionCount = 0;
+
+  constructor(
+    private voiceService: VoiceCabRecognitionService,
+    private soundService: SoundService,
+    private db: AngularFireDatabase,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.soundService.playBiNeural();
     this.initializePuzzle();
   }
 
@@ -76,9 +85,26 @@ export class QuebraCabecaComponent implements OnInit {
       return piece.position === correctPosition;
     });
     if (this.isComplete) {
-      console.log('Parabéns! Você completou o quebra-cabeça!');
+      this.completionCount++;
+      this.saveCompletionCount();
+      setTimeout(() => this.initializePuzzle(), 3000); // Restart the puzzle after 3 seconds
     }
   }
+
+  async saveCompletionCount() {
+    try {
+      const user = await this.authService.getCurrentUser();
+      if (user && user.uid) {
+        const userId = user.uid;
+        this.db.object(`users/${userId}/completionCount`).set(this.completionCount);
+      } else {
+        console.error('User not found or UID not available');
+      }
+    } catch (error) {
+      console.error('Error getting user:', error);
+    }
+  }
+  
 
   resetPuzzle() {
     this.initializePuzzle();
