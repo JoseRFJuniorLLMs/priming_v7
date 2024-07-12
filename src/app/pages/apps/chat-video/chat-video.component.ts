@@ -53,7 +53,7 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
-    private authService: AuthService, // Adicionando o AuthService
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: { targetUserId: string, targetUserName: string }
   ) {
     this.targetUserId = data.targetUserId;
@@ -61,21 +61,24 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    const loggedUser = await this.authService.getCurrentUser();
-    if (loggedUser) {
-      this.loggedUserName = loggedUser.email ?? 'Email';
-      this.loggedUserId = loggedUser.uid ?? 'ID não disponível';
-      this.chatVideoService.setCurrentUserId(this.loggedUserId);
-    }
-  
-    if (screenfull.isEnabled) {
-      screenfull.request();
-      this.toggleCollapse();
-    }
-    await this.startCall();
-    this.startPeriodicCheck();
-  }
+    try {
+      const loggedUser = await this.authService.getCurrentUser();
+      if (loggedUser) {
+        this.loggedUserName = loggedUser.email ?? 'Email';
+        this.loggedUserId = loggedUser.uid ?? 'ID não disponível';
+        this.chatVideoService.setCurrentUserId(this.loggedUserId);
+      }
 
+      if (screenfull.isEnabled) {
+        screenfull.request();
+        this.toggleCollapse();
+      }
+      await this.startCall();
+      this.startPeriodicCheck();
+    } catch (error) {
+      console.error('Error in ngOnInit:', error);
+    }
+  }
   
   ngOnDestroy(): void {
     if (this.checkUserOnlineInterval) {
@@ -88,17 +91,17 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
       const isOnline = await this.chatVideoService.checkUserOnlineStatus(
         this.targetUserId
       );
-      console.log(`User online status: ${isOnline}`); // Log para depuração
+      console.log(`User online status: ${isOnline}`);
       if (isOnline && !this.otherUserOnline) {
         this.openOnlineUserDialog();
       }
       this.otherUserOnline = isOnline;
-      this.cdr.detectChanges(); // Forçar detecção de mudanças
-    }, 10000); // Verificação a cada 10 segundos para testes
+      this.cdr.detectChanges();
+    }, 10000);
   }
 
   openOnlineUserDialog() {
-    console.log('Opening online user dialog'); // Log para depuração
+    console.log('Opening online user dialog');
     this.dialog.open(OnlineUserDialogComponent, {
       width: '250px'
     });
@@ -118,14 +121,14 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
     this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
       this.targetUserId
     );
-    this.cdr.detectChanges(); // Forçar detecção de mudanças
+    this.cdr.detectChanges();
   }
 
   finishCall() {
     this.chatVideoService.finishCall();
     this.inCall = false;
     this.otherUserOnline = false;
-    this.cdr.detectChanges(); // Forçar detecção de mudanças
+    this.cdr.detectChanges();
   }
 
   muteMicrophone() {
@@ -154,4 +157,6 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
       ? this.layoutService.expandSidenav()
       : this.layoutService.collapseSidenav();
   }
-}
+
+  
+}//fim
