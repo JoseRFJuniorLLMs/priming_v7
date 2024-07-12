@@ -189,12 +189,12 @@ export class NavigationLoaderService {
             route: '/apps/aio-table',
             icon: 'mat:assignment'
           },
-          {
+  /*         {
             type: 'link',
             label: 'chat-video',
             route: '/apps/chat-video',
             icon: 'mat:assignment'
-          },
+          }, */
           {
             type: 'link',
             label: 'Series',

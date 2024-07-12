@@ -87,7 +87,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   private flashcardDialogRef: any;
   filteredNotes$!: Observable<NoteCollection[]>;
 
-  private studentId = 'some-student-id'; 
+  private studentId = ''; 
   totalSatoshis = 0;
   showSatoshiAlert = false;
 

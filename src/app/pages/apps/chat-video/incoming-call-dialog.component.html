@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Incoming Call</h1>
+<div mat-dialog-content>
+  <p>{{ data.callNotification.from }} is calling you</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" matTooltip="Accept call" (click)="acceptCall()">
+    <i class="fas fa-check-circle"></i> Accept
+  </button>
+  <button mat-button color="warn" matTooltip="Reject call" (click)="rejectCall()">
+    <i class="fas fa-times-circle"></i> Reject
+  </button>
+</div>

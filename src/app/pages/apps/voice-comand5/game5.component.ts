@@ -75,7 +75,7 @@ export class Game5Component implements OnInit, AfterViewInit, OnDestroy {
   correctEnglish: boolean[] = [];
   correctPronunciation: boolean[] = [];
 
-  private studentId = 'some-student-id'; 
+  private studentId = ''; 
   totalSatoshis = 0; // Adicionar o total de Satoshis
   showSatoshiAlert = false;
 

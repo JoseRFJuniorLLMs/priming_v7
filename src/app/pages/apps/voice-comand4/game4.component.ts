@@ -57,7 +57,7 @@ export class Game4Component implements OnInit, AfterViewInit, OnDestroy {
 
   totalSatoshis = 0;
   showSatoshiAlert = false;
-  private studentId = 'some-student-id'; // replace with actual student ID
+  private studentId = ''; 
 
   constructor(
     private renderer: Renderer2,
