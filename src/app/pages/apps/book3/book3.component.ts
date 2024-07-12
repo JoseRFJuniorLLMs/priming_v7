@@ -13,8 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 import nlp from 'compromise';
 import { PdfService } from '../clase/pdf.service';
 import { DialogZettelComponent } from '../clase/dialog.component';
-import { GrammarService } from './grammar.service';
-
 
   // Método para aplicar destaque nas partes do discurso
   interface Word {
@@ -114,8 +112,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     public pdfLoaderService: PdfService,
     private layoutService: VexLayoutService,
     private datatextService: DatatextService,
-    private dialog: MatDialog,
-    private grammarService: GrammarService
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -382,9 +379,6 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     if (this.isReading) {
       this.stopReading();
     } else {
-      if (this.isPartsOfSpeechActive) {
-        this.clearPartsOfSpeech();
-      }
       this.startReading();
     }
   }
@@ -776,75 +770,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   
-  //------------------------  Gramatica linkedin  ---------------//
-  private partsOfSpeech = {
-    Noun: { color: '#4169E1', symbol: 'n.' },
-    Verb: { color: '#FF4500', symbol: 'v.' },
-    Adjective: { color: '#32CD32', symbol: 'adj.' },
-    Adverb: { color: '#9932CC', symbol: 'adv.' }
-  };
   
-  applyPartsOfSpeech(): void {
-    if (!this.textContainer) {
-      console.error('Text container not initialized');
-      return;
-    }
-
-    if (this.isPartsOfSpeechActive) {
-      this.clearPartsOfSpeech();
-    } else {
-      this.grammarService.applyPartsOfSpeech(this.textContainer.nativeElement);
-      this.isPartsOfSpeechActive = true;
-    }
-  }
-
-  clearPartsOfSpeech(): void {
-    if (!this.textContainer) {
-      console.error('Text container not initialized');
-      return;
-    }
-
-    this.grammarService.clearPartsOfSpeech(this.textContainer.nativeElement);
-    this.isPartsOfSpeechActive = false;
-  }
-
-  private classifyWord(word: string, doc: any): { text: string; type: string } {
-    const tags = doc.match(word).terms(0).out('tags') || [];
-    const type = this.determineWordType(tags);
-    return { text: word, type };
-  }
-
-  private determineWordType(tags: string[]): string {
-    if (tags.includes('Noun')) return 'Noun';
-    if (tags.includes('Verb')) return 'Verb';
-    if (tags.includes('Adjective')) return 'Adjective';
-    if (tags.includes('Adverb')) return 'Adverb';
-    return 'Other';
-  }
-
-  private createWordSpan(word: { text: string; type: string }): string {
-    const { color, symbol } = this.partsOfSpeech[word.type as keyof typeof this.partsOfSpeech];
-    return `<span class="word-container">
-              <span class="grammar-symbol" style="color: ${color}">${symbol}</span>
-              <span style="color: ${color}">${word.text}</span>
-            </span>`;
-  }
-
-  togglePartsOfSpeech(): void {
-    if (!this.textContainer) {
-      console.error('Text container not initialized');
-      return;
-    }
-
-    if (this.isPartsOfSpeechActive) {
-      this.grammarService.clearPartsOfSpeech(this.textContainer.nativeElement);
-    } else {
-      this.grammarService.applyPartsOfSpeech(this.textContainer.nativeElement);
-    }
-    this.isPartsOfSpeechActive = !this.isPartsOfSpeechActive;
-  }
-
-
 }//fim  
   
 

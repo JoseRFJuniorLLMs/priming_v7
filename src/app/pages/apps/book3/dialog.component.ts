@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -7,16 +7,15 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { Voice5RecognitionService } from './voice5-recognition.service';
 import { Subscription } from 'rxjs';
-
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatChipsModule } from '@angular/material/chips';
-
 import { SatoshiService } from '../note/satoshi.service';
 import { NoteService } from '../note/note.service';
 import { NoteCollection } from '../note/note-collection';
 import { Student } from 'src/app/model/student/student';
 import { AuthService } from '../../pages/auth/login/auth.service';
+import { GrammarService } from './grammar.service'; // Ensure GrammarService is correctly imported
 
 @Component({
   selector: 'dialogbook3',
@@ -27,12 +26,19 @@ import { AuthService } from '../../pages/auth/login/auth.service';
     MatTooltipModule,
     MatIconModule,
     MatDialogModule,
-    MatProgressBarModule, MatBadgeModule, MatBottomSheetModule, MatChipsModule
+    MatProgressBarModule, 
+    MatBadgeModule, 
+    MatBottomSheetModule, 
+    MatChipsModule
   ],
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  styleUrls: ['./dialog.component.scss'],
+  providers: [GrammarService] // Add GrammarService to the providers
 })
-export class DialogComponent implements OnInit, OnDestroy {
+export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('dialogContent') dialogContent: ElementRef | undefined;
+  
   sentences: string[];
   nlpResults: any[];
   spokenText: string = '';
@@ -44,7 +50,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   voices: SpeechSynthesisVoice[] = [];
   selectedVoice: SpeechSynthesisVoice | null = null;
-  studentId: string = ''; // Agora iremos obter o ID do estudante logado
+  studentId: string = ''; // Now we'll obtain the logged-in student ID
   totalSatoshis = 0;
   showSatoshiAlert = false;
   private satoshiSubscription: Subscription | null = null;
@@ -54,9 +60,10 @@ export class DialogComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: { sentences: string[], nlpResults: any },
     private voiceRecognitionService: Voice5RecognitionService,
     private satoshiService: SatoshiService,
-    private authService: AuthService, // Injetamos o AuthService aqui
-    private noteService: NoteService, // Injetamos o NoteService aqui
-    private cdr: ChangeDetectorRef 
+    private authService: AuthService, // Inject AuthService here
+    private noteService: NoteService, // Inject NoteService here
+    private cdr: ChangeDetectorRef,
+    private grammarService: GrammarService // Inject GrammarService here
   ) {
     this.sentences = data.sentences;
     this.nlpResults = data.nlpResults;
@@ -65,7 +72,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    // Obtemos o ID do usuário logado
+    // Obtain the logged-in user's ID
     const currentUser = await this.authService.getCurrentUser();
     if (currentUser) {
       this.studentId = currentUser.uid;
@@ -77,6 +84,10 @@ export class DialogComponent implements OnInit, OnDestroy {
     });
 
     this.loadVoices();
+  }
+
+  ngAfterViewInit() {
+    this.applyGrammarToAllSentences();
   }
 
   ngOnDestroy(): void {
@@ -122,11 +133,11 @@ export class DialogComponent implements OnInit, OnDestroy {
       this.playClicked[index] = true;
       this.playSentence(this.sentences[index], index);
     }
-    this.showSubtitle(this.sentences[index]); // Atualiza a legenda com a nova frase
+    this.showSubtitle(this.sentences[index]); // Update the subtitle with the new sentence
   }
   
   playSentence(sentence: string, index: number): void {
-    this.stopSentence(); // Garante que qualquer síntese de fala em andamento seja interrompida antes de iniciar uma nova
+    this.stopSentence(); // Ensure any ongoing speech synthesis is stopped before starting a new one
   
     const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.lang = 'en-US';
@@ -144,11 +155,14 @@ export class DialogComponent implements OnInit, OnDestroy {
     utterance.onend = () => {
       this.canSpeak = true;
       this.currentSentenceIndex = index;
-      this.playClicked[index] = false; // Reseta o estado do botão de reprodução após finalizar a fala
-      this.incrementSatoshiAndCreateNote(this.sentences[index]); // Incrementa satoshi e cria uma nota
+      this.playClicked[index] = false; // Reset the play button state after the speech ends
+      this.incrementSatoshiAndCreateNote(this.sentences[index]); // Increment satoshi and create a note
 
       // Show subtitle with the spoken text
       this.showSubtitle(sentence);
+
+      // Apply parts of speech highlighting to the subtitle
+      this.applyPartsOfSpeechToSubtitle();
     };
   
     speechSynthesis.speak(utterance);
@@ -161,9 +175,9 @@ export class DialogComponent implements OnInit, OnDestroy {
   toggleSpeakSentence(index: number): void {
     this.speakClicked[index] = !this.speakClicked[index];
     if (this.speakClicked[index]) {
-      this.voiceRecognitionService.startListening(); // Inicia o reconhecimento de voz quando o botão fica vermelho
+      this.voiceRecognitionService.startListening(); // Start voice recognition when the button turns red
     } else {
-      this.voiceRecognitionService.stopListening(); // Para o reconhecimento de voz quando o botão fica verde
+      this.voiceRecognitionService.stopListening(); // Stop voice recognition when the button turns green
     }
   }
 
@@ -185,7 +199,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       }
     }
-    this.cdr.markForCheck(); // Garante que a mudança seja detectada
+    this.cdr.markForCheck(); // Ensure change detection is triggered
   }
 
   highlightWordElement(element: Element | null): void {
@@ -195,9 +209,10 @@ export class DialogComponent implements OnInit, OnDestroy {
     }
   }
 
+
   highlightWords(sentence: string, sentenceIndex: number): string {
     const words = sentence.split(' ');
-    return words.map((word, wordIndex) => `<span class="word" id="sentence-${sentenceIndex}-word-${wordIndex}" style="font-size: 24px; font-family: Calibri;">${word}</span>`).join(' ');
+    return `<span class="sentence">${words.map((word, wordIndex) => `<span class="word" id="sentence-${sentenceIndex}-word-${wordIndex}" style="font-size: 24px; font-family: Calibri;">${word}</span>`).join(' ')}</span>`;
   }
 
   incrementSatoshiAndCreateNote(sentence: string) {
@@ -219,12 +234,66 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck(); // Trigger change detection
       }, 2000);
     }).catch(error => {
-      console.error('Erro ao criar nota e incrementar saldo de satoshi:', error);
+      console.error('Error creating note and incrementing satoshi balance:', error);
     });
   }
 
   showSubtitle(sentence: string): void {
-    this.spokenText = sentence; // Define o texto falado como a legenda
-    this.cdr.markForCheck(); // Aciona a detecção de mudanças
-  }
+    this.spokenText = sentence;
+    this.cdr.markForCheck();
+    
+    // Apply grammar to subtitle
+    setTimeout(() => {
+        const subtitleElement = document.querySelector('.subtitle');
+        if (subtitleElement instanceof HTMLElement) {
+            this.grammarService.applyPartsOfSpeech(subtitleElement);
+        }
+    });
 }
+
+applyGrammarToAllSentences() {
+    if (this.dialogContent && this.dialogContent.nativeElement) {
+        const sentenceElements = this.dialogContent.nativeElement.querySelectorAll('.sentence');
+        sentenceElements.forEach((element: HTMLElement) => {
+            this.grammarService.applyPartsOfSpeech(element);
+        });
+    }
+}
+
+  applyPartsOfSpeechToSubtitle(): void {
+    const subtitleElement = document.querySelector('.subtitle');
+    if (subtitleElement && subtitleElement instanceof HTMLElement) {
+      this.grammarService.applyPartsOfSpeech(subtitleElement);
+    }
+  }
+
+  applyPartsOfSpeechManually(): void {
+    const textContainer = document.querySelector('.dialog-content');
+    if (textContainer && textContainer instanceof HTMLElement) {
+      this.grammarService.applyPartsOfSpeech(textContainer);
+    }
+  }
+
+  applyGrammarManually(): void {
+    console.log('Applying grammar manually');
+    console.log('Dialog content reference:', this.dialogContent);
+    
+    if (this.dialogContent && this.dialogContent.nativeElement) {
+      console.log('Dialog content found');
+      const sentenceElements = this.dialogContent.nativeElement.querySelectorAll('.sentence');
+      console.log(`Found ${sentenceElements.length} sentence elements`);
+      sentenceElements.forEach((element: HTMLElement, index: number) => {
+        console.log(`Applying grammar to sentence ${index + 1}`);
+        console.log('Sentence content:', element.innerText);
+        this.grammarService.applyPartsOfSpeech(element);
+      });
+    } else {
+      console.error('Dialog content not found');
+    }
+    this.cdr.detectChanges();
+  }
+  
+
+
+
+}//fim  

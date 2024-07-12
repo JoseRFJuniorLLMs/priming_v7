@@ -1,11 +1,9 @@
 <!-- Alerta de Satoshi -->
 <span class="satoshi-alert">
-<mat-chip class="custom-badge">
-  <i class="fa fa-btc" matTooltip="Satoshi" 
-  aria-hidden="true" style="font-size: 30px; color: rgb(248, 187, 2);">
-  </i>
-  Satoshi: {{ totalSatoshis }}
-</mat-chip>
+  <mat-chip class="custom-badge">
+    <i class="fa fa-btc" matTooltip="Satoshi" aria-hidden="true" style="font-size: 30px; color: rgb(248, 187, 2);"></i>
+    Satoshi: {{ totalSatoshis }}
+  </mat-chip>
 </span>
 
 <div mat-dialog-content class="full-height">
@@ -17,6 +15,12 @@
   <select id="voices" (change)="onVoiceChange($event)">
     <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
   </select>
+
+<!-- Botão para aplicar a gramática manualmente -->
+<button mat-raised-button color="primary" (click)="applyGrammarManually()">
+  Apply Grammar (Debug)
+</button>
+
 
   <table>
     <tr *ngFor="let sentence of sentences; let i = index">
@@ -50,5 +54,3 @@
   <mat-icon svgIcon="mat:close"></mat-icon>
 </button>
 <div class="subtitle" *ngIf="spokenText">{{ spokenText }}</div>
-
-

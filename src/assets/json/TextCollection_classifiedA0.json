@@ -1,0 +1,821 @@
+[
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ccd"
+        },
+        "prime": "CHEAT",
+        "target": "FAIL",
+        "text": "In a world full of fun and play, Tim the cat loved to cheat in every game. But one day, he cheated so much that his friends didn't want to play with him anymore. Tim felt very sad and learned that cheating only makes you fail in making friends.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cce"
+        },
+        "prime": "SHARE",
+        "target": "HAPPY",
+        "text": "Lily had a big bag of candy. She saw her friends playing and decided to share her candy with them. Her friends were very happy and thanked her. Lily felt very happy too because sharing made everyone smile.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ccf"
+        },
+        "prime": "HELP",
+        "target": "FRIEND",
+        "text": "One day, a little bird named Ben got lost. He was scared and didn't know how to get home. A kind dog named Max saw Ben and decided to help. Max guided Ben back to his nest. Ben was very thankful and they became good friends.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd0"
+        },
+        "prime": "HONEST",
+        "target": "TRUST",
+        "text": "Tommy found a shiny coin on the ground. He knew it was not his. He saw his teacher looking for it and gave it back to her. His teacher smiled and told Tommy that being honest makes people trust you.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd1"
+        },
+        "prime": "CARE",
+        "target": "LOVE",
+        "text": "Mia had a small garden. She took care of her plants every day, giving them water and love. The plants grew big and beautiful. Mia felt proud and loved her garden even more.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd2"
+        },
+        "prime": "LISTEN",
+        "target": "UNDERSTAND",
+        "text": "Jack was always talking and never listened. One day, he couldn't understand his homework. His friend Sarah told him that if he listened carefully in class, he would understand better. Jack started to listen and his grades improved.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd3"
+        },
+        "prime": "SMILE",
+        "target": "FRIEND",
+        "text": "Emily was new in school and felt lonely. She smiled at a girl named Anna. Anna smiled back and they started talking. Soon, they became best friends. A smile made Emily feel welcomed.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd4"
+        },
+        "prime": "TRY",
+        "target": "SUCCESS",
+        "text": "Sam wanted to ride a bike but he was scared of falling. His dad told him to keep trying. After many tries, Sam finally rode his bike without falling. He felt proud and happy.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd5"
+        },
+        "prime": "CLEAN",
+        "target": "ORGANIZED",
+        "text": "Lucy’s room was always messy. Her mom helped her clean it up. Now Lucy keeps her room tidy. She likes finding her toys easily and feels more organized.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd6"
+        },
+        "prime": "READ",
+        "target": "LEARN",
+        "text": "James loved to read books. Each book took him on a new adventure. He learned about different places and people. Reading made James very smart.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd7"
+        },
+        "prime": "KIND",
+        "target": "FRIEND",
+        "text": "Sophie saw a boy who was sad because he had no friends. She went to him and asked if he wanted to play. The boy smiled and they became friends. Being kind made a new friend.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd8"
+        },
+        "prime": "HELP",
+        "target": "HAPPY",
+        "text": "Tom’s grandmother needed help to carry groceries. Tom helped her and she gave him a big hug. Helping others made Tom feel happy inside.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cd9"
+        },
+        "prime": "LAUGH",
+        "target": "JOY",
+        "text": "Emma told a funny joke and everyone laughed. Their laughter filled the room with joy. Emma realized that making people laugh brings happiness.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cda"
+        },
+        "prime": "SING",
+        "target": "FUN",
+        "text": "Billy loved to sing. He sang every day and his family enjoyed his songs. Singing made Billy feel happy and it was so much fun.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cdb"
+        },
+        "prime": "DRAW",
+        "target": "CREATE",
+        "text": "Nina liked to draw pictures. She drew flowers, animals, and her family. Her drawings made her happy and she loved creating new things.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cdc"
+        },
+        "prime": "PLAY",
+        "target": "FRIENDS",
+        "text": "Tim and his friends played soccer every afternoon. Playing together made them happy and they became good friends.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cdd"
+        },
+        "prime": "DREAM",
+        "target": "GOAL",
+        "text": "Mia dreamed of becoming a doctor. She studied hard and never gave up. One day, her dream came true and she was very proud.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cde"
+        },
+        "prime": "JUMP",
+        "target": "JOY",
+        "text": "Ben loved to jump on his trampoline. Each jump made him feel like he was flying. Jumping brought Ben so much joy.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cdf"
+        },
+        "prime": "LOVE",
+        "target": "FAMILY",
+        "text": "Sarah loved spending time with her family. They played games, read books, and had fun together. Love made their family strong.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce0"
+        },
+        "prime": "LEARN",
+        "target": "SMART",
+        "text": "Tommy loved learning new things. He asked many questions and read books. Learning made Tommy very smart and curious.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce1"
+        },
+        "prime": "RUN",
+        "target": "FAST",
+        "text": "Anna loved to run. She practiced every day and got faster and faster. Running made Anna feel free and strong.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce2"
+        },
+        "prime": "HUG",
+        "target": "COMFORT",
+        "text": "Whenever Tim felt sad, his mom gave him a big hug. Hugs made Tim feel loved and comforted.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce3"
+        },
+        "prime": "DANCE",
+        "target": "FUN",
+        "text": "Lucy loved to dance to her favorite songs. Dancing made her feel happy and full of energy. She danced every day for fun.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce4"
+        },
+        "prime": "BAKE",
+        "target": "SHARE",
+        "text": "Ellie and her mom baked cookies. The cookies smelled so good. Ellie shared them with her friends, and everyone loved them.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce5"
+        },
+        "prime": "BUILD",
+        "target": "CREATE",
+        "text": "Sam built a fort with blankets and pillows. He invited his sister to play inside. Building things made Sam feel creative and proud.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce6"
+        },
+        "prime": "GIVE",
+        "target": "JOY",
+        "text": "Lily gave her old toys to kids who had none. The kids were very happy and thanked her. Giving made Lily feel joyful.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce7"
+        },
+        "prime": "EXPLORE",
+        "target": "DISCOVER",
+        "text": "Jake loved to explore the forest near his house. He found new plants and animals every time. Exploring helped Jake discover the wonders of nature.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce8"
+        },
+        "prime": "WATCH",
+        "target": "LEARN",
+        "text": "Ben watched his dad cook dinner. He learned how to make his favorite pasta. Watching and helping made Ben a good cook.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ce9"
+        },
+        "prime": "PLAY",
+        "target": "TEAM",
+        "text": "The kids played soccer together. They learned to pass the ball and work as a team. Playing as a team made them win the game.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cea"
+        },
+        "prime": "CREATE",
+        "target": "IMAGINE",
+        "text": "Emily loved to create stories. She imagined faraway lands and brave heroes. Creating stories made her very imaginative.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ceb"
+        },
+        "prime": "PLANT",
+        "target": "GROW",
+        "text": "Tom planted seeds in his garden. He watered them every day. Soon, little plants began to grow. Planting made Tom happy to see his garden grow.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cec"
+        },
+        "prime": "PAINT",
+        "target": "ART",
+        "text": "Anna loved to paint pictures. She painted flowers, trees, and animals. Painting made Anna feel like an artist.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3ced"
+        },
+        "prime": "LISTEN",
+        "target": "UNDERSTAND",
+        "text": "John always listened to his teacher carefully. Because he listened well, he understood his lessons and did well in school.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cee"
+        },
+        "prime": "TALK",
+        "target": "COMMUNICATE",
+        "text": "Sara liked to talk with her friends. They shared stories and secrets. Talking helped them understand each other better.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cef"
+        },
+        "prime": "RESPECT",
+        "target": "FRIENDSHIP",
+        "text": "Liam learned to respect his friends' opinions. Even if they disagreed, they stayed friends. Respect made their friendship stronger.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf0"
+        },
+        "prime": "LEAD",
+        "target": "GUIDE",
+        "text": "Mia was the leader of her group. She guided her friends during games and projects. Being a good leader made her friends trust her.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf1"
+        },
+        "prime": "PRAISE",
+        "target": "CONFIDENCE",
+        "text": "Ella's teacher praised her for her good work. The praise made Ella feel confident and proud of herself.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf2"
+        },
+        "prime": "FORGIVE",
+        "target": "PEACE",
+        "text": "Tom and Jack had a fight. They both felt bad. Tom decided to forgive Jack, and they made peace. Forgiveness made them happy again.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf3"
+        },
+        "prime": "HONOR",
+        "target": "RESPECT",
+        "text": "Emma always honored her parents. She listened to them and respected their advice. Honoring her parents made Emma a good child.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf4"
+        },
+        "prime": "ENCOURAGE",
+        "target": "BRAVE",
+        "text": "Sam was afraid to swim. His sister encouraged him and told him he could do it. Sam felt brave and tried. He learned to swim and was happy.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf5"
+        },
+        "prime": "DISCOVER",
+        "target": "LEARN",
+        "text": "Lily discovered a new book in the library. She read it and learned many new things. Discovering new books made learning fun for Lily.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf6"
+        },
+        "prime": "INCLUDE",
+        "target": "TOGETHER",
+        "text": "Anna saw a girl sitting alone. She invited her to play with her friends. Including everyone made the game more fun and brought them together.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf7"
+        },
+        "prime": "TRUST",
+        "target": "SAFE",
+        "text": "Max trusted his dog to protect him. His dog always stayed close and made him feel safe. Trusting his dog gave Max comfort.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf8"
+        },
+        "prime": "ENJOY",
+        "target": "HAPPINESS",
+        "text": "Tim enjoyed playing in the park. He swung on the swings and slid down the slides. Enjoying the park brought Tim lots of happiness.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cf9"
+        },
+        "prime": "LAUGH",
+        "target": "SMILE",
+        "text": "Katie loved to tell jokes. Her jokes made everyone laugh and smile. Making people laugh made Katie happy too.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cfa"
+        },
+        "prime": "CHEER",
+        "target": "SUPPORT",
+        "text": "During the race, Tom’s friends cheered for him. Their support made Tom run faster and win. Cheering for friends makes them feel strong.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3cfb"
+        },
+        "prime": "ENCOURAGE",
+        "target": "TRY",
+        "text": "Ella encouraged her brother to try playing the piano. He was nervous at first, but her encouragement helped him. He tried and loved it.",
+        "level": "A0"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c00"
+        },
+        "prime": "COLORS",
+        "target": "LEARN",
+        "text": "Tommy had a box of crayons. He picked up the red crayon and drew a big apple. Then he used the blue crayon to color the sky. Tommy learned that colors make pictures beautiful.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c01"
+        },
+        "prime": "NUMBERS",
+        "target": "COUNT",
+        "text": "Lily loved counting. She counted her fingers, her toes, and her toys. One day, she counted to ten all by herself. Counting made Lily happy and proud.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c02"
+        },
+        "prime": "MONTHS",
+        "target": "CALENDAR",
+        "text": "Ben learned the names of the months. January is cold, February has Valentine's Day, and March brings spring. Each month has special days and Ben loved learning about them.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c03"
+        },
+        "prime": "FAMILY",
+        "target": "NAMES",
+        "text": "Mia's family is big. She has a mommy, daddy, sister, and brother. She also has a grandma and grandpa. Mia loves spending time with her family and knows everyone's name.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c04"
+        },
+        "prime": "BODY",
+        "target": "PARTS",
+        "text": "Sam learned about his body. He has two arms, two legs, and one head. He can clap with his hands and run with his legs. Learning about his body parts was fun for Sam.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c05"
+        },
+        "prime": "ANIMALS",
+        "target": "LEARN",
+        "text": "Emma loves animals. She knows that dogs bark, cats meow, and birds sing. Emma likes visiting the zoo to see all the animals and learn their names.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c06"
+        },
+        "prime": "SHAPES",
+        "target": "LEARN",
+        "text": "Jake played with shapes. He had a circle, a square, and a triangle. He used the shapes to make a house. Learning shapes helped Jake create fun pictures.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c07"
+        },
+        "prime": "FOOD",
+        "target": "LEARN",
+        "text": "Lucy loves different foods. She eats apples, bananas, and carrots. She knows that apples are red, bananas are yellow, and carrots are orange. Learning about food is delicious!",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c08"
+        },
+        "prime": "WEATHER",
+        "target": "LEARN",
+        "text": "Tommy likes learning about weather. He knows when it's sunny, he can play outside. When it's rainy, he needs an umbrella. Tommy loves seeing the rainbow after the rain.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c09"
+        },
+        "prime": "SCHOOL",
+        "target": "LEARN",
+        "text": "Lily goes to school every day. She learns about numbers, letters, and colors. She loves her teacher and her friends. School is a place where Lily learns many new things.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0a"
+        },
+        "prime": "VEHICLES",
+        "target": "LEARN",
+        "text": "Ben loves playing with toy cars. He knows that cars drive on roads, boats sail on water, and planes fly in the sky. Learning about vehicles is exciting for Ben.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0b"
+        },
+        "prime": "FRIENDS",
+        "target": "LEARN",
+        "text": "Mia loves playing with her friends. They play games, share toys, and have fun together. Mia learns that friends are special and important.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0c"
+        },
+        "prime": "HOBBIES",
+        "target": "LEARN",
+        "text": "Sam has many hobbies. He likes drawing, reading books, and playing soccer. Each hobby makes him happy and he loves learning new things.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0d"
+        },
+        "prime": "HOLIDAYS",
+        "target": "LEARN",
+        "text": "Emma learned about holidays. Christmas has a tree, Easter has eggs, and Halloween has pumpkins. Each holiday is special and Emma loves celebrating them.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0e"
+        },
+        "prime": "SPORTS",
+        "target": "LEARN",
+        "text": "Jake enjoys playing sports. He likes soccer, basketball, and swimming. Playing sports keeps Jake active and he learns to be a good team player.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c0f"
+        },
+        "prime": "CLOTHES",
+        "target": "LEARN",
+        "text": "Lucy likes dressing up. She wears shirts, pants, and shoes. She knows that clothes keep her warm and comfortable. Learning about clothes is fun for Lucy.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c10"
+        },
+        "prime": "JOBS",
+        "target": "LEARN",
+        "text": "Tommy's dad is a doctor and his mom is a teacher. He learns about different jobs like firefighter, police officer, and chef. Tommy dreams of having a job one day too.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c11"
+        },
+        "prime": "TRANSPORT",
+        "target": "LEARN",
+        "text": "Lily takes the bus to school. She knows that trains, cars, and bikes are all types of transport. Learning about different ways to travel is exciting for Lily.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c12"
+        },
+        "prime": "GAMES",
+        "target": "PLAY",
+        "text": "Ben loves playing games. He likes hide and seek, tag, and board games. Playing games with friends teaches Ben to share and have fun.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c13"
+        },
+        "prime": "MUSIC",
+        "target": "LEARN",
+        "text": "Mia loves listening to music. She knows about different instruments like piano, guitar, and drums. Music makes Mia happy and she loves to dance.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c14"
+        },
+        "prime": "NATURE",
+        "target": "EXPLORE",
+        "text": "Sam loves exploring nature. He sees trees, flowers, and animals in the park. Nature is beautiful and Sam loves learning about it.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c15"
+        },
+        "prime": "INSECTS",
+        "target": "LEARN",
+        "text": "Emma likes watching insects. She sees ants, butterflies, and bees. Learning about insects is fun and Emma loves to explore.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c16"
+        },
+        "prime": "TOYS",
+        "target": "PLAY",
+        "text": "Jake has many toys. He has cars, dolls, and blocks. Playing with toys makes Jake happy and he learns to share with his friends.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c17"
+        },
+        "prime": "SEASONS",
+        "target": "LEARN",
+        "text": "Lucy learns about the seasons. Spring has flowers, summer is hot, autumn has leaves, and winter is cold. Each season is special and Lucy loves them all.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c18"
+        },
+        "prime": "SCHOOL SUBJECTS",
+        "target": "LEARN",
+        "text": "Tommy learns different subjects at school. He likes math, science, and art. Each subject teaches Tommy something new and interesting.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c19"
+        },
+        "prime": "FEELINGS",
+        "target": "EXPRESS",
+        "text": "Lily learns about feelings. She feels happy when she plays, sad when she loses a toy, and excited on her birthday. Learning to express feelings is important.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c20"
+        },
+        "prime": "HEALTH",
+        "target": "LEARN",
+        "text": "Ben learns about health. He eats fruits, drinks water, and exercises. Being healthy makes Ben feel strong and happy.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c21"
+        },
+        "prime": "TIME",
+        "target": "LEARN",
+        "text": "Mia learns to tell time. She knows when it's morning, afternoon, and night. Learning about time helps Mia plan her day.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c22"
+        },
+        "prime": "HOUSE",
+        "target": "LEARN",
+        "text": "Sam learns about his house. He knows the kitchen, bedroom, and bathroom. Learning about his house helps Sam feel safe and comfortable.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c23"
+        },
+        "prime": "PLACES",
+        "target": "LEARN",
+        "text": "Emma learns about different places. She knows the park, the library, and the supermarket. Learning about places helps Emma explore her neighborhood.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c24"
+        },
+        "prime": "COLORS",
+        "target": "LEARN",
+        "text": "Jake likes coloring. He uses red, blue, and yellow crayons. Learning colors helps Jake make beautiful pictures.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c25"
+        },
+        "prime": "MONTHS",
+        "target": "CALENDAR",
+        "text": "Lucy learns the months of the year. January is winter, June is summer, and December is Christmas time. Each month has something special.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c26"
+        },
+        "prime": "NUMBERS",
+        "target": "COUNT",
+        "text": "Tommy likes counting. He counts apples, books, and stars. Learning numbers helps Tommy in many ways.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c27"
+        },
+        "prime": "ANIMALS",
+        "target": "LEARN",
+        "text": "Lily visits the zoo. She sees lions, elephants, and monkeys. Learning about animals is fun and exciting.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c28"
+        },
+        "prime": "FOOD",
+        "target": "LEARN",
+        "text": "Ben learns about healthy food. He eats vegetables, fruits, and drinks milk. Healthy food makes Ben strong and happy.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c29"
+        },
+        "prime": "VEHICLES",
+        "target": "LEARN",
+        "text": "Mia loves cars and trains. She learns that cars drive on roads and trains run on tracks. Learning about vehicles is fun for Mia.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c30"
+        },
+        "prime": "FAMILY",
+        "target": "NAMES",
+        "text": "Sam loves his family. He knows his mom, dad, sister, and brother. Family is important and Sam loves them all.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c31"
+        },
+        "prime": "SHAPES",
+        "target": "LEARN",
+        "text": "Emma plays with shapes. She has circles, squares, and triangles. Learning shapes helps Emma make new things.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c32"
+        },
+        "prime": "SEASONS",
+        "target": "LEARN",
+        "text": "Jake learns about the seasons. Spring has flowers, summer is hot, autumn has leaves, and winter is cold. Each season is different and fun.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c33"
+        },
+        "prime": "GAMES",
+        "target": "PLAY",
+        "text": "Lucy loves playing games. She likes puzzles, board games, and ball games. Playing games with friends is fun and teaches Lucy new skills.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c34"
+        },
+        "prime": "HOBBIES",
+        "target": "LEARN",
+        "text": "Tommy has many hobbies. He likes painting, singing, and cycling. Hobbies make Tommy happy and he learns new things.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c35"
+        },
+        "prime": "SCHOOL",
+        "target": "LEARN",
+        "text": "Lily loves school. She learns new subjects and plays with her friends. School is a place where Lily grows and learns.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c36"
+        },
+        "prime": "HOLIDAYS",
+        "target": "CELEBRATE",
+        "text": "Ben loves holidays. Christmas, Easter, and Halloween are his favorites. Holidays are fun and Ben loves celebrating them.",
+        "level": "A1"
+    },
+    {
+        "_id": {
+            "$oid": "65bcc36aaffad5f039fa3c37"
+        },
+        "prime": "JOBS",
+        "target": "LEARN",
+        "text": "Mia learns about different jobs. She knows about doctors, teachers, and firefighters. Learning about jobs helps Mia dream about her future.",
+        "level": "A1"
+    }
+]

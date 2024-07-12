@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import textCollection from '../../../../assets/json/TextCollection_classified.json';
+//import textCollection from '../../../../assets/json/TextCollection_classified.json';
+import textCollection from '../../../../assets/json/TextCollection_classifiedA0.json';
+
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { TextItem } from './text-item.interface';  
