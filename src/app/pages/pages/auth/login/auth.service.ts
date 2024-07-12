@@ -80,12 +80,11 @@ export class AuthService {
             loginHistory: [currentTimestamp]
           }, { merge: true });
         }
-
+  
         this.notificationService.listenForCallNotifications(user.uid);
-
+  
         // Initialize WebRTC for the user, set up the connection and create an offer
         await this.chatVideoService.startLocalStream();
-        this.chatVideoService.setupPeerConnection();
         await this.chatVideoService.setupWebRTCForUser(user.uid);
         await this.chatVideoService.createOffer(user.uid);
       }
@@ -96,7 +95,7 @@ export class AuthService {
       this.loginErrorSubject.next('Incorrect email or password.');
     }
   }
-
+  
   async logout() {
     try {
       const user = await this.afAuth.currentUser;

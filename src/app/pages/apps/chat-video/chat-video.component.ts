@@ -118,11 +118,10 @@ export class ChatVideoComponent implements OnInit, OnDestroy {
 
   async startCall() {
     await this.chatVideoService.startCall(this.webcamVideo, this.remoteVideo, this.loggedUserId, this.targetUserId);
-    this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(
-      this.targetUserId
-    );
+    this.otherUserOnline = await this.chatVideoService.checkUserOnlineStatus(this.targetUserId);
     this.cdr.detectChanges();
   }
+  
 
   finishCall() {
     this.chatVideoService.finishCall();

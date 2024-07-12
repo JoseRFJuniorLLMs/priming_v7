@@ -63,12 +63,12 @@ export class ChatVideoService {
     this.remoteStream = new MediaStream();
   }
 
-  setupPeerConnection() {
+  setupPeerConnection(remoteVideo: HTMLVideoElement) {
     if (!this.localStream) {
       console.error('Local stream not initialized');
       return;
     }
-
+  
     if (!this.pc) {
       this.pc = new RTCPeerConnection({
         iceServers: [
@@ -76,12 +76,12 @@ export class ChatVideoService {
           { urls: 'stun:stun2.l.google.com:19302' }
         ]
       });
-
+  
       this.localStream.getTracks().forEach((track) => {
         this.pc?.addTrack(track, this.localStream);
         console.log('localStream.getTracks :', track);
       });
-
+  
       this.pc.ontrack = (event) => {
         console.log('Track received:', event);
         if (event.streams && event.streams[0]) {
@@ -91,9 +91,10 @@ export class ChatVideoService {
           inboundStream.addTrack(event.track);
           this.remoteStream = inboundStream;
         }
+        remoteVideo.srcObject = this.remoteStream; // add remoto
         console.log('Remote stream:', this.remoteStream);
       };
-
+  
       this.pc.onicecandidate = (event) => {
         if (event.candidate) {
           console.log('ICE Candidate:', event.candidate);
@@ -103,7 +104,7 @@ export class ChatVideoService {
       };
     }
   }
-
+  
   async startCall(
     webcamVideo: ElementRef<HTMLVideoElement>,
     remoteVideo: ElementRef<HTMLVideoElement>,
@@ -113,21 +114,21 @@ export class ChatVideoService {
     try {
       await this.startLocalStream();
       this.soundService.playOn();
-      this.setupPeerConnection();
-
+      this.setupPeerConnection(remoteVideo.nativeElement);  
+  
       webcamVideo.nativeElement.srcObject = this.localStream;
       remoteVideo.nativeElement.srcObject = this.remoteStream;
-
+  
       const callsSnapshot = await getDocs(collection(this.firestore, 'calls'));
       const existingCallDoc = callsSnapshot.docs[0];
-
+  
       console.log('Current User ID:>>>>', currentUserId);
-
+  
       if (!currentUserId) {
         console.error('No user is currently logged in or user ID is not available');
         return;
       }
-
+  
       if (existingCallDoc) {
         this.callDocId = existingCallDoc.id;
         await this.answerCall(existingCallDoc);
@@ -135,20 +136,20 @@ export class ChatVideoService {
       } else {
         await this.createOffer(currentUserId, targetUserId);
         console.log('createOffer:>>>>', targetUserId, currentUserId);
-
+  
         if (targetUserId) {
           this.notificationService.sendCallNotification(targetUserId, this.callDocId, currentUserId);
           console.log('sendCallNotification:>>>>', targetUserId, currentUserId);
         }
       }
-
+  
       await this.updateCallState(currentUserId, CallState.CALLING);
       await this.updateOnlineStatus(currentUserId, true);
     } catch (error) {
       console.error('Error during startCall:', error);
     }
   }
-
+  
   async finishCall() {
     try {
       this.soundService.playClose();
