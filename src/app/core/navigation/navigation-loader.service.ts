@@ -171,6 +171,12 @@ export class NavigationLoaderService {
               },
               {
                 type: 'link',
+                label: 'Books Grammatics',
+                route: '/apps/grammar-analyzer',
+                icon: 'mat:text_rotate_up'
+              },
+              {
+                type: 'link',
                 label: 'Books OpenAI',
                 route: '/apps/book',
                 icon: 'mat:text_rotate_up'

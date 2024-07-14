@@ -1,0 +1,25 @@
+<div class="grammar-analyzer">
+   
+    <div class="file-input-container">
+      <button mat-raised-button color="primary" (click)="fileInput.click()">
+        <span class="material-symbols-outlined">
+          upload_file
+        </span>
+        Choose File
+      </button>
+      <input #fileInput type="file" (change)="onFileSelected($event)" accept=".txt" style="display: none;">
+      <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
+    </div>
+  
+    <div class="action-buttons">
+      <button mat-raised-button color="accent" (click)="analyzeText()" [disabled]="!text || isAnalyzed">
+        <span class="material-symbols-outlined">
+          analytics
+        </span>
+        Analyze Grammar
+      </button>
+    </div>
+    
+    <div #textContainer class="text-container" [class.analyzed]="isAnalyzed"></div>
+  </div>
+  

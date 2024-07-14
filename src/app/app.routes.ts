@@ -170,12 +170,21 @@ export const appRoutes: VexRoutes = [
               toolbarShadowEnabled: false
             }
           },
-          
           {
             path: 'book3',
             loadComponent: () =>
               import('./pages/apps/book3/book3.component').then(
                 (m) => m.Book3Component
+              ),
+            data: {
+              toolbarShadowEnabled: false
+            }
+          },
+          {
+            path: 'grammar-analyzer',
+            loadComponent: () =>
+              import('./pages/apps/book4/grammar-analyzer.component').then(
+                (m) => m.GrammarAnalyzerComponent
               ),
             data: {
               toolbarShadowEnabled: false

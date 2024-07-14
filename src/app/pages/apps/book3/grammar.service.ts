@@ -56,7 +56,6 @@ export class GrammarService {
     }
 }
 
-
   private determineWordType(tags: string[]): string {
     if (tags.includes('Noun')) return 'Noun';
     if (tags.includes('Verb')) return 'Verb';

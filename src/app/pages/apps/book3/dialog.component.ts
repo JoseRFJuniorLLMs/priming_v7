@@ -133,11 +133,11 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
       this.playClicked[index] = true;
       this.playSentence(this.sentences[index], index);
     }
-    this.showSubtitle(this.sentences[index]); // Update the subtitle with the new sentence
+    this.showSubtitle(this.sentences[index]); 
   }
   
   playSentence(sentence: string, index: number): void {
-    this.stopSentence(); // Ensure any ongoing speech synthesis is stopped before starting a new one
+    this.stopSentence(); 
   
     const utterance = new SpeechSynthesisUtterance(sentence);
     utterance.lang = 'en-US';
@@ -155,8 +155,8 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
     utterance.onend = () => {
       this.canSpeak = true;
       this.currentSentenceIndex = index;
-      this.playClicked[index] = false; // Reset the play button state after the speech ends
-      this.incrementSatoshiAndCreateNote(this.sentences[index]); // Increment satoshi and create a note
+      this.playClicked[index] = false; 
+      this.incrementSatoshiAndCreateNote(this.sentences[index]); 
 
       // Show subtitle with the spoken text
       this.showSubtitle(sentence);
@@ -175,9 +175,9 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
   toggleSpeakSentence(index: number): void {
     this.speakClicked[index] = !this.speakClicked[index];
     if (this.speakClicked[index]) {
-      this.voiceRecognitionService.startListening(); // Start voice recognition when the button turns red
+      this.voiceRecognitionService.startListening(); 
     } else {
-      this.voiceRecognitionService.stopListening(); // Stop voice recognition when the button turns green
+      this.voiceRecognitionService.stopListening(); 
     }
   }
 
@@ -199,7 +199,7 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       }
     }
-    this.cdr.markForCheck(); // Ensure change detection is triggered
+    this.cdr.markForCheck(); 
   }
 
   highlightWordElement(element: Element | null): void {
@@ -208,7 +208,6 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
       element.classList.add('highlighted-word');
     }
   }
-
 
   highlightWords(sentence: string, sentenceIndex: number): string {
     const words = sentence.split(' ');
@@ -227,11 +226,11 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
     this.noteService.createNote(note).then(() => {
       this.updateSatoshiBalance();
       this.showSatoshiAlert = true;
-      this.cdr.markForCheck(); // Trigger change detection
+      this.cdr.markForCheck(); 
   
       setTimeout(() => {
         this.showSatoshiAlert = false;
-        this.cdr.markForCheck(); // Trigger change detection
+        this.cdr.markForCheck(); 
       }, 2000);
     }).catch(error => {
       console.error('Error creating note and incrementing satoshi balance:', error);
@@ -241,14 +240,6 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
   showSubtitle(sentence: string): void {
     this.spokenText = sentence;
     this.cdr.markForCheck();
-    
-    // Apply grammar to subtitle
-    setTimeout(() => {
-        const subtitleElement = document.querySelector('.subtitle');
-        if (subtitleElement instanceof HTMLElement) {
-            this.grammarService.applyPartsOfSpeech(subtitleElement);
-        }
-    });
 }
 
 applyGrammarToAllSentences() {
