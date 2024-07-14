@@ -21,13 +21,13 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB3JAznMf0DFR0Ekay42KoNO8ZNjHE4v6Y",
-  authDomain: "priming-queimadas.firebaseapp.com",
-  projectId: "priming-queimadas",
-  storageBucket: "priming-queimadas.appspot.com",
-  messagingSenderId: "510437439716",
-  appId: "1:510437439716:web:08651c1374979b0ea114f1",
-  measurementId: "G-SC9BKBJD4B"
+  apiKey: "AIzaSyCnntNNrBZTHBypuK3CkRZTTnAIooU5abs",
+  authDomain: "priming-eba00.firebaseapp.com",
+  projectId: "priming-eba00",
+  storageBucket: "priming-eba00.appspot.com",
+  messagingSenderId: "781495467306",
+  appId: "1:781495467306:web:f8a9ac8872d8215d64f253",
+  measurementId: "G-PC1B8W2G10"
 };
 
 export const appConfig: ApplicationConfig = {

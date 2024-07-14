@@ -1,7 +1,8 @@
-// src/app/components/load-json/load-json.component.ts
 import { Component } from '@angular/core';
 import { FirestoreLoadService } from './firestore-load.service';
-import stories from '../../../../assets/json/TextCollection_classifiedA0.json'; 
+//import stories from '../../../../assets/json/TextCollection_classifiedA0.json'; 
+import stories from '../../../../assets/json/TextCollection_classified.json';
+
 @Component({
   selector: 'app-load-json',
   templateUrl: './load-json.component.html',
