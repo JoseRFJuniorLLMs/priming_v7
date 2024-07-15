@@ -15,98 +15,123 @@
     </button>
   </div>
 
-  <div #textContainer></div>
-
   <div *ngIf="isAnalyzed">
     <h1>Analysis of "{{ text }}"</h1>
+    
     <div *ngIf="pronouns.length">
       <p><strong>Pronouns:</strong></p>
       <div *ngFor="let pronoun of pronouns">
-        <button mat-button color="accent" matTooltip="pronoun">{{ pronoun }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Pronoun'].color}" matTooltip="pronoun">
+          {{ partsOfSpeech['Pronoun'].symbol }} {{ pronoun }}
+        </button>
       </div>
     </div>
 
     <div *ngIf="verbs.length">
       <p><strong>Verbs:</strong></p>
       <div *ngFor="let verb of verbs">
-        <button mat-button color="accent" matTooltip="verb">{{ verb }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Verb'].color}" matTooltip="verb">
+          {{ partsOfSpeech['Verb'].symbol }} {{ verb }}
+        </button>
       </div>
     </div>
 
     <div *ngIf="nouns.length">
       <p><strong>Nouns:</strong></p>
       <div *ngFor="let noun of nouns">
-        <button mat-button color="accent" matTooltip="noun">{{ noun }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Noun'].color}" matTooltip="noun">
+          {{ partsOfSpeech['Noun'].symbol }} {{ noun }}
+        </button>
       </div>
     </div>
 
     <div *ngIf="adjectives.length">
       <p><strong>Adjectives:</strong></p>
       <div *ngFor="let adjective of adjectives">
-        <button mat-button color="accent" matTooltip="adjective">{{ adjective }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Adjective'].color}" matTooltip="adjective">
+          {{ partsOfSpeech['Adjective'].symbol }} {{ adjective }}
+        </button>
       </div>
     </div>
 
     <div *ngIf="adverbs.length">
       <p><strong>Adverbs:</strong></p>
       <div *ngFor="let adverb of adverbs">
-        <button mat-button color="accent" matTooltip="adverb">{{ adverb }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Adverb'].color}" matTooltip="adverb">
+          {{ partsOfSpeech['Adverb'].symbol }} {{ adverb }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="people.length">
       <p><strong>People:</strong></p>
       <div *ngFor="let person of people">
-        <button mat-button color="accent" matTooltip="person">{{ person }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Pronoun'].color}" matTooltip="person">
+          {{ partsOfSpeech['Pronoun'].symbol }} {{ person }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="places.length">
       <p><strong>Places:</strong></p>
       <div *ngFor="let place of places">
-        <button mat-button color="accent" matTooltip="place">{{ place }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="place">
+          {{ partsOfSpeech['Other'].symbol }} {{ place }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="organizations.length">
       <p><strong>Organizations:</strong></p>
       <div *ngFor="let organization of organizations">
-        <button mat-button color="accent" matTooltip="organization">{{ organization }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="organization">
+          {{ partsOfSpeech['Other'].symbol }} {{ organization }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="clauses.length">
       <p><strong>Clauses:</strong></p>
       <div *ngFor="let clause of clauses">
-        <button mat-button color="accent" matTooltip="clause">{{ clause }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="clause">
+          {{ partsOfSpeech['Other'].symbol }} {{ clause }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="questions.length">
       <p><strong>Questions:</strong></p>
       <div *ngFor="let question of questions">
-        <button mat-button color="accent" matTooltip="question">{{ question }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="question">
+          {{ partsOfSpeech['Other'].symbol }} {{ question }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="acronyms.length">
       <p><strong>Acronyms:</strong></p>
       <div *ngFor="let acronym of acronyms">
-        <button mat-button color="accent" matTooltip="acronym">{{ acronym }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="acronym">
+          {{ partsOfSpeech['Other'].symbol }} {{ acronym }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="emails.length">
       <p><strong>Emails:</strong></p>
       <div *ngFor="let email of emails">
-        <button mat-button color="accent" matTooltip="email">{{ email }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="email">
+          {{ partsOfSpeech['Other'].symbol }} {{ email }}
+        </button>
       </div>
     </div>
-    
+
     <div *ngIf="urls.length">
       <p><strong>URLs:</strong></p>
       <div *ngFor="let url of urls">
-        <button mat-button color="accent" matTooltip="url">{{ url }}</button>
+        <button mat-button [ngStyle]="{'color': partsOfSpeech['Other'].color}" matTooltip="url">
+          {{ partsOfSpeech['Other'].symbol }} {{ url }}
+        </button>
       </div>
     </div>
   </div>

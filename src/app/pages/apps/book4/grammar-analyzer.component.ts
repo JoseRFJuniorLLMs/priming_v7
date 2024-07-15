@@ -88,4 +88,28 @@ export class GrammarAnalyzerComponent {
       this.fileInput.nativeElement.value = '';
     }
   }
+  public partsOfSpeech = {
+    Noun: { color: '#9932CC', symbol: 'n.' },
+    Verb: { color: '#FF4500', symbol: 'v.' },
+    Adjective: { color: '#32CD32', symbol: 'adj.' },
+    Adverb: { color: '#9932CC', symbol: 'adv.' },
+    Determiner: { color: '#1E90FF', symbol: 'det.' },
+    Preposition: { color: '#FFA500', symbol: 'prep.' },
+    Conjunction: { color: '#FF69B4', symbol: 'conj.' },
+    Pronoun: { color: '#20B2AA', symbol: 'pron.' },
+    Other: { color: '#000000', symbol: '' }
+  };
+  
+  public determineWordType(tags: string[]): string {
+    if (tags.includes('Noun')) return 'Noun';
+    if (tags.includes('Verb')) return 'Verb';
+    if (tags.includes('Adjective')) return 'Adjective';
+    if (tags.includes('Adverb')) return 'Adverb';
+    if (tags.includes('Determiner')) return 'Determiner';
+    if (tags.includes('Preposition')) return 'Preposition';
+    if (tags.includes('Conjunction')) return 'Conjunction';
+    if (tags.includes('Pronoun')) return 'Pronoun';
+    return 'Other';
+  }
+  
 }
