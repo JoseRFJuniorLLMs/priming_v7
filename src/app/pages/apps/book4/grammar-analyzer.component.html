@@ -9,7 +9,7 @@
   </div>
 
   <div class="action-buttons">
-    <button mat-raised-button color="accent" (click)="analyzeText()" [disabled]="!text || isAnalyzed">
+    <button mat-raised-button color="accent" (click)="performAnalysis()" [disabled]="!text || isAnalyzed">
       <span class="material-symbols-outlined">analytics</span>
       Analyze Grammar
     </button>
@@ -19,7 +19,6 @@
 
   <div *ngIf="isAnalyzed">
     <h1>Analysis of "{{ text }}"</h1>
-    
     <div *ngIf="pronouns.length">
       <p><strong>Pronouns:</strong></p>
       <div *ngFor="let pronoun of pronouns">
@@ -52,6 +51,62 @@
       <p><strong>Adverbs:</strong></p>
       <div *ngFor="let adverb of adverbs">
         <button mat-button color="accent" matTooltip="adverb">{{ adverb }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="people.length">
+      <p><strong>People:</strong></p>
+      <div *ngFor="let person of people">
+        <button mat-button color="accent" matTooltip="person">{{ person }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="places.length">
+      <p><strong>Places:</strong></p>
+      <div *ngFor="let place of places">
+        <button mat-button color="accent" matTooltip="place">{{ place }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="organizations.length">
+      <p><strong>Organizations:</strong></p>
+      <div *ngFor="let organization of organizations">
+        <button mat-button color="accent" matTooltip="organization">{{ organization }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="clauses.length">
+      <p><strong>Clauses:</strong></p>
+      <div *ngFor="let clause of clauses">
+        <button mat-button color="accent" matTooltip="clause">{{ clause }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="questions.length">
+      <p><strong>Questions:</strong></p>
+      <div *ngFor="let question of questions">
+        <button mat-button color="accent" matTooltip="question">{{ question }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="acronyms.length">
+      <p><strong>Acronyms:</strong></p>
+      <div *ngFor="let acronym of acronyms">
+        <button mat-button color="accent" matTooltip="acronym">{{ acronym }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="emails.length">
+      <p><strong>Emails:</strong></p>
+      <div *ngFor="let email of emails">
+        <button mat-button color="accent" matTooltip="email">{{ email }}</button>
+      </div>
+    </div>
+    
+    <div *ngIf="urls.length">
+      <p><strong>URLs:</strong></p>
+      <div *ngFor="let url of urls">
+        <button mat-button color="accent" matTooltip="url">{{ url }}</button>
       </div>
     </div>
   </div>

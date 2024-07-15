@@ -1,4 +1,3 @@
-
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,14 +30,14 @@ export class GrammarAnalyzerComponent {
   nouns: string[] = [];
   adjectives: string[] = [];
   adverbs: string[] = [];
-
-  private partsOfSpeech = {
-    Noun: { color: '#9932CC', symbol: 'n.' },
-    Verb: { color: '#FF4500', symbol: 'v.' },
-    Adjective: { color: '#32CD32', symbol: 'adj.' },
-    Adverb: { color: '#FFA500', symbol: 'adv.' },
-    Pronoun: { color: '#20B2AA', symbol: 'pron.' },
-  };
+  people: string[] = [];
+  places: string[] = [];
+  organizations: string[] = [];
+  clauses: string[] = [];
+  questions: string[] = [];
+  acronyms: string[] = [];
+  emails: string[] = [];
+  urls: string[] = [];
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -56,54 +55,26 @@ export class GrammarAnalyzerComponent {
     }
   }
 
-  analyzeText(): void {
-    if (this.textContainer) {
-      const text = this.textContainer.nativeElement.innerText.trim();
-      if (text) {
-        this.applyPartsOfSpeech(text);
-        this.isAnalyzed = true;
-      } else {
-        alert('Por favor, selecione um arquivo de texto primeiro.');
-      }
-    }
+  performAnalysis(): void {
+    this.analyzeText(this.text); // Usando a variável text
   }
 
-  private applyPartsOfSpeech(text: string): void {
+  analyzeText(text: string): void {
     const doc = nlp(text);
-    const terms = doc.terms().out('array');
-    const tagsArray = doc.terms().out('tags');
-
-    this.resetWordCategories();
-
-    terms.forEach((term: any, index: number) => {
-      const tags = Array.isArray(tagsArray[index]) ? tagsArray[index] : [];
-      const type = this.determineWordType(tags);
-      
-      if (type === 'Noun') this.nouns.push(term);
-      else if (type === 'Verb') this.verbs.push(term);
-      else if (type === 'Adjective') this.adjectives.push(term);
-      else if (type === 'Adverb') this.adverbs.push(term);
-      else if (type === 'Pronoun') this.pronouns.push(term);
-    });
-
-    this.textContainer.nativeElement.innerHTML = terms.join(' ');
-  }
-
-  private determineWordType(tags: string[]): string {
-    if (tags.includes('Noun')) return 'Noun';
-    if (tags.includes('Verb')) return 'Verb';
-    if (tags.includes('Adjective')) return 'Adjective';
-    if (tags.includes('Adverb')) return 'Adverb';
-    if (tags.includes('Pronoun')) return 'Pronoun';
-    return 'Other';
-  }
-
-  private resetWordCategories(): void {
-    this.pronouns = [];
-    this.verbs = [];
-    this.nouns = [];
-    this.adjectives = [];
-    this.adverbs = [];
+    this.pronouns = doc.pronouns().out('array');
+    this.verbs = doc.verbs().out('array');
+    this.nouns = doc.nouns().out('array');
+    this.adjectives = doc.adjectives().out('array');
+    this.adverbs = doc.adverbs().out('array');
+    this.people = doc.people().out('array');
+    this.places = doc.places().out('array');
+    this.organizations = doc.organizations().out('array');
+    this.clauses = doc.clauses().out('array');
+    this.questions = doc.questions().out('array');
+    this.acronyms = doc.acronyms().out('array');
+    this.emails = doc.emails().out('array');
+    this.urls = doc.urls().out('array');
+    this.isAnalyzed = true; // Marcar como analisado
   }
 
   resetAnalysis(): void {
