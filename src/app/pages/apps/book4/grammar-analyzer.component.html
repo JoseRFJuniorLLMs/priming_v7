@@ -1,25 +1,58 @@
 <div class="grammar-analyzer">
-   
-    <div class="file-input-container">
-      <button mat-raised-button color="primary" (click)="fileInput.click()">
-        <span class="material-symbols-outlined">
-          upload_file
-        </span>
-        Choose File
-      </button>
-      <input #fileInput type="file" (change)="onFileSelected($event)" accept=".txt" style="display: none;">
-      <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
-    </div>
-  
-    <div class="action-buttons">
-      <button mat-raised-button color="accent" (click)="analyzeText()" [disabled]="!text || isAnalyzed">
-        <span class="material-symbols-outlined">
-          analytics
-        </span>
-        Analyze Grammar
-      </button>
-    </div>
-    
-    <div #textContainer class="text-container" [class.analyzed]="isAnalyzed"></div>
+  <div class="file-input-container">
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+      <span class="material-symbols-outlined">upload_file</span>
+      Choose File
+    </button>
+    <input #fileInput type="file" (change)="onFileSelected($event)" accept=".txt" style="display: none;">
+    <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
   </div>
-  
+
+  <div class="action-buttons">
+    <button mat-raised-button color="accent" (click)="analyzeText()" [disabled]="!text || isAnalyzed">
+      <span class="material-symbols-outlined">analytics</span>
+      Analyze Grammar
+    </button>
+  </div>
+
+  <div #textContainer></div>
+
+  <div *ngIf="isAnalyzed">
+    <h1>Analysis of "{{ text }}"</h1>
+    
+    <div *ngIf="pronouns.length">
+      <p><strong>Pronouns:</strong></p>
+      <div *ngFor="let pronoun of pronouns">
+        <button mat-button color="accent" matTooltip="pronoun">{{ pronoun }}</button>
+      </div>
+    </div>
+
+    <div *ngIf="verbs.length">
+      <p><strong>Verbs:</strong></p>
+      <div *ngFor="let verb of verbs">
+        <button mat-button color="accent" matTooltip="verb">{{ verb }}</button>
+      </div>
+    </div>
+
+    <div *ngIf="nouns.length">
+      <p><strong>Nouns:</strong></p>
+      <div *ngFor="let noun of nouns">
+        <button mat-button color="accent" matTooltip="noun">{{ noun }}</button>
+      </div>
+    </div>
+
+    <div *ngIf="adjectives.length">
+      <p><strong>Adjectives:</strong></p>
+      <div *ngFor="let adjective of adjectives">
+        <button mat-button color="accent" matTooltip="adjective">{{ adjective }}</button>
+      </div>
+    </div>
+
+    <div *ngIf="adverbs.length">
+      <p><strong>Adverbs:</strong></p>
+      <div *ngFor="let adverb of adverbs">
+        <button mat-button color="accent" matTooltip="adverb">{{ adverb }}</button>
+      </div>
+    </div>
+  </div>
+</div>
