@@ -50,7 +50,7 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
 
   voices: SpeechSynthesisVoice[] = [];
   selectedVoice: SpeechSynthesisVoice | null = null;
-  studentId: string = ''; // Now we'll obtain the logged-in student ID
+  studentId: string = ''; 
   totalSatoshis = 0;
   showSatoshiAlert = false;
   private satoshiSubscription: Subscription | null = null;

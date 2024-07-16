@@ -18,7 +18,7 @@ import { Student } from 'src/app/model/student/student';
 import { EditStudentDialogComponent } from './edit-student-dialog.component';
 import { DeleteStudentDialogComponent } from './delete-student-dialog.component';
 import { MatBadgeModule } from '@angular/material/badge';
-
+import { AuthService } from 'src/app/pages/pages/auth/login/auth.service';
 
 @Component({
   selector: 'app-student',
@@ -50,7 +50,8 @@ export class StudentComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     @Inject(Firestore) private firestore: Firestore,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -66,12 +67,19 @@ export class StudentComponent implements OnInit {
     });
   }
 
-  updateStudent(student: Student) {
-    this.studentService.updateStudentData(student).then(() => {
-      console.log('Student updated successfully');
-    }).catch(error => {
+  async updateStudent(student: Student) {
+    try {
+      const uid = await this.authService.getUID();
+      if (uid) {
+        student._id = uid;
+        await this.studentService.updateStudentData(student);
+        console.log('Student updated successfully');
+      } else {
+        console.error('Error: User is not logged in.');
+      }
+    } catch (error) {
       console.error('Error updating student:', error);
-    });
+    }
   }
 
   deleteStudent(id: string) {
