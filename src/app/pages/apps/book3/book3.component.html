@@ -1,5 +1,5 @@
 <div class="prism-container">
-  <div *ngIf="!showTable" class="button-container">
+  <div *ngIf="!showTable && !showSavedTexts" class="button-container">
     <div class="center-buttons">
       <button (click)="goBackToList()" class="back-button" matTooltip="go Back To List">
         <span class="material-symbols-outlined" style="color: rgb(254, 39, 1); font-size: 50px;">
@@ -16,7 +16,6 @@
 
       <button (click)="voiceRecognitionService.increaseSpeechRate()">+</button>
       <button (click)="voiceRecognitionService.decreaseSpeechRate()">-</button>
-
     </div>
 
     <div class="right-buttons">
@@ -26,8 +25,7 @@
         </span>
       </button>
 
-      <button (click)="applyBeeLineReader()"
-        matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
+      <button (click)="applyBeeLineReader()" matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
         <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'"
           [style.fontSize]="'50px'">
           {{ isBeeLineActive ? 'palette' : 'color_lens' }}
@@ -62,12 +60,10 @@
         <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">text_decrease</span>
       </button>
 
-      <label for="fontSelect" matTooltip="Select Font">
-      </label>
+      <label for="fontSelect" matTooltip="Select Font"></label>
       <select id="fontSelect" matTooltip="Select Font" (change)="changeFont($event)" [value]="selectedFont">
         <option *ngFor="let font of fonts" [value]="font">{{ font }}</option>
       </select>
-
 
       <div id="text-size-menu" class="dropdown-menu" [ngClass]="{'show-menu': isTextSizeMenuOpen}">
         <div>
@@ -82,13 +78,6 @@
             </option>
           </select>
         </div>
-
-    <!--     <button (click)="toggleRecording()" matTooltip="Recording/Stop">
-          <span class="material-symbols-outlined" [style.color]="voiceRecognitionService.isRecording ? 'red' : 'blue'"
-            [style.fontSize]="'50px'">
-            {{ voiceRecognitionService.isRecording ? 'stop' : 'mic' }}
-          </span>
-        </button> -->
 
         <button (click)="uploadFile.click()" matTooltip="Load Text">
           <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
@@ -107,7 +96,6 @@
 
   <div *ngIf="showTable">
     <div class="filter-container">
-
       <label for="levelFilter" class="filter-label">
         <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">filter_list</span>
         Filter by Level:
@@ -160,7 +148,6 @@
           </span>
         </label>
       </div>
-
     </div>
     <table>
       <thead>
@@ -221,17 +208,33 @@
     </table>
   </div>
 
+  <div *ngIf="showSavedTexts">
+    <table>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Page Read</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let text of savedTexts" (click)="openSavedText(text)">
+          <td>{{ text.fileName }}</td>
+          <td>{{ text.pageRead }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
   <div #textContainer class="text-container"></div>
 
   <div class="caption-container" *ngIf="showCaptions && currentSentence" #captionContainer>
     {{ currentSentence }}
   </div>
+
+  <!-- Button to switch to Saved Texts view -->
+  <button (click)="showSavedTexts = !showSavedTexts" class="toggle-saved-texts-button" matTooltip="Toggle Saved Texts">
+    <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
+      {{ showSavedTexts ? 'list_alt' : 'folder_open' }}
+    </span>
+  </button>
 </div>
-
-
-<!-- Button to switch to Saved Texts view -->
-<button (click)="showSavedTexts = !showSavedTexts" class="toggle-saved-texts-button" matTooltip="Toggle Saved Texts">
-  <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
-    {{ showSavedTexts ? 'list_alt' : 'folder_open' }}
-  </span>
-</button>

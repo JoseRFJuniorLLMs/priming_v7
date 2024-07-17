@@ -103,6 +103,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   private currentSpeechRate: number = 1;
 
   savedTexts: SavedText[] = [];
+  showSavedTexts: boolean = false; 
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
