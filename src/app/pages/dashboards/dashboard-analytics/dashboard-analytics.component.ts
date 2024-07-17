@@ -86,7 +86,6 @@ import { Book3Component } from '../../apps/book3/book3.component';
 import { NoteListComponent } from '../../apps/note/list/note-list.component';
 import { CardComponent } from '../../apps/memory/card.component';
 
-
 // Interface para descrever a estrutura da resposta da API
 interface ResponseData {
   choices?: { message: { content: string } }[];

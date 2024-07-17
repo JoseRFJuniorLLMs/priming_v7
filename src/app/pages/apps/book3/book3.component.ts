@@ -10,12 +10,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { DialogComponent } from './dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 import { PdfService } from '../clase/pdf.service';
 import { DialogZettelComponent } from '../clase/dialog.component';
 import { FormsModule } from '@angular/forms';
+
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../../pages/auth/login/auth.service';
-
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 
@@ -42,7 +46,9 @@ interface SavedText {
   imports: [
     CommonModule, MatTooltipModule,
     DialogComponent, MatSliderModule,
-    FormsModule
+    FormsModule, MatTableModule, MatTabsModule,
+    MatExpansionModule
+
   ]
 })
 export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
@@ -816,9 +822,13 @@ async loadSavedTexts() {
 openSavedText(text: SavedText) {
   this.sentences = this.splitIntoSentences(text.content);
   this.currentSentenceIndex = text.pageRead || 0;
-  this.processText();
-  this.showTable = false;
+  this.processText(); 
+  this.showTable = false;  
+  this.showSavedTexts = false; 
+  this.textContainer.nativeElement.scrollIntoView({ behavior: 'smooth' }); 
 }
+
+
 
 
 }//fim  
