@@ -18,6 +18,7 @@ import nlp from 'compromise';
   ]
 })
 export class GrammarAnalyzerComponent {
+
   @ViewChild('textContainer') textContainer!: ElementRef;
   @ViewChild('fileInput') fileInput!: ElementRef;
 
@@ -25,19 +26,19 @@ export class GrammarAnalyzerComponent {
   fileName: string = '';
   isAnalyzed: boolean = false;
 
-  pronouns: string[] = [];
-  verbs: string[] = [];
-  nouns: string[] = [];
-  adjectives: string[] = [];
-  adverbs: string[] = [];
-  people: string[] = [];
-  places: string[] = [];
-  organizations: string[] = [];
-  clauses: string[] = [];
-  questions: string[] = [];
-  acronyms: string[] = [];
-  emails: string[] = [];
-  urls: string[] = [];
+  pronouns!: string;
+  verbs!: string;
+  nouns!: string;
+  adjectives!: string;
+  adverbs!: string;
+  people!: string;
+  places!: string;
+  organizations!: string;
+  clauses!: string;
+  questions!: string;
+  acronyms!: string;
+  emails!: string;
+  urls!: string;
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -56,25 +57,25 @@ export class GrammarAnalyzerComponent {
   }
 
   performAnalysis(): void {
-    this.analyzeText(this.text); // Usando a variável text
+    this.analyzeText(this.text); 
   }
 
   analyzeText(text: string): void {
     const doc = nlp(text);
-    this.pronouns = doc.pronouns().out('array');
-    this.verbs = doc.verbs().out('array');
-    this.nouns = doc.nouns().out('array');
-    this.adjectives = doc.adjectives().out('array');
-    this.adverbs = doc.adverbs().out('array');
-    this.people = doc.people().out('array');
-    this.places = doc.places().out('array');
-    this.organizations = doc.organizations().out('array');
-    this.clauses = doc.clauses().out('array');
-    this.questions = doc.questions().out('array');
-    this.acronyms = doc.acronyms().out('array');
-    this.emails = doc.emails().out('array');
-    this.urls = doc.urls().out('array');
-    this.isAnalyzed = true; // Marcar como analisado
+    this.pronouns = doc.pronouns().out('text');
+    this.verbs = doc.verbs().out('text');
+    this.nouns = doc.nouns().out('text');
+    this.adjectives = doc.adjectives().out('text');
+    this.adverbs = doc.adverbs().out('text');
+    this.people = doc.people().out('text');
+    this.places = doc.places().out('text');
+    this.organizations = doc.organizations().out('text');
+    this.clauses = doc.clauses().out('text');
+    this.questions = doc.questions().out('text');
+    this.acronyms = doc.acronyms().out('text');
+    this.emails = doc.emails().out('text');
+    this.urls = doc.urls().out('text');
+    this.isAnalyzed = true; 
   }
 
   resetAnalysis(): void {
@@ -88,6 +89,7 @@ export class GrammarAnalyzerComponent {
       this.fileInput.nativeElement.value = '';
     }
   }
+
   public partsOfSpeech = {
     Noun: { color: '#9932CC', symbol: 'n.' },
     Verb: { color: '#FF4500', symbol: 'v.' },

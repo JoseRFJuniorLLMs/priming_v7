@@ -243,7 +243,7 @@ export class DashboardAnalyticsComponent implements OnInit, AfterViewInit {
   imagePrompt: string = '';
   generatedImageUrl: string = '';
 
-  /* ==================CONTRUTOR==================== */
+  /* ==================CONSTRUTOR==================== */
   constructor(
     private http: HttpClient,
     private _snackBar: MatSnackBar,

@@ -26,9 +26,9 @@ export class NlpService {
   }
 
   cosineSimilarity(vecA: any, vecB: any): number {
-    const dotProduct = tf.sum(tf.mul(vecA, vecB)).dataSync()[0];  // Corrigido para calcular o produto escalar corretamente
-    const magnitudeA = tf.norm(vecA).dataSync()[0];  // Corrigido para calcular a magnitude corretamente
-    const magnitudeB = tf.norm(vecB).dataSync()[0];  // Corrigido para calcular a magnitude corretamente
+    const dotProduct = tf.sum(tf.mul(vecA, vecB)).dataSync()[0];  
+    const magnitudeA = tf.norm(vecA).dataSync()[0];  
+    const magnitudeB = tf.norm(vecB).dataSync()[0];  
     return dotProduct / (magnitudeA * magnitudeB);
   }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -102,6 +102,7 @@ export class LoginComponent implements OnInit {
         this.snackbar.open('Login failed. Please check your credentials and try again.', 'Close', { duration: 5000 });
       }
     } else {
+      console.error('Please enter a valid email and password.:');
       this.snackbar.open('Please enter a valid email and password.', 'Close', { duration: 3000 });
     }
   }
@@ -116,4 +117,10 @@ export class LoginComponent implements OnInit {
     }
     this.cd.markForCheck();
   }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKey(event: KeyboardEvent) {
+    this.send();
+  }
+  
 }

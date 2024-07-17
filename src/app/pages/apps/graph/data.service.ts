@@ -117,13 +117,16 @@ export class DataService {
           }
         });
 
-        observer.next(Array.from(uniqueSentences).map((sentence, index) => ({
-          id: index + 1,
-          shape: 'circularImage',
-          image: 'https://priming-ai-2.web.app/assets/img/logo/priming.png',
-          label: sentence,
-          color: { background: nodeColors.get(sentence) || 'lightgrey' }
-        })));
+        observer.next(Array.from(uniqueSentences).map((sentence, index) => {
+          const note = notes.find(n => n.description === sentence);
+          return {
+            id: index + 1,
+            shape: 'circularImage',
+            image: note?.image || 'https://priming-ai-7.web.app/assets/img/logo/priming.png', // Usa a imagem do note ou uma imagem padrão
+            label: sentence,
+            color: { background: nodeColors.get(sentence) || 'lightgrey' }
+          };
+        }));
         observer.complete();
       });
     });
@@ -163,3 +166,4 @@ export class DataService {
     });
   }
 }
+

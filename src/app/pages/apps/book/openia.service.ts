@@ -15,7 +15,7 @@ export class OpenAIService {
   sendText(text: string) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      "Authorization": `Bearer ${gpt4.gptApiKey}`,
+      "Authorization": `Bearer ${gpt4.apiKey}`,
     });
 
     const body = {
@@ -29,4 +29,4 @@ export class OpenAIService {
 
 
 
-}
+}//fim
