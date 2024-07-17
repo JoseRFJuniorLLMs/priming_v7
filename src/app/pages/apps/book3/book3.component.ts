@@ -13,6 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { PdfService } from '../clase/pdf.service';
 import { DialogZettelComponent } from '../clase/dialog.component';
 import { FormsModule } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from '../../pages/auth/login/auth.service';
 
 // Método para aplicar destaque nas partes do discurso
 interface Word {
@@ -95,7 +97,10 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     public pdfLoaderService: PdfService,
     private layoutService: VexLayoutService,
     private datatextService: DatatextService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit(): void {
@@ -359,7 +364,6 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   startReading() {
     if (!this.isReading) {
       this.isReading = true;
@@ -569,9 +573,37 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         this.currentSentenceIndex = 0;
         this.processText();
         this.showTable = false;
-        //this.startReading();
+
+        // Save to Firebase
+        this.saveToFirebase(file.name, text);
       };
       reader.readAsText(file);
+    }
+  }
+
+  private async saveToFirebase(fileName: string, fileContent: string): Promise<void> {
+    try {
+      const user = await this.authService.getCurrentUser();
+      if (user) {
+        const textData = {
+          fileName: fileName,
+          content: fileContent,
+          pageRead: this.currentSentenceIndex,
+          userId: user.uid,
+          userName: user.displayName || 'Anonymous',
+          timestamp: new Date()
+        };
+
+        await this.firestore.collection('TextCollection').add(textData);
+        console.log('File saved successfully to Firebase');
+        // You might want to show a success message to the user here
+      } else {
+        console.error('No user logged in');
+        // You might want to show a message to the user that they need to be logged in
+      }
+    } catch (error) {
+      console.error('Error saving file to Firebase:', error);
+      // You might want to show an error message to the user here
     }
   }
 
