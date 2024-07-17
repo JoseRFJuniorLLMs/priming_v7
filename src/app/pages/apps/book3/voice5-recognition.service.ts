@@ -1,7 +1,6 @@
 import { ElementRef, Injectable, NgZone } from '@angular/core';
 import { Subject } from 'rxjs';
 import WaveSurfer from 'wavesurfer.js';
-import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +18,8 @@ export class Voice5RecognitionService {
   public recordingEnded$ = new Subject<string>();
 
   private selectedVoice: SpeechSynthesisVoice | null = null;
+
+  private currentSpeechRate: number = 1;
 
   constructor(private zone: NgZone) {
     this.setupSpeechRecognition();
@@ -85,112 +86,14 @@ export class Voice5RecognitionService {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-GB';
     utterance.voice = this.selectedVoice;
+    utterance.rate = this.currentSpeechRate;
     synth.speak(utterance);
   }
-
-  public setupWaveSurfer(micElement: ElementRef<HTMLDivElement>): void {
-    if (this.wavesurfer) {
-      this.wavesurfer.destroy();
-    }
-
-    if (!micElement || !micElement.nativeElement) {
-      console.error('micElement ainda não está disponível.');
-      return;
-    }
-
-    try {
-      this.wavesurfer = WaveSurfer.create({
-        container: micElement.nativeElement,
-        waveColor: 'rgb(33, 150, 243)',
-        progressColor: 'rgb(135, 206, 235)',
-        barGap: 1,
-        barWidth: 1,
-        barHeight: 1,
-        barRadius: 1,
-        backend: 'WebAudio'
-      });
-
-      this.recordPlugin = this.wavesurfer.registerPlugin(
-        RecordPlugin.create({
-          mimeType: 'audio/webm',
-          scrollingWaveform: false,
-          renderRecordedAudio: false
-        })
-      );
-
-      this.recordPlugin.on('record-end', (blob: Blob) => {
-        this.onRecordEnd(blob);
-      });
-
-    } catch (error) {
-      console.error('Erro ao inicializar o WaveSurfer:', error);
-    }
-  }
-
-  private onRecordEnd(blob: Blob): void {
-    this.isRecording = false;
-    this.recordedUrl = URL.createObjectURL(blob);
-    this.recordingEnded$.next(this.recordedUrl);
-    console.log('Recording ended:', this.recordedUrl);
-  }
-
-  public startRecording(): void {
-    if (!this.recordPlugin || this.recordPlugin.isRecording()) {
-      console.warn('Gravação já está em andamento ou recordPlugin não está inicializado.');
-      return;
-    }
-
-    try {
-      this.recordPlugin.startRecording();
-      this.isRecording = true;
-      console.log('Started recording.');
-    } catch (error) {
-      console.error('Erro ao iniciar a gravação:', error);
-    }
-  }
-
-  public stopRecording(): void {
-    if (this.recordPlugin && this.recordPlugin.isRecording()) {
-      this.recordPlugin.stopRecording();
-      this.isRecording = false;
-      console.log('Stopped recording.');
-    } else {
-      console.warn('Não há gravação em andamento para parar.');
-    }
-  }
-
-  public pauseRecording(): void {
-    if (this.recordPlugin && this.isRecording) {
-      if (!this.isPaused) {
-        this.recordPlugin.pauseRecording();
-        this.isPaused = true;
-        console.log('Paused recording.');
-      } else {
-        this.recordPlugin.resumeRecording();
-        this.isPaused = false;
-        console.log('Resumed recording.');
-      }
-    } else {
-      console.warn('Não há gravação em andamento para pausar/retomar.');
-    }
-  }
-
-  public toggleRecording(): void {
-    if (!this.recordPlugin) {
-      return;
-    }
-
-    if (this.isRecording) {
-      this.stopRecording();
-    } else {
-      this.startRecording();
-    }
-  }
+  
 
   public speakSelectedText(selectedText: string): void {
     const synth = window.speechSynthesis;
-  
-    const speakText = () => {
+      const speakText = () => {
       const utterance = new SpeechSynthesisUtterance(selectedText);
       utterance.lang = 'en-GB';
       utterance.voice = this.selectedVoice || synth.getVoices().find(voice => voice.lang === 'en-GB' && /female|woman|girl/i.test(voice.name)) || null;
@@ -206,10 +109,10 @@ export class Voice5RecognitionService {
       speakText();
     }
   }
+
   private setupVoice(): void {
     const synth = window.speechSynthesis;
-  
-    const loadVoices = () => {
+      const loadVoices = () => {
       const voices = synth.getVoices();
       this.selectedVoice = voices.find(voice => voice.lang === 'en-GB' && /female|woman|girl/i.test(voice.name)) || null;
     };
@@ -225,4 +128,29 @@ export class Voice5RecognitionService {
     }, 500);
   }
   
+  
+  public increaseSpeechRate(): void {
+    if (this.currentSpeechRate < 2) { // Limite máximo de 2x
+        this.currentSpeechRate += 0.1; // Aumenta em 0.1
+        this.setSpeechRate(this.currentSpeechRate);
+    }
 }
+
+public decreaseSpeechRate(): void {
+    if (this.currentSpeechRate > 0.5) { // Limite mínimo de 0.5x
+        this.currentSpeechRate -= 0.1; // Diminui em 0.1
+        this.setSpeechRate(this.currentSpeechRate);
+    }
+}
+
+private setSpeechRate(rate: number): void {
+    this.currentSpeechRate = rate;
+}
+
+public setSpeechRateFromSlider(value: number): void {
+  this.currentSpeechRate = 0.5 + (value / 100) * 1.5;
+}
+
+
+  
+}//fim

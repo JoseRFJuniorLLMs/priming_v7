@@ -1,12 +1,10 @@
-// sound.service.ts
-
 import { EventEmitter, Injectable, Output } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SoundService {
-  volume: number = 0.5; // Valor inicial do volume
+  volume: number = 0.5; 
   audioPlayer: HTMLAudioElement | null = null;
   timer: any;
   paused: boolean = false;

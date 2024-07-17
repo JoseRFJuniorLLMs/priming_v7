@@ -6,28 +6,33 @@ import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { VexLayoutService } from '@vex/services/vex-layout.service';
 import { DatatextService } from './datatext.service';
 import { TextItem } from './text-item.interface';
-import WaveSurfer from 'wavesurfer.js';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSliderModule } from '@angular/material/slider';
 import { DialogComponent } from './dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import nlp from 'compromise';
 import { PdfService } from '../clase/pdf.service';
 import { DialogZettelComponent } from '../clase/dialog.component';
+import { FormsModule } from '@angular/forms';
 
-  // Método para aplicar destaque nas partes do discurso
-  interface Word {
-    text: string;
-    type: string;
-  }
+// Método para aplicar destaque nas partes do discurso
+interface Word {
+  text: string;
+  type: string;
+}
 
 @Component({
   selector: 'book3',
   templateUrl: './book3.component.html',
   styleUrls: ['./book3.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatTooltipModule, DialogComponent]
+  imports: [
+    CommonModule, MatTooltipModule,
+    DialogComponent, MatSliderModule,
+    FormsModule
+  ]
 })
 export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
+
   @ViewChild('textContainer') textContainer!: ElementRef;
   @ViewChild('mic') micElement!: ElementRef<HTMLDivElement>;
   @ViewChild('waveformPlay') waveformPlay!: ElementRef;
@@ -57,7 +62,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   selectedFont: string = 'Calibri';
   fonts: string[] = [
     'Calibri', 'Sitka', 'Comic Sans', 'Arial', 'Verdana', 'Times New Roman', 'Georgia', 'Courier New',
-    'Brush Script MT', 'Lucida Handwriting', 'Pacifico', 'Dancing Script', 'Great Vibes', 'Indie Flower', 
+    'Brush Script MT', 'Lucida Handwriting', 'Pacifico', 'Dancing Script', 'Great Vibes', 'Indie Flower',
     'Shadows Into Light', 'Amatic SC', 'Caveat', 'Permanent Marker', 'Satisfy', 'Patrick Hand', 'Homemade Apple'
   ];
   currentSentence: string | null = null;
@@ -76,34 +81,12 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   sortOrder: 'asc' | 'desc' = 'asc';
   selectedLevel: string = '';
 
-  // NLP - Manipulação de Texto
-  textNLP: string = '';
-  pronouns: string[] = [];
-  verbs: string[] = [];
-  nouns: string[] = [];
-  adjectives: string[] = [];
-  adverbs: string[] = [];
-  people: string[] = [];
-  places: string[] = [];
-  organizations: string[] = [];
-  dates: string[] = [];
-  values: string[] = [];
-  phrases: string[] = [];
-  clauses: string[] = [];
-  negations: string[] = [];
-  questions: string[] = [];
-  quotes: string[] = [];
-  acronyms: string[] = [];
-  emails: string[] = [];
-  urls: string[] = [];
-  emojis: string[] = [];
-  mentions: string[] = [];
-  hashtags: string[] = [];
-
-  nlpResults: any;
-  isDialogOpen: boolean = false; 
+  isDialogOpen: boolean = false;
   isPartsOfSpeechActive: boolean = false;
   words: { text: string, type: string }[] = [];
+
+  sliderValue: number = 50;
+  private currentSpeechRate: number = 1;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
@@ -117,19 +100,18 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.voiceRecognitionService.recordingEnded$.subscribe(url => {
-      this.createWaveSurferPlay(url);
       this.openResultDialog();
     });
-  
+
     this.voiceRecognitionService.spokenText$.subscribe(spokenText => {
       this.compareText(spokenText);
     });
-  
+
     this.loadTextsByPage();
     this.loadVoices();
     this.loadUniqueLevels();
   }
-  
+
 
   loadUniqueLevels(): void {
     this.datatextService.getUniqueLevels().subscribe((levels: string[]) => {
@@ -140,25 +122,23 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.tryEnterFullscreen();
-  
-    this.voiceRecognitionService.setupWaveSurfer(this.micElement);
-  
+
     setTimeout(() => {
       this.layoutService.collapseSidenav();
       this.changeDetectorRef.detectChanges();
     });
-  
+
     document.addEventListener('mouseup', this.handleMouseUp.bind(this));
   }
-  
-  
+
+
   handleMouseUp() {
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) {
       this.confirmCopyText();
     }
   }
-  
+
   tryEnterFullscreen() {
     if (screenfull.isEnabled) {
       screenfull.request().catch(err => {
@@ -167,7 +147,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  
+
   requestFullscreenOnInteraction() {
     if (screenfull.isEnabled) {
       screenfull.request().catch(err => {
@@ -175,8 +155,8 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       });
     }
   }
-  
-    
+
+
   loadTextsByPage(): void {
     if (this.selectedLevel) {
       this.datatextService.getFilteredTextsByPage(this.page, this.pageSize, this.selectedLevel).subscribe((texts: TextItem[]) => {
@@ -230,13 +210,9 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         this.currentSentenceIndex = 0;
         this.processText();
         this.showTable = false;
-        this.startReading();
+        //this.startReading();
         this.toggleCaptions();
         this.soundService.playOn();
-
-        this.textNLP = textItem.text;
-        this.analyzeText();
-
       } else {
         this.soundService.playErro();
       }
@@ -377,17 +353,27 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
 
   toggleReading() {
     if (this.isReading) {
-      this.stopReading();
+      this.pauseReading();
     } else {
       this.startReading();
     }
   }
-  
+
 
   startReading() {
-    if (!this.isReading && this.sentences.length > 0) {
+    if (!this.isReading) {
       this.isReading = true;
+      speechSynthesis.resume();
       this.readNextSentence();
+      console.log("Starting reading...");
+    }
+  }
+
+  pauseReading() {
+    if (this.isReading) {
+      this.isReading = false;
+      speechSynthesis.pause();
+      console.log("Pause reading...");
     }
   }
 
@@ -424,33 +410,6 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  createWaveSurferPlay(url: string): void {
-    if (!this.waveformPlay || !this.waveformPlay.nativeElement) {
-      return;
-    }
-
-    const wavesurferPlay = WaveSurfer.create({
-      container: this.waveformPlay.nativeElement,
-      waveColor: 'black',
-      progressColor: 'gray',
-      barWidth: 1,
-      cursorWidth: 1,
-      height: 1,
-      barGap: 1,
-      backend: 'WebAudio',
-    });
-
-    wavesurferPlay.load(url);
-  }
-
-  toggleRecording(): void {
-    if (this.voiceRecognitionService.isRecording) {
-      this.voiceRecognitionService.stopRecording();
-    } else {
-      this.voiceRecognitionService.startRecording();
-    }
-  }
-
   finalizeReading(): void {
     this.openResultDialog();
   }
@@ -461,15 +420,14 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     document.removeEventListener('mouseup', this.handleMouseUp.bind(this));
-  
+
     if (this.voiceRecognitionService.wavesurfer) {
       this.voiceRecognitionService.wavesurfer.destroy();
     }
     this.voiceRecognitionService.stopListening();
-    this.voiceRecognitionService.stopRecording();
     this.soundService.playErro();
   }
-  
+
   selectText(index: number): void {
     const globalIndex = this.page * this.pageSize + index;
     this.loadTextByIndex(globalIndex);
@@ -531,7 +489,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       this.processText();
     }
   }
-  
+
   toggleCaptions(): void {
     this.showCaptions = !this.showCaptions;
   }
@@ -611,7 +569,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         this.currentSentenceIndex = 0;
         this.processText();
         this.showTable = false;
-        this.startReading();
+        //this.startReading();
       };
       reader.readAsText(file);
     }
@@ -623,16 +581,15 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       height: '80vh',
       maxHeight: '100vh',
       data: {
-        sentences: this.sentences,
-        nlpResults: this.nlpResults
+        sentences: this.sentences
       }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-  
+
   calculateTotalCorrect(): number {
     return this.totalCorrect;
   }
@@ -645,51 +602,19 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
     return this.wordsToTrain;
   }
 
-  analyzeText() {
-    const doc = nlp(this.textNLP);
-    this.sentences = doc.sentences().out('array');
-    
-    this.nlpResults = this.sentences.map(sentence => {
-      const sentenceDoc = nlp(sentence);
-      return {
-        pronouns: sentenceDoc.pronouns().out('array'),
-        verbs: sentenceDoc.verbs().out('array'),
-        nouns: sentenceDoc.nouns().out('array'),
-        adjectives: sentenceDoc.adjectives().out('array'),
-        adverbs: sentenceDoc.adverbs().out('array'),
-        people: sentenceDoc.people().out('array'),
-        places: sentenceDoc.places().out('array'),
-        organizations: sentenceDoc.organizations().out('array'),
-        dates: sentenceDoc.match('#Date').out('array'),
-        values: sentenceDoc.match('#Value').out('array'),
-        phrases: sentenceDoc.sentences().out('array'),
-        clauses: sentenceDoc.clauses().out('array'),
-        negations: sentenceDoc.match('#Negative').out('array'),
-        questions: sentenceDoc.match('?').out('array'),
-        quotes: sentenceDoc.match('"').out('array'),
-        acronyms: sentenceDoc.match('#Acronym').out('array'),
-        emails: sentenceDoc.match('#Email').out('array'),
-        urls: sentenceDoc.match('#Url').out('array'),
-        emojis: sentenceDoc.match('#Emoji').out('array'),
-        mentions: sentenceDoc.match('@').out('array'),
-        hashtags: sentenceDoc.match('#Hashtag').out('array')
-      };
-    });
-  }
-
   confirmCopyText(): void {
     if (this.isDialogOpen) {
-      return; // Evita abrir múltiplos diálogos
+      return;
     }
     const selection = window.getSelection();
     if (selection) {
       const selectedText = selection.toString();
       if (selectedText.length > 0) {
-        this.isDialogOpen = true; // Marca o diálogo como aberto
-  
+        this.isDialogOpen = true;
+
         this.pdfLoaderService.openSnackBar('Text copied to clipboard!');
         this.voiceRecognitionService.speakSelectedText('Zettelkasten notes, now you can save the note to study:' + selectedText);
-  
+
         // Copia o texto para a área de transferência
         const textarea = document.createElement('textarea');
         textarea.style.position = 'fixed';
@@ -700,21 +625,20 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-  
+
         // Abre o diálogo e passa o texto selecionado
         const dialogRef = this.dialog.open(DialogZettelComponent, {
           width: '600px',
           data: { text: selectedText }
         });
-  
+
         dialogRef.afterClosed().subscribe(() => {
-          this.isDialogOpen = false; // Marca o diálogo como fechado
+          this.isDialogOpen = false;
         });
       }
     }
   }
-  
-  
+
   loadVoices() {
     const voices = speechSynthesis.getVoices();
     if (voices.length) {
@@ -727,7 +651,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
       };
     }
   }
-  
+
   applyBeeLineReader() {
     if (this.isBeeLineActive) {
       this.clearBeeLineReader();
@@ -741,10 +665,10 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         [0, 0, 0]       // Preto
       ];
       const totalWords = words.length;
-      const gradientWords = 50; // Número de palavras por ciclo de degradê
+      const gradientWords = 50;
       const colorStops = colors.length - 1;
       const wordsPerStop = Math.floor(gradientWords / colorStops);
-  
+
       let gradientText = words.map((word: string, index: number) => {
         const stopIndex = Math.floor((index % gradientWords) / wordsPerStop);
         const t = ((index % gradientWords) % wordsPerStop) / wordsPerStop;
@@ -753,26 +677,81 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
         const color = this.interpolateColor(startColor, endColor, t);
         return `<span style="color: rgb(${color.join(',')})">${word}</span>`;
       }).join(' ');
-  
+
       textContainer.innerHTML = gradientText;
-      this.isBeeLineActive = true;  // Define o estado como ativo
+      this.isBeeLineActive = true;
     }
   }
-  
+
   interpolateColor(startColor: number[], endColor: number[], t: number): number[] {
     return startColor.map((start, i) => Math.round(start + (endColor[i] - start) * t));
   }
-      
+
   clearBeeLineReader() {
     if (this.currentText) {
-      this.processText();  
-      this.isBeeLineActive = false;  
+      this.processText();
+      this.isBeeLineActive = false;
     }
   }
-  
-  
+
+/* 
+  increaseVoiceVolume() {
+    this.voiceRecognitionService.increaseVoiceVolume();
+  }
+
+
+  decreaseVoiceVolume() {
+    this.voiceRecognitionService.decreaseVoiceVolume();
+  }
+
+
+  increaseWaveSurferVolume() {
+    this.voiceRecognitionService.increaseWaveSurferVolume();
+  }
+
+  decreaseWaveSurferVolume() {
+    this.voiceRecognitionService.decreaseWaveSurferVolume();
+  }
+
+  onVolumeChange(value: number): void {
+    this.voiceRecognitionService.setVoiceVolume(value / 100);
+  }
+
+  formatLabel(value: number): string {
+    return `${value}%`;
+  } */
+
+  formatLabel(value: number): string {
+    const rate = 0.5 + (value / 100) * 1.5;
+    return `${rate.toFixed(1)}x`;
+  }
+
+  onSpeedChange(value: number): void {
+    this.voiceRecognitionService.setSpeechRateFromSlider(value);
+  }
+
+
+  public increaseSpeechRate(): void {
+    if (this.currentSpeechRate < 2) { // Limite máximo de 2x
+        this.currentSpeechRate += 0.1; // Aumenta em 0.1
+        this.setSpeechRate(this.currentSpeechRate);
+    }
+}
+
+public decreaseSpeechRate(): void {
+    if (this.currentSpeechRate > 0.5) { 
+        this.currentSpeechRate -= 0.1; 
+        this.setSpeechRate(this.currentSpeechRate);
+    }
+}
+
+private setSpeechRate(rate: number): void {
+  this.currentSpeechRate = rate;
+}
+
+
 }//fim  
-  
+
 
 
 

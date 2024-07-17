@@ -16,12 +16,6 @@
     <option *ngFor="let voice of voices" [value]="voice.name">{{ voice.name }}</option>
   </select>
 
-<!-- Botão para aplicar a gramática manualmente -->
-<!-- <button mat-raised-button color="primary" (click)="applyGrammarManually()">
-  Apply Grammar (Debug)
-</button> -->
-
-
   <table>
     <tr *ngFor="let sentence of sentences; let i = index">
       <td>

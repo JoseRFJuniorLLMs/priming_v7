@@ -32,8 +32,8 @@ import { GrammarService } from './grammar.service'; // Ensure GrammarService is 
     MatChipsModule
   ],
   templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
-  providers: [GrammarService] // Add GrammarService to the providers
+  styleUrls: ['./dialog.component.scss']
+ 
 })
 export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -62,8 +62,7 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
     private satoshiService: SatoshiService,
     private authService: AuthService, // Inject AuthService here
     private noteService: NoteService, // Inject NoteService here
-    private cdr: ChangeDetectorRef,
-    private grammarService: GrammarService // Inject GrammarService here
+    private cdr: ChangeDetectorRef
   ) {
     this.sentences = data.sentences;
     this.nlpResults = data.nlpResults;
@@ -87,7 +86,7 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.applyGrammarToAllSentences();
+
   }
 
   ngOnDestroy(): void {
@@ -161,8 +160,6 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
       // Show subtitle with the spoken text
       this.showSubtitle(sentence);
 
-      // Apply parts of speech highlighting to the subtitle
-      this.applyPartsOfSpeechToSubtitle();
     };
   
     speechSynthesis.speak(utterance);
@@ -241,48 +238,6 @@ export class DialogComponent implements OnInit, OnDestroy, AfterViewInit {
     this.spokenText = sentence;
     this.cdr.markForCheck();
 }
-
-applyGrammarToAllSentences() {
-    if (this.dialogContent && this.dialogContent.nativeElement) {
-        const sentenceElements = this.dialogContent.nativeElement.querySelectorAll('.sentence');
-        sentenceElements.forEach((element: HTMLElement) => {
-            this.grammarService.applyPartsOfSpeech(element);
-        });
-    }
-}
-
-  applyPartsOfSpeechToSubtitle(): void {
-    const subtitleElement = document.querySelector('.subtitle');
-    if (subtitleElement && subtitleElement instanceof HTMLElement) {
-      this.grammarService.applyPartsOfSpeech(subtitleElement);
-    }
-  }
-
-  applyPartsOfSpeechManually(): void {
-    const textContainer = document.querySelector('.dialog-content');
-    if (textContainer && textContainer instanceof HTMLElement) {
-      this.grammarService.applyPartsOfSpeech(textContainer);
-    }
-  }
-
-  applyGrammarManually(): void {
-    console.log('Applying grammar manually');
-    console.log('Dialog content reference:', this.dialogContent);
-    
-    if (this.dialogContent && this.dialogContent.nativeElement) {
-      console.log('Dialog content found');
-      const sentenceElements = this.dialogContent.nativeElement.querySelectorAll('.sentence');
-      console.log(`Found ${sentenceElements.length} sentence elements`);
-      sentenceElements.forEach((element: HTMLElement, index: number) => {
-        console.log(`Applying grammar to sentence ${index + 1}`);
-        console.log('Sentence content:', element.innerText);
-        this.grammarService.applyPartsOfSpeech(element);
-      });
-    } else {
-      console.error('Dialog content not found');
-    }
-    this.cdr.detectChanges();
-  }
   
 
 

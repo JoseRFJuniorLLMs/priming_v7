@@ -6,11 +6,17 @@
           low_priority
         </span>
       </button>
+
       <button (click)="toggleReading()" matTooltip="Reading">
-        <span class="material-symbols-outlined" [style.color]="isReading ? 'rgb(248, 187, 2)' : 'rgb(50, 205, 50)'" [style.fontSize]="'70px'">
+        <span class="material-symbols-outlined" [style.color]="isReading ? 'rgb(248, 187, 2)' : 'rgb(50, 205, 50)'"
+          [style.fontSize]="'70px'">
           {{ isReading ? 'pause_circle' : 'play_circle' }}
         </span>
       </button>
+
+      <button (click)="voiceRecognitionService.increaseSpeechRate()">+</button>
+      <button (click)="voiceRecognitionService.decreaseSpeechRate()">-</button>
+
     </div>
 
     <div class="right-buttons">
@@ -20,41 +26,35 @@
         </span>
       </button>
 
-      <button (click)="applyBeeLineReader()" matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
-        <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
+      <button (click)="applyBeeLineReader()"
+        matTooltip="BeeLine Reader ( Dyslexia, ADHD): adds color gradients to digital text to improve reading ability and focus.">
+        <span class="material-symbols-outlined" [style.color]="isBeeLineActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'"
+          [style.fontSize]="'50px'">
           {{ isBeeLineActive ? 'palette' : 'color_lens' }}
         </span>
       </button>
-      
-      
+
       <button (click)="toggleCaptions()" matTooltip="Toggle Captions">
-        <span class="material-symbols-outlined" [style.color]="showCaptions ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" [style.fontSize]="'50px'">
+        <span class="material-symbols-outlined" [style.color]="showCaptions ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'"
+          [style.fontSize]="'50px'">
           {{ showCaptions ? 'closed_caption_disabled' : 'closed_caption' }}
         </span>
       </button>
 
-      <!--  <button (click)="togglePartsOfSpeech()" matTooltip="Highlight Parts of Speech">
-        <span class="material-symbols-outlined" 
-              [style.color]="isPartsOfSpeechActive ? 'rgb(255, 0, 0)' : 'rgb(0, 0, 255)'" 
-              [style.fontSize]="'50px'">
-          {{ isPartsOfSpeechActive ? 'visibility_off' : 'visibility' }}
-        </span>
-      </button>
-       -->
-      
-
       <button (click)="toggleDarkMode()" matTooltip="Toggle Dark Mode">
-        <span class="material-symbols-outlined" [style.color]="isDarkMode ? 'rgb(255, 215, 0)' : 'rgb(0, 0, 0)'" [style.fontSize]="'50px'">
+        <span class="material-symbols-outlined" [style.color]="isDarkMode ? 'rgb(255, 215, 0)' : 'rgb(0, 0, 0)'"
+          [style.fontSize]="'50px'">
           {{ isDarkMode ? 'brightness_low' : 'dark_mode' }}
         </span>
       </button>
 
       <button (click)="toggleDyslexicMode()" matTooltip="Toggle Dyslexic Mode">
-        <span class="material-symbols-outlined" [style.color]="isDyslexicMode ? 'red' : 'blue'" [style.fontSize]="'50px'">
+        <span class="material-symbols-outlined" [style.color]="isDyslexicMode ? 'red' : 'blue'"
+          [style.fontSize]="'50px'">
           {{ isDyslexicMode ? 'script' : 'font_download' }}
         </span>
       </button>
-      
+
       <button (click)="increaseTextSize()" matTooltip="increase Text Size">
         <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">text_increase</span>
       </button>
@@ -63,14 +63,11 @@
       </button>
 
       <label for="fontSelect" matTooltip="Select Font">
-<!--           <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
-            spellcheck
-          </span> -->
-        </label>
-        <select id="fontSelect" matTooltip="Select Font" (change)="changeFont($event)" [value]="selectedFont">
-          <option *ngFor="let font of fonts" [value]="font">{{ font }}</option>
-        </select>
-  
+      </label>
+      <select id="fontSelect" matTooltip="Select Font" (change)="changeFont($event)" [value]="selectedFont">
+        <option *ngFor="let font of fonts" [value]="font">{{ font }}</option>
+      </select>
+
 
       <div id="text-size-menu" class="dropdown-menu" [ngClass]="{'show-menu': isTextSizeMenuOpen}">
         <div>
@@ -86,11 +83,12 @@
           </select>
         </div>
 
-        <button (click)="toggleRecording()" matTooltip="Recording/Stop">
-          <span class="material-symbols-outlined" [style.color]="voiceRecognitionService.isRecording ? 'red' : 'blue'" [style.fontSize]="'50px'">
+    <!--     <button (click)="toggleRecording()" matTooltip="Recording/Stop">
+          <span class="material-symbols-outlined" [style.color]="voiceRecognitionService.isRecording ? 'red' : 'blue'"
+            [style.fontSize]="'50px'">
             {{ voiceRecognitionService.isRecording ? 'stop' : 'mic' }}
           </span>
-        </button>
+        </button> -->
 
         <button (click)="uploadFile.click()" matTooltip="Load Text">
           <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
@@ -98,8 +96,8 @@
           </span>
           <i class="modus-icons" aria-hidden="true">file_type_text</i>
         </button>
-        <input type="file" #uploadFile (change)="loadFile($event)" accept=".txt" style="display: none;"/>
-        
+        <input type="file" #uploadFile (change)="loadFile($event)" accept=".txt" style="display: none;" />
+
         <button (click)="closeTextSizeMenu()" matTooltip="close Text Size Menu">
           <span class="material-symbols-outlined" style="color: rgb(255, 99, 71); font-size: 50px;">close</span>
         </button>
@@ -110,13 +108,11 @@
   <div *ngIf="showTable">
     <div class="filter-container">
 
-
       <label for="levelFilter" class="filter-label">
         <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">filter_list</span>
         Filter by Level:
       </label>
-      <select id="levelFilter" (change)="filterByLevel($event)" class="custom-select" 
-      matTooltip="
+      <select id="levelFilter" (change)="filterByLevel($event)" class="custom-select" matTooltip="
       CEFR English Levels
       A0 - Complete Beginner.
       A1 - Beginner.
@@ -127,46 +123,45 @@
       C2 - Proficient.">
         <option value="">All</option>
         <option *ngFor="let level of uniqueLevels" [value]="level">{{ level }}</option>
-      </select>   
+      </select>
 
+      <div>
+        <button (click)="previousPage()" [disabled]="page === 0" matTooltip="Previous Page">
+          <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
+            arrow_back_ios
+          </span>
+        </button>
 
-  <div>
-    <button (click)="previousPage()" [disabled]="page === 0" matTooltip="Previous Page">
-      <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
-        arrow_back_ios
-      </span>
-    </button>
+        <button (click)="nextPage()" matTooltip="Next Page">
+          <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
+            arrow_forward_ios
+          </span>
+        </button>
+      </div>
 
-    <button (click)="nextPage()" matTooltip="Next Page">
-      <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
-        arrow_forward_ios
-      </span>
-    </button>
-  </div>
+      <div>
+        <button (click)="uploadFile.click()" matTooltip="Load Text">
+          <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
+            upload_file
+          </span>
+        </button>
+        <input type="file" #uploadFile (change)="loadFile($event)" accept=".txt" style="display: none;" />
+      </div>
 
-  <div>
-    <button (click)="uploadFile.click()" matTooltip="Load Text">
-      <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
-        upload_file
-      </span>
-    </button>
-    <input type="file" #uploadFile (change)="loadFile($event)" accept=".txt" style="display: none;"/>
-  </div>
-  
-  <div>
-    <select id="voiceSelect" (change)="onVoiceChange($event)" matTooltip="Voice Select Menu">
-      <option *ngFor="let voice of voices" [value]="voice.name">
-        {{ voice.name }} ({{ voice.lang.split('-')[0] }})
-      </option>
-    </select>
-    <label for="voiceSelect" matTooltip="Select Voice">
-      <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
-        voice_chat
-      </span>
-    </label>
-  </div>
+      <div>
+        <select id="voiceSelect" (change)="onVoiceChange($event)" matTooltip="Voice Select Menu">
+          <option *ngFor="let voice of voices" [value]="voice.name">
+            {{ voice.name }} ({{ voice.lang.split('-')[0] }})
+          </option>
+        </select>
+        <label for="voiceSelect" matTooltip="Select Voice">
+          <span class="material-symbols-outlined" style="color: rgb(1, 103, 255); font-size: 50px;">
+            voice_chat
+          </span>
+        </label>
+      </div>
 
-  </div>
+    </div>
     <table>
       <thead>
         <tr>
@@ -189,15 +184,18 @@
                 A1 - Beginner.
               </ng-container>
               <ng-container *ngSwitchCase="'A2'">
-                <span class="material-symbols-outlined" matTooltip="Level where basic concepts are grasped">lightbulb</span>
+                <span class="material-symbols-outlined"
+                  matTooltip="Level where basic concepts are grasped">lightbulb</span>
                 A2 - Elementary.
               </ng-container>
               <ng-container *ngSwitchCase="'B1'">
-                <span class="material-symbols-outlined" matTooltip="Level with intermediate understanding">blur_on</span>
+                <span class="material-symbols-outlined"
+                  matTooltip="Level with intermediate understanding">blur_on</span>
                 B1 - Intermediate.
               </ng-container>
               <ng-container *ngSwitchCase="'B2'">
-                <span class="material-symbols-outlined" matTooltip="Level exceeding intermediate skills">trending_up</span>
+                <span class="material-symbols-outlined"
+                  matTooltip="Level exceeding intermediate skills">trending_up</span>
                 B2 - Advanced Intermediate.
               </ng-container>
               <ng-container *ngSwitchCase="'C1'">
@@ -214,7 +212,7 @@
               </ng-container>
             </ng-container>
           </td>
-            
+
           <td>{{ text.prime }}</td>
           <td>{{ text.target }}</td>
           <td>{{ text.text.split('. ')[0] }}</td>
@@ -233,8 +231,3 @@
 <div #mic id="mic" class="waveform-container"></div>
 <div #waveformPlay id="waveformPlay" class="waveformPlay"></div>
 
-<!-- <button (click)="copySelectedText()" matTooltip="Copy Selected Text">
-  <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
-    content_copy
-  </span>
-</button> -->
