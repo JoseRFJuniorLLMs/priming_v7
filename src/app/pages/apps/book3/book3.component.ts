@@ -16,10 +16,22 @@ import { FormsModule } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from '../../pages/auth/login/auth.service';
 
-// Método para aplicar destaque nas partes do discurso
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+
 interface Word {
   text: string;
   type: string;
+}
+
+interface SavedText {
+  id: string;
+  fileName: string;
+  content: string;
+  pageRead: number;
+  userId: string;
+  userName: string;
+  timestamp: firebase.firestore.Timestamp;
 }
 
 @Component({
@@ -90,6 +102,8 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   sliderValue: number = 50;
   private currentSpeechRate: number = 1;
 
+  savedTexts: SavedText[] = [];
+
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     public voiceRecognitionService: Voice5RecognitionService,
@@ -104,6 +118,7 @@ export class Book3Component implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.loadSavedTexts();
     this.voiceRecognitionService.recordingEnded$.subscribe(url => {
       this.openResultDialog();
     });
@@ -779,6 +794,29 @@ public decreaseSpeechRate(): void {
 
 private setSpeechRate(rate: number): void {
   this.currentSpeechRate = rate;
+}
+
+async loadSavedTexts() {
+  try {
+    const user = await this.authService.getCurrentUser();
+    if (user) {
+      this.firestore.collection<SavedText>('TextCollection', ref => ref.where('userId', '==', user.uid))
+        .valueChanges({ idField: 'id' })
+        .subscribe(texts => {
+          this.savedTexts = texts;
+          this.changeDetectorRef.detectChanges();
+        });
+    }
+  } catch (error) {
+    console.error('Error loading saved texts:', error);
+  }
+}
+
+openSavedText(text: SavedText) {
+  this.sentences = this.splitIntoSentences(text.content);
+  this.currentSentenceIndex = text.pageRead || 0;
+  this.processText();
+  this.showTable = false;
 }
 
 

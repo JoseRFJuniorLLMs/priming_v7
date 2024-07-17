@@ -228,6 +228,10 @@
   </div>
 </div>
 
-<div #mic id="mic" class="waveform-container"></div>
-<div #waveformPlay id="waveformPlay" class="waveformPlay"></div>
 
+<!-- Button to switch to Saved Texts view -->
+<button (click)="showSavedTexts = !showSavedTexts" class="toggle-saved-texts-button" matTooltip="Toggle Saved Texts">
+  <span class="material-symbols-outlined" style="color: rgb(0, 123, 255); font-size: 50px;">
+    {{ showSavedTexts ? 'list_alt' : 'folder_open' }}
+  </span>
+</button>
