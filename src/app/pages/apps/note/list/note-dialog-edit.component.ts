@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NoteCollection } from '../../note/note-collection';
 import { NoteService } from '../note.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'note-dialog-edit',
@@ -23,7 +24,8 @@ import { NoteService } from '../note.service';
     MatButtonModule,
     MatDialogModule ,
     MatTooltipModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatIconModule
   ]
 })
 export class NoteDialogEditComponent {
