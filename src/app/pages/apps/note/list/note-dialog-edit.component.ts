@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
 import { NoteCollection } from '../../note/note-collection';
+import { NoteService } from '../note.service';
 
 @Component({
   selector: 'note-dialog-edit',
@@ -28,10 +29,27 @@ import { NoteCollection } from '../../note/note-collection';
 export class NoteDialogEditComponent {
   constructor(
     public dialogRef: MatDialogRef<NoteDialogEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: NoteCollection
+    @Inject(MAT_DIALOG_DATA) public data: NoteCollection,
+    private noteService: NoteService 
   ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-}
+
+  update(): void {
+    if (this.data._id) {
+      this.noteService.updateNote(this.data._id, this.data).then(
+        () => {
+          this.dialogRef.close(this.data); 
+          this.dialogRef.close();
+        },
+        (error) => {
+          console.error('Error updating note', error);
+        }
+      );
+    }
+  }
+
+
+}//fim

@@ -52,16 +52,16 @@ export class NoteComponent implements OnInit {
   loadNotes(): void {
     this.notes$ = this.noteService.noteCollection$;
     this.notes$.subscribe(notes => {
-      console.log('Loaded notes:', notes); // Adicionando logs para verificar se as notas foram carregadas
+      console.log('Loaded notes:', notes); 
     });
   }
 
-  createNote(): void {
+  /* createNote(): void {
     const newNote = new NoteCollection({
-      _id: '', // Generate a unique ID for the new note if necessary
+      _id: '', 
       created_at: new Date().toISOString(),
       description: '',
-      student: { _id: '123' }, // Exemplo de estudante
+      student: { _id: '123' }, 
       tags: '',
       title: '',
       permanent: false 
@@ -76,7 +76,7 @@ export class NoteComponent implements OnInit {
         console.error('Error creating note:', error);
       });
   }
-
+ */
   updateNote(id: string, noteData: Partial<NoteCollection>): void {
     this.noteService
       .updateNote(id, noteData)
@@ -166,7 +166,20 @@ export class NoteComponent implements OnInit {
     });
   }
 
+  /* editNote(note: NoteCollection): void {
+      const dialogRef = this.dialog.open(NoteEditComponent, {
+        width: '400px',
+        data: { note }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.updateNote(note._id, result);
+        }
+      });
+    }
+ */
   ngOnDestroy(): void {
-    // Implementa a lógica necessária para limpar recursos, se necessário
+    
   }
 }
