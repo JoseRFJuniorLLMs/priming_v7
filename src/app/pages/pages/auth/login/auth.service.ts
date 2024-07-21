@@ -7,8 +7,9 @@ import { map } from 'rxjs/operators';
 import { Student } from 'src/app/model/student/student';
 import { ChatVideoService } from 'src/app/pages/apps/chat-video/chat-video.service';
 import { StudentService } from 'src/app/pages/apps/student/student.service';
-import firebase from 'firebase/compat/app';
 import { NotificationService } from 'src/app/pages/apps/chat-video/notification.service';
+import firebase from 'firebase/compat/app';
+import { DataListService } from 'src/app/pages/apps/note/list/data-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class AuthService {
     private router: Router,
     private chatVideoService: ChatVideoService,
     private studentService: StudentService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private dataListService: DataListService 
   ) {}
 
   async register(email: string, password: string, studentData: Omit<Student, '_id' | 'email'>) {
@@ -87,6 +89,13 @@ export class AuthService {
         await this.chatVideoService.startLocalStream();
         await this.chatVideoService.setupWebRTCForUser(user.uid);
         await this.chatVideoService.createOffer(user.uid);
+  
+        // Atualiza as notas atrasadas após o login
+        setTimeout(() => {
+          this.dataListService.updateOverdueNotes()
+            .then(() => console.log('Notas atrasadas atualizadas com sucesso após o login.'))
+            .catch(error => console.error('Erro ao atualizar as notas atrasadas após o login:', error));
+        }, 0);
       }
       this.loginErrorSubject.next(null);
       this.router.navigate(['/dashboards/analytics']);
@@ -95,6 +104,7 @@ export class AuthService {
       this.loginErrorSubject.next('Incorrect email or password.');
     }
   }
+  
   
   async logout() {
     try {
@@ -127,5 +137,3 @@ export class AuthService {
 
 
 }//fim
-
-

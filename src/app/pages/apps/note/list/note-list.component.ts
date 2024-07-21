@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; // Adicione esta importação
-import { DataListService } from './data-list.service';
-import { NoteCollection } from '../../note/note-collection';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,11 +8,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge'; 
+
 import { FlashcardComponent } from './flashcard.component';
 import { NoteDialogComponent } from './note-dialog.component';
 import { VoiceCardRecognitionService } from './voice-card-recognition.service';
 import { RsvpreaderComponent } from '../../../dashboards/components/dialog-rsvpreader/rsvpreader.component';
 import { NoteDialogEditComponent } from './note-dialog-edit.component';
+
+import { DataListService } from './data-list.service';
+import { NoteCollection } from '../../note/note-collection';
 
 @Component({
   selector: 'note-list',

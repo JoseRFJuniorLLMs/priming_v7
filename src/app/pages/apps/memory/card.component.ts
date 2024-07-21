@@ -6,6 +6,7 @@ import { Voice6RecognitionService } from './voice6-recognition.service';
 import { SoundService } from 'src/app/layouts/components/footer/sound.service';
 import { SatoshiService } from '../note/satoshi.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../pages/auth/login/auth.service';
 
 interface Card {
   id: number;
@@ -37,12 +38,22 @@ export class CardComponent implements OnInit, OnDestroy {
     private cardService: CardService, 
     public voiceService: Voice6RecognitionService, 
     public soundService: SoundService,
-    private satoshiService: SatoshiService
+    private satoshiService: SatoshiService,
+    private authService: AuthService
   ) {} 
 
   ngOnInit(): void {
-    this.newGame();
-    this.updateSatoshiBalance();
+    this.authService.getUID().then(uid => {
+      if (uid) {
+        this.studentId = uid;
+        this.newGame();
+        this.updateSatoshiBalance();
+      } else {
+        console.error('Não foi possível obter o ID do estudante.');
+      }
+    }).catch(error => {
+      console.error('Erro ao obter o ID do estudante:', error);
+    });
   }
 
   ngOnDestroy(): void {
@@ -52,11 +63,16 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   updateSatoshiBalance() {
+    if (!this.studentId) {
+      console.error('O ID do estudante não está definido.');
+      return;
+    }
+  
     this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
       balance => {
         this.totalSatoshis = balance;
       },
-      error => console.error('Error fetching satoshi balance:', error)
+      error => console.error('Erro ao buscar o saldo de satoshi:', error)
     );
   }
 
@@ -99,7 +115,7 @@ export class CardComponent implements OnInit, OnDestroy {
         card1.isMatched = card2.isMatched = true;
         this.remainingPairs--;
   
-        this.voiceService.speak("That's right, yes baby!" + card1.word);
+        this.voiceService.speak("That's right !" + card1.word);
   
         this.incrementSatoshi();
   
@@ -118,6 +134,11 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   private incrementSatoshi() {
+    if (!this.studentId) {
+      console.error('O ID do estudante não está definido.');
+      return;
+    }
+
     this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
       newBalance => {
         this.totalSatoshis = newBalance;

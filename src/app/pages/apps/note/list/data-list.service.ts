@@ -137,22 +137,25 @@ export class DataListService {
 
   updateOverdueNotes(): Promise<void> {
     const today = format(new Date(), 'yyyy-MM-dd');
-    const fifteenDaysAgo = format(subDays(new Date(), 15), 'yyyy-MM-dd');
+    //const fifteenDaysAgo = format(subDays(new Date(), 15), 'yyyy-MM-dd');
     console.log('Atualizando notas atrasadas para a data de hoje:', today); // Log para verificar a execução
     return this.afAuth.authState.pipe(
       switchMap(async user => {
         if (user && user.uid) {
           const overdueNotesQuery = query(
             this.noteCollectionRef,
-            where('next_revision_date', '<=', fifteenDaysAgo),
+            where('next_revision_date', '<', today),
             where('student._id', '==', user.uid),
             where('permanent', '==', false)
           );
+  
           const querySnapshot = await getDocs(overdueNotesQuery);
           const batch = writeBatch(this.firestore);
+  
           querySnapshot.forEach(doc => {
             batch.update(doc.ref, { next_revision_date: today });
           });
+  
           return batch.commit().then(() => {
             console.log('Notas atrasadas atualizadas com sucesso!'); // Log para verificar sucesso
           }).catch(error => {
@@ -164,7 +167,7 @@ export class DataListService {
       })
     ).toPromise();
   }
-
+  
   // Novo método para buscar notas permanentes
   getPermanentNotes(): Observable<NoteCollection[]> {
     return this.afAuth.authState.pipe(
