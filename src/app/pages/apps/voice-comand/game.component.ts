@@ -214,7 +214,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
       
       this.speak = `${parsedCommand.who} ${parsedCommand.why} ${parsedCommand.action} ${parsedCommand.where}`;
       this.soundService.playDone();
-      this.incrementSatoshi(); // Incrementa satoshi ao reconhecer um comando válido
+      this.incrementSatoshi(); 
     } else {
       this.message = `${cleanedCommand}`;
       this.soundService.playErro();
@@ -243,10 +243,11 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
       () => {
         this.totalSatoshis++;
         this.showSatoshiAlert = true;
-        this.cdr.detectChanges(); // Forçar a detecção de mudanças
+
+        this.cdr.detectChanges(); 
         setTimeout(() => {
           this.showSatoshiAlert = false;
-          this.cdr.detectChanges(); // Forçar a detecção de mudanças
+          this.cdr.detectChanges(); 
         }, 3000);
       },
       (error: any) => console.error('Error incrementing satoshi:', error)
