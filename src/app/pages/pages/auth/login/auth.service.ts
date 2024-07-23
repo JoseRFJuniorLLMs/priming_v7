@@ -105,7 +105,6 @@ export class AuthService {
     }
   }
   
-  
   async logout() {
     try {
       const user = await this.afAuth.currentUser;

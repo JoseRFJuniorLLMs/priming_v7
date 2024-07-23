@@ -40,7 +40,7 @@
   }
 
   .example-list {
-    width: 1000px;
+    width: 100%;
     max-width: 100%;
     border: solid 1px #ccc;
     min-height: 60px;
@@ -211,33 +211,70 @@
       }
     }
   }
+}
 
-  .satoshi-alert {
-    position: fixed;
-    top: 20px;
-    left: 80%;
-    transform: translateX(-50%);
-    background-color: #ffeb3b;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
-    font-weight: bold;
-    animation: fadeInOut 2s ease-in-out;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  .satoshi {
-    position: static;
-    transform: translateX(-50%);
-    background-color: lightblue;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
-    font-weight: bold;
-  }
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+tr.active {
+  background-color: #e0f7fa;
+}
+
+.hidden-word {
+  display: inline-block;
+  font-family: monospace;
+}
+
+.hidden-word span {
+  visibility: hidden;
+}
+
+.hidden-word span:first-child,
+.hidden-word span:last-child {
+  visibility: visible;
+}
+
+button {
+  margin: 5px;
+}
 
 
+
+.satoshi-alert {
+  position: fixed;
+  top: 20px;
+  left: 80%;
+  transform: translateX(-50%);
+  background-color: #ffeb3b;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  font-weight: bold;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.satoshi {
+  position: static;
+  transform: translateX(-50%);
+  background-color: lightblue;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  font-weight: bold;
 }

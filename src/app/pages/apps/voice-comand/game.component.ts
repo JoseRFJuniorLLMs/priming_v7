@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, Input, OnInit, ViewChild, NgZone, ChangeDetectorRef, AfterViewInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importando CommonModule
+import { CommonModule } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,8 +22,8 @@ import { VoiceRecognitionService } from './voice-recognition.service';
 import WaveSurfer from 'wavesurfer.js';
 import screenfull from 'screenfull';
 import { FlashcardComponent } from '../note/list/flashcard.component';
+import { SatoshiService } from '../note/satoshi.service'; // Verifique o caminho correto
 import { NoteCollection } from '../note/note-collection';
-import { SatoshiService } from '../note/satoshi.service'; // Importando o SatoshiService
 
 @Component({
   selector: 'game-component',
@@ -52,7 +52,7 @@ import { SatoshiService } from '../note/satoshi.service'; // Importando o Satosh
 export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   student$!: Observable<any[]>;
-  private satoshiSubscription: Subscription | null = null; // Adicionado para acompanhar as assinaturas
+  private satoshiSubscription: Subscription | null = null;
 
   @ViewChild('mic') micElement!: ElementRef<HTMLDivElement>;
   @ViewChild('micSelect') micSelectElement!: ElementRef<HTMLSelectElement>;
@@ -87,21 +87,21 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
   private flashcardDialogRef: any;
   filteredNotes$!: Observable<NoteCollection[]>;
 
-  private studentId = ''; 
+  private studentId = 'student-id';
   totalSatoshis = 0;
   showSatoshiAlert = false;
 
   constructor(
+    private cdr: ChangeDetectorRef, // Mudança de cdRef para cdr para manter consistência
     public dialog: MatDialog,
     private elementRef: ElementRef,
     @Inject(Firestore) private firestore: Firestore,
-    private cdRef: ChangeDetectorRef,
     private zone: NgZone,
     private soundService: SoundService,
     private voiceRecognitionService: VoiceRecognitionService,
-    private satoshiService: SatoshiService // Injetando o SatoshiService
+    @Inject(SatoshiService) private satoshiService: SatoshiService // Adicionando o SatoshiService
   ) {
-    const student = collection(this.firestore, 'Student');
+    const student = collection(this.firestore, 'StudentCollection'); // Verifique o nome correto da coleção
     this.student$ = collectionData(student) as Observable<any[]>;
 
     this.totalCombinations = this.whos.length * this.whys.length * this.actions.length * this.wheres.length;
@@ -146,10 +146,11 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateSatoshiBalance() {
     this.satoshiSubscription = this.satoshiService.getSatoshiBalance(this.studentId).subscribe(
-      balance => {
+      (balance: number) => {
         this.totalSatoshis = balance;
+        this.cdr.detectChanges(); // Forçar a detecção de mudanças
       },
-      error => console.error('Error fetching satoshi balance:', error)
+      (error: any) => console.error('Error fetching satoshi balance:', error)
     );
   }
 
@@ -179,7 +180,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateHint(event: any): void {
     this.commandCounter = event.value;
-    this.cdRef.detectChanges();
+    this.cdr.detectChanges();
   }
 
   startVoiceRecognition(): void {
@@ -199,7 +200,7 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
       if (!this.combinations.has(commandKey)) {
         this.combinations.add(commandKey);
         this.commandCounter++;
-        this.cdRef.detectChanges();
+        this.cdr.detectChanges();
         if (this.commandCounter === this.pageSize) {
           this.nextPage();
         }
@@ -227,88 +228,54 @@ export class GameComponent implements OnInit, AfterViewInit, OnDestroy {
     const actionPattern = this.actions.join('|');
     const wherePattern = this.wheres.join('|');
 
-    const regex = new RegExp(`(${whoPattern})\\s+(${whyPattern})\\s+(${actionPattern})\\s+(${wherePattern})`, 'i');
+    const regex = new RegExp(`(${whoPattern})\\s+(${whyPattern})\\s+(${actionPattern})\\s+(${wherePattern})`);
     const match = command.match(regex);
 
     if (match) {
-      return {
-        who: match[1],
-        why: match[2],
-        action: match[3],
-        where: match[4]
-      };
+      return { who: match[1], why: match[2], action: match[3], where: match[4] };
     }
+
     return null;
+  }
+
+  incrementSatoshi(): void {
+    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
+      () => {
+        this.totalSatoshis++;
+        this.showSatoshiAlert = true;
+        this.cdr.detectChanges(); // Forçar a detecção de mudanças
+        setTimeout(() => {
+          this.showSatoshiAlert = false;
+          this.cdr.detectChanges(); // Forçar a detecção de mudanças
+        }, 3000);
+      },
+      (error: any) => console.error('Error incrementing satoshi:', error)
+    );
+  }
+
+  createWaveSurferPlay(url: string): void {
+    if (this.voiceRecognitionService.wavesurfer) {
+      this.voiceRecognitionService.wavesurfer.destroy();
+    }
+    this.voiceRecognitionService.wavesurfer = WaveSurfer.create({
+      container: this.waveformPlay.nativeElement,
+      waveColor: '#6c63ff',
+      progressColor: '#FE7F9C',
+      barWidth: 4,
+      cursorWidth: 1,
+      height: 100,
+      normalize: true
+    });
+
+    this.voiceRecognitionService.wavesurfer.load(url);
   }
 
   startRecording(): void {
     this.voiceRecognitionService.startRecording();
   }
 
-  createWaveSurferPlay(url: string): void {
-    if (!this.waveformPlay || !this.waveformPlay.nativeElement) {
-      return;
-    }
-
-    const wavesurferPlay = WaveSurfer.create({
-      container: this.waveformPlay.nativeElement,
-      waveColor: 'black',
-      progressColor: 'gray',
-      barWidth: 2,
-      cursorWidth: 1,
-      height: 60,
-      barGap: 3,
-      backend: 'WebAudio',
-    });
-
-    wavesurferPlay.load(url);
+  speakText(message: string): void {
+    const speech = new SpeechSynthesisUtterance(message);
+    window.speechSynthesis.speak(speech);
   }
-
-  playBiNeural(): void {
-    this.soundService.playBiNeural();
-  }
-
-  toggleCollapse() {
-    this.collapsed
-      ? this.layoutService.expandSidenav()
-      : this.layoutService.collapseSidenav();
-  }
-
-  speakText(text: string): void {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-  
-    const setVoice = () => {
-      const voices = window.speechSynthesis.getVoices();
-      const femaleVoice = voices.find(voice => voice.name === 'Google UK English Female');
-  
-      if (femaleVoice) {
-        utterance.voice = femaleVoice;
-      } else {
-        console.warn('Voz "Google UK English Female" não encontrada, usando a voz padrão.');
-      }
-  
-      window.speechSynthesis.speak(utterance);
-    };
-  
-    if (window.speechSynthesis.getVoices().length === 0) {
-      window.speechSynthesis.onvoiceschanged = setVoice;
-    } else {
-      setVoice();
-    }
-  }
-
-  private incrementSatoshi() {
-    this.satoshiService.incrementSatoshi(this.studentId, 1).subscribe(
-      newBalance => {
-        this.totalSatoshis = newBalance;
-        this.showSatoshiAlert = true;
-        setTimeout(() => this.showSatoshiAlert = false, 2000);
-      },
-      error => console.error('Erro ao incrementar saldo de satoshi:', error)
-    );
-  }
-
-  
-
 }

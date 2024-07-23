@@ -85,7 +85,7 @@ export class Game3Component implements OnInit, AfterViewInit, OnDestroy {
   currentCombinations: { who: string, why: string, action: string, where: string }[] = [];
 
   private flashcardDialogRef: any;
-  private studentId = 'student-id'; // ID do estudante logado
+  private studentId = 'student-id';
   totalSatoshis = 0;
   showSatoshiAlert = false;
 
@@ -211,7 +211,7 @@ export class Game3Component implements OnInit, AfterViewInit, OnDestroy {
 
       this.speak = `${parsedCommand.who} ${parsedCommand.why} ${parsedCommand.action} ${parsedCommand.where}`;
       this.soundService.playDone();
-      this.incrementSatoshi(); // Incrementa satoshi ao reconhecer um comando válido
+      this.incrementSatoshi(); 
     } else {
       this.message = `${cleanedCommand}`;
       this.soundService.playErro();

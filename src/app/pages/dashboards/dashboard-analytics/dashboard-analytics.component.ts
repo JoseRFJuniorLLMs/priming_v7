@@ -278,7 +278,7 @@ export class DashboardAnalyticsComponent implements OnInit, AfterViewInit {
     this.voiceSelection = voice;
   } //fim
 
-  /* ==================abrirPopup==================== */
+  /* =================Abrir Popup==================== */
   abrirPopup() {
     this.dialog.open(ImagemPopupComponent, {});
   } //sim
@@ -310,7 +310,7 @@ export class DashboardAnalyticsComponent implements OnInit, AfterViewInit {
     });
   } //fim
 
-  /* ==================Some Method That SelectsText==================== */
+  /* ==================Some Method That Selects Text==================== */
   someMethodThatSelectsText(text: string) {
     this.sharedDataService.setSelectedText(text);
   } //fim
@@ -545,22 +545,19 @@ export class DashboardAnalyticsComponent implements OnInit, AfterViewInit {
     text: string,
     onAudioFinish?: () => void
   ): void {
-    this.wordsArray = this.getWordsArray(text); // Divide o texto em palavras
-    this.wordsDisplayed = 0; // Reseta o contador de palavras exibidas
+    this.wordsArray = this.getWordsArray(text);
+    this.wordsDisplayed = 0; 
 
-    // Carrega o áudio a partir da URL fornecida
     this.waveform.load(audioUrl);
 
-    // Quando o WaveSurfer estiver pronto, calcula a duração de cada palavra e inicia a reprodução
     this.waveform.on('ready', () => {
-      const duration = this.waveform.getDuration(); // Obtém a duração total do áudio
-      this.wordDuration = duration / this.wordsArray.length; // Calcula a duração de cada palavra
-      this.waveform.play(); // Inicia a reprodução do áudio
+      const duration = this.waveform.getDuration(); 
+      this.wordDuration = duration / this.wordsArray.length; 
+      this.waveform.play();
       this.openSnackBar('Begin Play Wav');
     });
 
-    // Adiciona um listener para o evento de término do áudio
-    // Se um callback foi fornecido, ele será chamado ao terminar a reprodução
+  
     this.waveform.on('finish', () => {
       this.isPlaying = false;
       if (onAudioFinish) {
