@@ -1,9 +1,19 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OllamaComponent } from './ollama.component';
 import nlp from 'compromise';
+
+interface PartOfSpeech {
+  color: string;
+  symbol: string;
+}
+
+interface AnalyzedWord {
+  word: string;
+  type: string;
+}
 
 @Component({
   selector: 'app-grammar-analyzer',
@@ -11,86 +21,21 @@ import nlp from 'compromise';
   styleUrls: ['./grammar-analyzer.component.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    MatIconModule, 
-    MatButtonModule, 
-    MatTooltipModule
+    CommonModule,
+    MatButtonModule,
+    MatTooltipModule,
+    OllamaComponent
   ]
 })
 export class GrammarAnalyzerComponent {
-
-  @ViewChild('textContainer') textContainer!: ElementRef;
-  @ViewChild('fileInput') fileInput!: ElementRef;
-
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+  
   text: string = '';
   fileName: string = '';
   isAnalyzed: boolean = false;
+  analyzedText: AnalyzedWord[] = [];
 
-  pronouns!: string;
-  verbs!: string;
-  nouns!: string;
-  adjectives!: string;
-  adverbs!: string;
-  people!: string;
-  places!: string;
-  organizations!: string;
-  clauses!: string;
-  questions!: string;
-  acronyms!: string;
-  emails!: string;
-  urls!: string;
-
-  onFileSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.fileName = file.name;
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.text = e.target?.result as string;
-        if (this.textContainer) {
-          this.textContainer.nativeElement.innerText = this.text;
-        }
-        this.isAnalyzed = false;
-      };
-      reader.readAsText(file);
-    }
-  }
-
-  performAnalysis(): void {
-    this.analyzeText(this.text); 
-  }
-
-  analyzeText(text: string): void {
-    const doc = nlp(text);
-    this.pronouns = doc.pronouns().out('text');
-    this.verbs = doc.verbs().out('text');
-    this.nouns = doc.nouns().out('text');
-    this.adjectives = doc.adjectives().out('text');
-    this.adverbs = doc.adverbs().out('text');
-    this.people = doc.people().out('text');
-    this.places = doc.places().out('text');
-    this.organizations = doc.organizations().out('text');
-    this.clauses = doc.clauses().out('text');
-    this.questions = doc.questions().out('text');
-    this.acronyms = doc.acronyms().out('text');
-    this.emails = doc.emails().out('text');
-    this.urls = doc.urls().out('text');
-    this.isAnalyzed = true; 
-  }
-
-  resetAnalysis(): void {
-    this.text = '';
-    this.fileName = '';
-    this.isAnalyzed = false;
-    if (this.textContainer) {
-      this.textContainer.nativeElement.innerHTML = '';
-    }
-    if (this.fileInput) {
-      this.fileInput.nativeElement.value = '';
-    }
-  }
-
-  public partsOfSpeech = {
+  partsOfSpeech: { [key: string]: PartOfSpeech } = {
     Noun: { color: '#9932CC', symbol: 'n.' },
     Verb: { color: '#FF4500', symbol: 'v.' },
     Adjective: { color: '#32CD32', symbol: 'adj.' },
@@ -101,17 +46,59 @@ export class GrammarAnalyzerComponent {
     Pronoun: { color: '#20B2AA', symbol: 'pron.' },
     Other: { color: '#000000', symbol: '' }
   };
-  
-  public determineWordType(tags: string[]): string {
-    if (tags.includes('Noun')) return 'Noun';
-    if (tags.includes('Verb')) return 'Verb';
-    if (tags.includes('Adjective')) return 'Adjective';
-    if (tags.includes('Adverb')) return 'Adverb';
-    if (tags.includes('Determiner')) return 'Determiner';
-    if (tags.includes('Preposition')) return 'Preposition';
-    if (tags.includes('Conjunction')) return 'Conjunction';
-    if (tags.includes('Pronoun')) return 'Pronoun';
+
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.fileName = file.name;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.text = e.target?.result as string;
+        console.log('Text from file:', this.text);  // Adicionado para depuração
+        this.isAnalyzed = false;
+        this.analyzedText = [];
+      };
+      reader.readAsText(file);
+    }
+  }
+
+  performAnalysis(): void {
+    if (!this.text) return;
+    
+    const doc = nlp(this.text);
+    console.log('NLP Document:', doc);  // Adicionado para depuração
+
+    this.analyzedText = doc.terms().out('array').map((term: any) => {
+      const word = term.text;
+      const tags = term.tags as string[];
+      console.log('Tags for word:', word, tags);  // Adicionado para depuração
+      const type = this.determineWordType(tags);
+      return { word, type };
+    });
+
+    console.log('Analyzed Text:', this.analyzedText);  // Adicionado para depuração
+    this.isAnalyzed = true;
+  }
+
+  resetAnalysis(): void {
+    this.text = '';
+    this.fileName = '';
+    this.isAnalyzed = false;
+    this.analyzedText = [];
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+
+  determineWordType(tags: string[]): string {
+    const possibleTypes = ['Noun', 'Verb', 'Adjective', 'Adverb', 'Determiner', 'Preposition', 'Conjunction', 'Pronoun'];
+    for (const type of possibleTypes) {
+      if (tags.includes(type)) return type;
+    }
     return 'Other';
   }
-  
+
+  getPartOfSpeech(type: string): PartOfSpeech {
+    return this.partsOfSpeech[type] || this.partsOfSpeech['Other'];
+  }
 }
