@@ -28,13 +28,14 @@ export class OllamaComponent {
   getResponse(): void {
     this.loading = true;
     this.error = null;
+    this.response = '';
 
     this.ollamaService.getResponse(this.prompt, 'llama3.1').subscribe({
-      next: (res) => {
-        this.response = res;
+      next: (chunk) => {
+        this.response += chunk; // Append each chunk to the response
       },
       error: (err) => {
-        this.error = 'Erro ao obter resposta: ' + err.message;
+        this.error = 'Erro ao obter resposta: ' + err;
       },
       complete: () => {
         this.loading = false;
