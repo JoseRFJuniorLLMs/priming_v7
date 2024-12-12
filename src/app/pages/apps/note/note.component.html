@@ -30,8 +30,8 @@
       <p>Tags: {{ note.tags }}</p>
       <p>Answer: {{ note.answer }}</p>
       <p>Level: {{ note.level }}</p>
-      <p>Last Revision Date: {{ convertToDate(note.last_revision_date) | date: 'short' }}</p>
-      <p>Next Revision Date: {{ convertToDate(note.next_revision_date) | date: 'short' }}</p>
+      <p [hidden]="true">Last Revision Date: {{ convertToDate(note.last_revision_date) | date: 'short' }}</p>
+      <p [hidden]="true">Next Revision Date: {{ convertToDate(note.next_revision_date) | date: 'short' }}</p>
       <p>Image: <img [src]="note.image" alt="Note image" *ngIf="note.image"></p>
       <p [ngClass]="{'highlight-permanent': note.permanent}">Permanent: {{ note.permanent ? 'Yes' : 'No' }}</p>
       <p>Created at: {{ convertToDate(note.created_at) | date: 'short' }}</p>
